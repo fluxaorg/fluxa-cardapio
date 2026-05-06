@@ -12,7 +12,6 @@ export default function Login() {
             titleGiant="fulano!"
             subtitle="faz teu login aí, bora pedir!"
             showEyes={true}
-            showStackedLanches={false}
           />
         </div>
         

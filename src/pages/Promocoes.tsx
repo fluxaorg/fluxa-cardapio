@@ -10,7 +10,6 @@ export default function Promocoes() {
             titleGiant="promoções!" 
             subtitle="aproveite enquanto durar" 
             showEyes={false} 
-            showStackedLanches={false} 
           />
         </div>
         <div className="split-right">

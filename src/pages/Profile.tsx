@@ -92,7 +92,6 @@ export default function Profile() {
             titleGiant={heroTitles.large}
             subtitle={heroTitles.sub}
             showEyes={activeTab === 'home'}
-            showStackedLanches={false}
           />
         </div>
         
