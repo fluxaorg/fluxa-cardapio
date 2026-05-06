@@ -6,7 +6,7 @@ export default function Checkout() {
   return (
     <div className="page-container detail-layout">
       {/* Left Area (mocked as previous step for visual reference) */}
-      <main className="main-section detail-left" style={{ opacity: 0.5, pointerEvents: 'none' }}>
+      <main className="main-section bg-white-block detail-left" style={{ opacity: 0.5, pointerEvents: 'none' }}>
         <div className="detail-header">
           <h1 className="detail-header-title">Detalhes do produto...</h1>
         </div>
@@ -17,7 +17,7 @@ export default function Checkout() {
       </main>
 
       {/* Right Area Sidebar - Checkout Payment */}
-      <aside className="main-section detail-sidebar checkout-sidebar">
+      <aside className="main-section bg-white-block detail-sidebar checkout-sidebar">
         <div className="sidebar-header">
           <div>
             <h2 className="sidebar-title">Meu pedido</h2>

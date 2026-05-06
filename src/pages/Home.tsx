@@ -5,7 +5,7 @@ import './Home.css';
 export default function Home() {
   return (
     <div className="page-container">
-      <main className="main-section split-layout">
+      <main className="main-section bg-white-block split-layout">
         <div className="split-left">
           <HeroSection
             topLabel="Bem vindo ao cardápio!"

@@ -5,7 +5,7 @@ import './Login.css';
 export default function Login() {
   return (
     <div className="page-container">
-      <main className="main-section split-layout">
+      <main className="main-section bg-white-block split-layout">
         <div className="split-left">
           <HeroSection
             titleMedium="faaala"

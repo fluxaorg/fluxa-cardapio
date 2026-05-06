@@ -1,24 +1,69 @@
-
+import { useState, useEffect } from 'react';
 import { Filter, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useCompany } from '../context/CompanyContext';
+import { supabase } from '../lib/supabase';
 import './Menu.css';
+
+type Category = {
+  id: string;
+  name: string;
+};
+
+type Product = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image_url: string;
+  category_id: string;
+};
 
 export default function Menu() {
   const navigate = useNavigate();
-  const categories = ['Pizzas', 'Lanches', 'Bebidas', 'Sobremesas'];
-  const activeCategory = 'Pizzas';
+  const { company } = useCompany();
+  const slug = company?.slug || '';
+  const basePath = slug ? `/${slug}` : '';
 
-  const products = Array(8).fill(null).map((_, i) => ({
-    id: i,
-    name: 'Pizza - Margeritta',
-    description: 'Feito com muito amor, para os amantes de',
-    price: 'a partir de 99$',
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=200&q=80'
-  }));
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!company?.id) return;
+
+    async function fetchData() {
+      const { data: cats } = await supabase
+        .from('food_categories')
+        .select('*')
+        .eq('company_id', company.id)
+        .order('sort_order', { ascending: true });
+
+      if (cats && cats.length > 0) {
+        setCategories(cats);
+        setActiveCategoryId(cats[0].id);
+      }
+
+      const { data: prods } = await supabase
+        .from('food_menu_items')
+        .select('*')
+        .eq('company_id', company.id)
+        .order('name', { ascending: true });
+
+      if (prods) {
+        setProducts(prods);
+      }
+    }
+    fetchData();
+  }, [company?.id]);
+
+  const filteredProducts = activeCategoryId 
+    ? products.filter(p => p.category_id === activeCategoryId)
+    : products;
 
   return (
     <div className="page-container">
-      <main className="main-section menu-section">
+      <main className="main-section bg-white-block menu-section">
         <div className="menu-header">
           <h1 className="menu-title">Categorias</h1>
           <button className="menu-filter-btn">
@@ -29,38 +74,42 @@ export default function Menu() {
         <div className="menu-categories">
           {categories.map((cat) => (
             <button
-              key={cat}
-              className={`category-pill ${cat === activeCategory ? 'active' : ''}`}
+              key={cat.id}
+              onClick={() => setActiveCategoryId(cat.id)}
+              className={`category-pill ${cat.id === activeCategoryId ? 'active' : ''}`}
             >
-              {cat}
+              {cat.name}
             </button>
           ))}
         </div>
 
         <div className="menu-grid">
-          {products.map((p) => (
+          {filteredProducts.map((p) => (
             <div 
               key={p.id} 
               className="product-card" 
-              onClick={() => navigate(`/produto/${p.id}`)}
+              onClick={() => navigate(`${basePath}/produto/${p.id}`)}
             >
-              <img src={p.image} alt={p.name} className="product-card-img" />
+              <img src={p.image_url || 'https://via.placeholder.com/200'} alt={p.name} className="product-card-img" />
               <div className="product-card-info">
                 <h3 className="product-card-name">{p.name}</h3>
                 <p className="product-card-desc">{p.description}</p>
-                <span className="product-card-price">{p.price}</span>
+                <span className="product-card-price">a partir de R$ {p.price?.toFixed(2)}</span>
               </div>
               <button 
                 className="product-card-add"
                 onClick={(e) => {
                   e.stopPropagation();
-                  // action
+                  navigate(`${basePath}/produto/${p.id}`);
                 }}
               >
                 <Plus size={18} strokeWidth={3} />
               </button>
             </div>
           ))}
+          {filteredProducts.length === 0 && (
+            <p style={{ color: '#888', gridColumn: '1 / -1', textAlign: 'center', padding: '40px' }}>Nenhum produto nesta categoria.</p>
+          )}
         </div>
       </main>
     </div>

@@ -18,7 +18,7 @@ export default function ProductDetail() {
   return (
     <div className="page-container detail-layout">
       {/* Left Area */}
-      <main className="main-section detail-left">
+      <main className="main-section bg-white-block detail-left">
         <div className="detail-header">
           <h1 className="detail-header-title">Detalhes do produto...</h1>
           <button className="menu-filter-btn">

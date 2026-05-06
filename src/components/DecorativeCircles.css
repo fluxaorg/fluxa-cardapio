@@ -1,11 +1,11 @@
 .decorative-circles-container {
-  position: absolute;
-  bottom: -40px;
-  left: -20px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 250px;
   height: 250px;
   pointer-events: none;
-  z-index: 0;
+  z-index: 5;
 }
 
 .circle {
@@ -17,16 +17,16 @@
   width: 200px;
   height: 200px;
   background-color: var(--color-circle-black);
-  bottom: 0;
-  left: 0;
+  bottom: -40px;
+  left: -40px;
 }
 
 .circle-2 {
   width: 150px;
   height: 150px;
   background-color: var(--color-circle-black);
-  bottom: 30px;
-  left: 70px;
+  bottom: 10px;
+  left: 60px;
   z-index: 1;
 }
 
@@ -34,15 +34,15 @@
   width: 170px;
   height: 170px;
   background-color: var(--color-circle-red);
-  bottom: 10px;
-  left: 120px;
+  bottom: -20px;
+  left: 100px;
   z-index: 2;
 }
 
 .arc-text-container {
   position: absolute;
   bottom: 150px; /* Adjust so it sits above circles */
-  left: 0px;
+  left: 10px;
   z-index: 3;
 }
 

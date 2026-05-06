@@ -1,26 +1,35 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Home, BookOpen, Pizza, Megaphone, User, Search, ShoppingBag } from 'lucide-react';
+import { useCompany } from '../context/CompanyContext';
 import './Navbar.css';
 
 export default function Navbar() {
   const location = useLocation();
+  const { company } = useCompany();
+
+  const slug = company?.slug || '';
+  const basePath = slug ? `/${slug}` : '';
 
   const navItems = [
-    { name: 'Início', path: '/', icon: Home },
-    { name: 'Menu', path: '/menu', icon: BookOpen },
-    { name: 'Pizzas', path: '/menu?category=pizzas', icon: Pizza },
-    { name: 'Promoções', path: '/promocoes', icon: Megaphone },
-    { name: 'Meu Perfil', path: '/perfil', icon: User },
+    { name: 'Início', path: `${basePath}/`, icon: Home },
+    { name: 'Menu', path: `${basePath}/menu`, icon: BookOpen },
+    { name: 'Pizzas', path: `${basePath}/pizzas`, icon: Pizza },
+    { name: 'Promoções', path: `${basePath}/promocoes`, icon: Megaphone },
+    { name: 'Meu Perfil', path: `${basePath}/perfil`, icon: User },
   ];
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
         {/* Left: Logo Block */}
-        <Link to="/" className="navbar-logo-block">
+        <Link to={`${basePath}/`} className="navbar-logo-block">
           <div className="navbar-logo-inner">
-            <Pizza size={20} color="white" />
-            <span className="navbar-logo-text">Quioski Lanches</span>
+            {company?.logo_url ? (
+              <img src={company.logo_url} alt="Logo" style={{ width: '20px', height: '20px', objectFit: 'cover', borderRadius: '4px' }} />
+            ) : (
+              <Pizza size={20} color="white" />
+            )}
+            <span className="navbar-logo-text">{company?.name || 'Quioski Lanches'}</span>
           </div>
           <span className="navbar-logo-sub">by fluxa</span>
         </Link>

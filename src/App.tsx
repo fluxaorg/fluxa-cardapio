@@ -1,5 +1,4 @@
-
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -7,10 +6,11 @@ import Profile from './pages/Profile';
 import Menu from './pages/Menu';
 import ProductDetail from './pages/ProductDetail';
 import Checkout from './pages/Checkout';
+import { CompanyProvider } from './context/CompanyContext';
 
-export default function App() {
+function TenantApp() {
   return (
-    <Router>
+    <CompanyProvider>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -20,6 +20,18 @@ export default function App() {
         <Route path="/produto/:id" element={<ProductDetail />} />
         <Route path="/checkout" element={<Checkout />} />
       </Routes>
+    </CompanyProvider>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/:slug/*" element={<TenantApp />} />
+      </Routes>
     </Router>
   );
 }
+
+export default App;

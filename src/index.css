@@ -62,11 +62,19 @@ body {
 }
 
 .main-section {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.bg-white-block {
   background-color: var(--color-surface);
   border-radius: var(--radius-section);
-  padding: 40px;
-  position: relative;
-  overflow: hidden; /* Para os círculos não vazarem muito se precisarmos segurar, mas a instrução diz "overflow: hidden no container ou visible". The instruction states: "saindo parcialmente do container (overflow: hidden no container ou visible)". I'll use hidden here and let the circles go to the edge. */
+  min-height: calc(100vh - 70px - 16px - 5px); /* Leave ~5px at bottom */
+  margin-bottom: 5px;
+  padding: 32px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.03);
 }
 
 /* Button Resets */
@@ -102,7 +110,7 @@ input::placeholder {
   font-weight: 900;
   font-size: 88px;
   line-height: 0.9;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
   color: var(--color-text-primary);
 }
 
