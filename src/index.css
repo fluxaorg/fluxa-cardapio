@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,900&display=swap');
+
+:root {
+  /* Primárias */
+  --color-red:       #C41C3B;   /* vermelho escuro — CTA, botões principais, ícones ativos */
+  --color-red-vivid: #E31E3E;   /* vermelho mais vivo — hover states, "+" buttons */
+  --color-black:     #1A1A1A;   /* quase-preto — textos principais, navbar dark mode */
+  --color-white:     #FFFFFF;   /* branco puro — fundo geral, cards */
+
+  /* Neutros */
+  --color-bg:        #F0EFEF;   /* cinza muito claro — fundo da page content area */
+  --color-surface:   #FFFFFF;   /* branco puro — cards, navbar, sidebar */
+  --color-border:    #E5E5E5;   /* borda sutil — divisores, separadores */
+
+  /* Tipografia */
+  --color-text-primary:   #1A1A1A;  /* títulos, labels */
+  --color-text-secondary: #888888;  /* subtítulos, descrições, ghost text */
+  --color-text-ghost:     #C0C0C0;  /* textos decorativos apagados */
+
+  /* Elementos decorativos */
+  --color-circle-black: #1A1A1A;
+  --color-circle-red:   #C41C3B;
+  --color-circle-gray:  #D9D9D9;
+
+  /* Fonts */
+  --font-family: 'DM Sans', sans-serif;
+
+  /* Radius */
+  --radius-pill:   999px;   /* pills/tags de categoria */
+  --radius-card:   20px;    /* cards grandes (perfil logado, produto) */
+  --radius-thumb:  12px;    /* thumbnails de produto na lista */
+  --radius-thumb-detail: 16px; /* imagem do produto no detalhe */
+  --radius-input:  12px;    /* inputs de email/senha */
+  --radius-btn:    12px;    /* botão "Booooooora pedir!", "Confirmar pedido" */
+  --radius-section: 20px;   /* container principal branco */
+  --radius-navbar: 0px;     /* navbar flat */
+
+  /* Shadows */
+  --shadow-card:    0 2px 16px rgba(0,0,0,0.07);
+  --shadow-sidebar: 0 4px 24px rgba(0,0,0,0.06);
+  --shadow-thumb:   0 2px 8px rgba(0,0,0,0.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Utilities */
+.page-container {
+  margin: 16px;
+  min-height: calc(100vh - 70px - 32px); /* height minus navbar and margin */
+}
+
+.main-section {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-section);
+  padding: 40px;
+  position: relative;
+  overflow: hidden; /* Para os círculos não vazarem muito se precisarmos segurar, mas a instrução diz "overflow: hidden no container ou visible". The instruction states: "saindo parcialmente do container (overflow: hidden no container ou visible)". I'll use hidden here and let the circles go to the edge. */
+}
+
+/* Button Resets */
+button {
+  font-family: var(--font-family);
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+button:active {
+  transform: scale(0.99);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 150ms ease;
+}
+
+input {
+  font-family: var(--font-family);
+  outline: none;
+}
+
+input::placeholder {
+  color: #AAAAAA;
+}
+
+/* Base styles for Typography scale */
+.text-hero-giant {
+  font-weight: 900;
+  font-size: 88px;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+}
+
+.text-hero-medium {
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+}
+
+.text-title-section {
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--color-text-primary);
+}
+
+.text-subtitle {
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--color-text-secondary);
+}
+
+/* Desktop First base */
+@media (max-width: 768px) {
+  .main-section {
+    padding: 24px;
+  }
+  
+  .text-hero-giant {
+    font-size: 64px;
+  }
+}

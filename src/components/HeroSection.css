@@ -1,0 +1,126 @@
+.hero-section {
+  height: 100%;
+  min-height: 500px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+}
+
+.hero-top-label {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-black);
+  margin-bottom: 8px;
+}
+
+.hero-bullet {
+  color: var(--color-red);
+}
+
+.hero-title-medium {
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--color-black);
+  line-height: 1.1;
+}
+
+.hero-giant-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-top: -4px;
+}
+
+.hero-title-giant {
+  font-size: 88px;
+  font-weight: 900;
+  color: var(--color-black);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.hero-underline {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  pointer-events: none;
+}
+
+.hero-subtitle {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  max-width: 280px;
+  line-height: 1.5;
+  margin-top: 16px;
+}
+
+/* Stacked Lanches */
+.stacked-lanches {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  color: var(--color-black);
+}
+
+.lanche-layer {
+  line-height: 1.2;
+}
+
+.l-1 { font-size: 11px; opacity: 0.15; font-weight: 300; }
+.l-2 { font-size: 13px; opacity: 0.25; font-weight: 400; }
+.l-3 { font-size: 16px; opacity: 0.50; font-weight: 700; }
+.l-4 { font-size: 13px; opacity: 0.25; font-weight: 400; }
+.l-5 { font-size: 11px; opacity: 0.15; font-weight: 300; }
+
+/* Eyes */
+.hero-eyes {
+  display: inline-flex;
+  align-items: flex-end;
+  position: absolute;
+  right: -60px;
+  bottom: 15px;
+}
+
+.eye-circle-large {
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-black);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.eye-circle-small {
+  width: 28px;
+  height: 28px;
+  background-color: var(--color-black);
+  border-radius: 50%;
+  margin-left: -8px;
+  margin-bottom: -4px;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .hero-title-giant {
+    font-size: 64px;
+  }
+  .hero-eyes {
+    right: -40px;
+    bottom: 10px;
+  }
+  .stacked-lanches {
+    display: none; /* Hide on mobile to save space */
+  }
+}
