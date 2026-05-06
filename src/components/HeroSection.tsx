@@ -9,7 +9,6 @@ interface HeroSectionProps {
   subtitle: string;
   showUnderline?: boolean;
   showEyes?: boolean;
-  showStackedLanches?: boolean;
 }
 
 export default function HeroSection({
@@ -19,7 +18,6 @@ export default function HeroSection({
   subtitle,
   showUnderline,
   showEyes,
-  showStackedLanches,
 }: HeroSectionProps) {
   return (
     <div className="hero-section">
