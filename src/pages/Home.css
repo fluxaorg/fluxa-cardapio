@@ -15,7 +15,7 @@
 .home-bento-grid {
   display: grid;
   grid-template-columns: 240px 1fr 1fr;
-  grid-template-rows: 280px 280px;
+  grid-template-rows: 280px 350px;
   gap: 16px;
   width: 100%;
   padding-right: 80px;
