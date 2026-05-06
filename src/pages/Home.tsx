@@ -19,21 +19,29 @@ export default function Home() {
         
         <div className="split-right">
           <div className="home-bento-grid">
-            {/* Top row */}
-            <div className="bento-col-left">
-              <div className="bento-placeholder img-large" style={{ backgroundColor: '#F0EFEF', borderRadius: '24px', width: '100%', height: '100%' }}></div>
+            {/* Top Left: Pizza (Large Vertical) */}
+            <div className="bento-item bento-pizza">
+              <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=500&auto=format&fit=crop" alt="Pizza" />
             </div>
-            <div className="bento-col-right">
-              <div className="bento-placeholder img-small" style={{ backgroundColor: '#F0EFEF', borderRadius: '24px', width: '100%', height: '100%' }}></div>
-              <div className="bento-placeholder img-small" style={{ backgroundColor: '#F0EFEF', borderRadius: '24px', width: '100%', height: '100%' }}></div>
+
+            {/* Top Right: Fries & Burger (Small Stacked) */}
+            <div className="bento-group-right">
+              <div className="bento-item bento-fries">
+                <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?q=80&w=500&auto=format&fit=crop" alt="Fries" />
+              </div>
+              <div className="bento-item bento-burger">
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500&auto=format&fit=crop" alt="Burger" />
+              </div>
             </div>
             
-            {/* Bottom row */}
-            <div className="bento-col-left-bottom">
-              <div className="bento-placeholder img-med-vert" style={{ backgroundColor: '#F0EFEF', borderRadius: '24px', width: '100%', height: '100%' }}></div>
+            {/* Bottom Left: Coca-Cola */}
+            <div className="bento-item bento-coke">
+              <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=500&auto=format&fit=crop" alt="Coke" />
             </div>
-            <div className="bento-col-right-bottom">
-              <div className="bento-placeholder img-med-horiz" style={{ backgroundColor: '#F0EFEF', borderRadius: '24px', width: '100%', height: '100%' }}></div>
+
+            {/* Bottom Right: Mozzarella Sticks (Large Horizontal) */}
+            <div className="bento-item bento-sticks">
+              <img src="https://images.unsplash.com/photo-1531496681078-2742ed47fbc8?q=80&w=500&auto=format&fit=crop" alt="Sticks" />
             </div>
           </div>
         </div>

@@ -1,12 +1,75 @@
 import { useState } from 'react';
 import HeroSection from '../components/HeroSection';
+import { useAuth } from '../context/AuthContext';
+import { Mail, Lock, ArrowLeft } from 'lucide-react';
 import './Profile.css';
-import { ArrowLeft } from 'lucide-react';
 
 type ProfileTab = 'home' | 'enderecos' | 'recentes' | 'cupons' | 'pedidos';
 
 export default function Profile() {
+  const { user, signInWithGoogle, signOut } = useAuth();
   const [activeTab, setActiveTab] = useState<ProfileTab>('home');
+
+  if (!user) {
+    return (
+      <div className="page-container">
+        <main className="main-section bg-white-block split-layout">
+          <div className="split-left">
+            <HeroSection 
+              titleMedium="faaala" 
+              titleGiant="fulano!" 
+              subtitle="faz teu login aí, bora pedir!" 
+              showEyes={true} 
+              showStackedLanches={false}
+            />
+          </div>
+          <div className="split-right login-panel">
+            <div className="login-card">
+              <div className="f-logo-circle">
+                <span className="f-letter">f</span>
+              </div>
+              
+              <div className="login-form-section">
+                <h2 className="login-title">Entrar</h2>
+                <p className="login-subtitle">é bom te ver de volta!</p>
+                <div className="login-input-group">
+                  <div className="login-input-wrapper">
+                    <Mail size={18} />
+                    <input type="email" placeholder="Email" />
+                  </div>
+                  <div className="login-input-wrapper">
+                    <Lock size={18} />
+                    <input type="password" placeholder="Senha" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="login-divider"></div>
+
+              <div className="login-form-section">
+                <h2 className="login-title">Cadastrar</h2>
+                <p className="login-subtitle">nesse caso... Prazer!</p>
+                <div className="login-input-group">
+                  <div className="login-input-wrapper">
+                    <Mail size={18} />
+                    <input type="email" placeholder="Email" />
+                  </div>
+                  <div className="login-input-wrapper">
+                    <Lock size={18} />
+                    <input type="password" placeholder="Senha" />
+                  </div>
+                </div>
+              </div>
+
+              <button className="btn-bora-pedir" onClick={signInWithGoogle}>
+                Booooooora pedir!
+              </button>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   const getHeroTitles = () => {
     switch (activeTab) {
@@ -48,7 +111,6 @@ export default function Profile() {
 
           {activeTab === 'home' ? (
             <div className="profile-bento-grid">
-              {/* Top Left: Endereços */}
               <div className="bento-card card-enderecos" onClick={() => setActiveTab('enderecos')}>
                 <div className="enderecos-text">
                   <span className="syl">en</span>
@@ -59,7 +121,6 @@ export default function Profile() {
                 </div>
               </div>
 
-              {/* Top Right: Pedidos recentes & Logout */}
               <div className="bento-card-group-top-right">
                 <div className="bento-card card-recentes" onClick={() => setActiveTab('recentes')}>
                   <div className="card-recentes-content">
@@ -69,7 +130,7 @@ export default function Profile() {
                   </div>
                 </div>
                 
-                <div className="bento-card card-logout" onClick={() => console.log('Logout clicked')}>
+                <div className="bento-card card-logout" onClick={signOut}>
                   <div className="card-logout-content">
                     <span className="logout-title">Logout</span>
                     <span className="logout-hint">ja vai?</span>
@@ -77,7 +138,6 @@ export default function Profile() {
                 </div>
               </div>
 
-              {/* Bottom Left: Meus Cupons */}
               <div className="bento-card card-cupons" onClick={() => setActiveTab('cupons')}>
                 <div className="card-cupons-content">
                   <span className="cupons-line1">Meus</span>
@@ -86,7 +146,6 @@ export default function Profile() {
                 </div>
               </div>
 
-              {/* Bottom Right: Meus Pedidos */}
               <div className="bento-card card-pedidos" onClick={() => setActiveTab('pedidos')}>
                 <div className="card-pedidos-content">
                   <span className="pedidos-line1">Meus</span>

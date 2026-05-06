@@ -8,6 +8,7 @@ import ProductDetail from './pages/ProductDetail';
 import Checkout from './pages/Checkout';
 import Pizzas from './pages/Pizzas';
 import Promocoes from './pages/Promocoes';
+import { AuthProvider } from './context/AuthContext';
 import { CompanyProvider } from './context/CompanyContext';
 
 function TenantApp() {
@@ -30,12 +31,14 @@ function TenantApp() {
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/quiosque" replace />} />
-        <Route path="/:slug/*" element={<TenantApp />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Navigate to="/quiosque" replace />} />
+          <Route path="/:slug/*" element={<TenantApp />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

@@ -58,45 +58,86 @@ export default function Pizzas() {
   };
 
   const renderPizzaChart = () => {
-    const max = selectedSize?.maxFlavors || 1;
-    const slices = [];
-    const angleStep = 360 / max;
-
-    for (let i = 0; i < max; i++) {
-      const startAngle = i * angleStep;
-      const endAngle = (i + 1) * angleStep;
-      const flavor = selectedFlavors[i];
-      
-      // Calculate path for circular slice
-      const radius = 100;
-      const x1 = 100 + radius * Math.cos((startAngle - 90) * Math.PI / 180);
-      const y1 = 100 + radius * Math.sin((startAngle - 90) * Math.PI / 180);
-      const x2 = 100 + radius * Math.cos((endAngle - 90) * Math.PI / 180);
-      const y2 = 100 + radius * Math.sin((endAngle - 90) * Math.PI / 180);
-      
-      const largeArcFlag = angleStep > 180 ? 1 : 0;
-      
-      const d = `M 100 100 L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
-      
-      slices.push(
-        <path 
-          key={i} 
-          d={d} 
-          fill={flavor ? '#C41C3B' : '#F0EFEF'} 
-          stroke="white" 
-          strokeWidth="2"
-          className="pizza-slice"
-          style={{ opacity: flavor ? 1 : 0.5 }}
-        />
-      );
-    }
+    const numSlices = selectedFlavors.length || 1;
+    const angleStep = 360 / numSlices;
+    const radius = 100;
 
     return (
       <div className="pizza-visualizer">
-        <svg viewBox="0 0 200 200" width="200" height="200">
-          <circle cx="100" cy="100" r="105" fill="#E5E5E5" /> {/* Border/Crust */}
-          {slices}
-          <circle cx="100" cy="100" r="5" fill="white" /> {/* Center hole */}
+        <svg viewBox="0 0 240 240" width="240" height="240">
+          <defs>
+            {/* Calabresa Pattern */}
+            <pattern id="pattern-calabresa" patternUnits="userSpaceOnUse" width="40" height="40">
+              <circle cx="20" cy="20" r="18" fill="#E04A4A" />
+              <circle cx="20" cy="20" r="12" fill="#C41C3B" />
+              <circle cx="15" cy="15" r="3" fill="#A01630" opacity="0.3" />
+            </pattern>
+            {/* Frango Pattern */}
+            <pattern id="pattern-frango" patternUnits="userSpaceOnUse" width="30" height="30">
+              <path d="M5,5 L25,5 L15,25 Z" fill="#F2D06B" transform="rotate(15)" />
+              <path d="M10,10 L20,10 L15,20 Z" fill="#D4AF37" transform="rotate(-20)" />
+            </pattern>
+            {/* Margherita Pattern */}
+            <pattern id="pattern-margherita" patternUnits="userSpaceOnUse" width="50" height="50">
+              <circle cx="25" cy="25" r="15" fill="#E63946" /> {/* Tomato */}
+              <path d="M20,10 Q25,0 30,10 T40,10" fill="#4CAF50" /> {/* Basil */}
+            </pattern>
+            {/* Gloss Filter */}
+            <filter id="gloss">
+              <feSpecularLighting surfaceScale="5" specularConstant=".75" specularExponent="20" lightingColor="#white">
+                <fePointLight x="-50" y="-50" z="300" />
+              </feSpecularLighting>
+            </filter>
+          </defs>
+
+          {/* Outer Crust Shadow */}
+          <circle cx="120" cy="120" r="115" fill="rgba(0,0,0,0.1)" />
+          
+          {/* Main Crust */}
+          <circle cx="120" cy="120" r="110" fill="#D49A6A" />
+          <circle cx="120" cy="120" r="102" fill="#FDE6D2" />
+
+          {/* Slices */}
+          {selectedFlavors.length === 0 ? (
+            <circle cx="120" cy="120" r="102" fill="#FDE6D2" opacity="0.5" stroke="#D49A6A" strokeWidth="1" strokeDasharray="5,5" />
+          ) : (
+            selectedFlavors.map((flavor, i) => {
+              const startAngle = i * angleStep;
+              const endAngle = (i + 1) * angleStep;
+              
+              const x1 = 120 + 102 * Math.cos((startAngle - 90) * Math.PI / 180);
+              const y1 = 120 + 102 * Math.sin((startAngle - 90) * Math.PI / 180);
+              const x2 = 120 + 102 * Math.cos((endAngle - 90) * Math.PI / 180);
+              const y2 = 120 + 102 * Math.sin((endAngle - 90) * Math.PI / 180);
+              
+              const largeArcFlag = angleStep > 180 ? 1 : 0;
+              const d = `M 120 120 L ${x1} ${y1} A 102 102 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
+
+              let patternId = '';
+              if (flavor.id === 'calabresa') patternId = 'url(#pattern-calabresa)';
+              else if (flavor.id === 'frango') patternId = 'url(#pattern-frango)';
+              else if (flavor.id === 'margherita') patternId = 'url(#pattern-margherita)';
+              else patternId = '#F2D06B'; // Default cheese color
+
+              return (
+                <g key={flavor.id}>
+                  <path d={d} fill={patternId} stroke="#D49A6A" strokeWidth="2" />
+                  {/* Subtle cheese texture overlay */}
+                  <path d={d} fill="white" opacity="0.1" />
+                </g>
+              );
+            })
+          )}
+
+          {/* Slice dividers (visible if > 1 slice) */}
+          {numSlices > 1 && selectedFlavors.length > 0 && Array.from({ length: numSlices }).map((_, i) => {
+            const angle = i * angleStep;
+            const x = 120 + 102 * Math.cos((angle - 90) * Math.PI / 180);
+            const y = 120 + 102 * Math.sin((angle - 90) * Math.PI / 180);
+            return <line key={i} x1="120" y1="120" x2={x} y2={y} stroke="#D49A6A" strokeWidth="2" />;
+          })}
+          
+          <circle cx="120" cy="120" r="102" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="4" />
         </svg>
       </div>
     );
