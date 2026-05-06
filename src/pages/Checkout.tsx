@@ -1,5 +1,4 @@
-import React from 'react';
-import { Filter } from 'lucide-react';
+
 import './ProductDetail.css'; // Reusing some layout classes
 import './Checkout.css';
 

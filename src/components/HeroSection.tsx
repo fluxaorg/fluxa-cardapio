@@ -1,4 +1,4 @@
-import React from 'react';
+
 import DecorativeCircles from './DecorativeCircles';
 import './HeroSection.css';
 
