@@ -44,7 +44,7 @@
   bottom: -225px; 
   left: -225px;
   z-index: 10;
-  transform: rotate(-35deg); 
+  transform: rotate(55deg); /* Rotated to show on the right side */
   pointer-events: none;
 }
 

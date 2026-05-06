@@ -51,15 +51,6 @@ export default function HeroSection({
         </div>
         <p className="hero-subtitle">{subtitle}</p>
 
-        {showStackedLanches && (
-          <div className="stacked-lanches">
-            <div className="lanche-layer l-1">LANCHES</div>
-            <div className="lanche-layer l-2">LANCHES</div>
-            <div className="lanche-layer l-3">LANCHES</div>
-            <div className="lanche-layer l-4">LANCHES</div>
-            <div className="lanche-layer l-5">LANCHES</div>
-          </div>
-        )}
       </div>
 
       <DecorativeCircles />

@@ -7,8 +7,12 @@ import './Profile.css';
 type ProfileTab = 'home' | 'enderecos' | 'recentes' | 'cupons' | 'pedidos';
 
 export default function Profile() {
-  const { user, signInWithGoogle, signOut } = useAuth();
+  const { user, signInWithGoogle, signOut, loading } = useAuth();
   const [activeTab, setActiveTab] = useState<ProfileTab>('home');
+
+  if (loading) {
+    return <div className="page-loading">Carregando...</div>;
+  }
 
   if (!user) {
     return (
@@ -19,8 +23,6 @@ export default function Profile() {
               titleMedium="faaala" 
               titleGiant="fulano!" 
               subtitle="faz teu login aí, bora pedir!" 
-              showEyes={true} 
-              showStackedLanches={false}
             />
           </div>
           <div className="split-right login-panel">
@@ -49,21 +51,14 @@ export default function Profile() {
               <div className="login-form-section">
                 <h2 className="login-title">Cadastrar</h2>
                 <p className="login-subtitle">nesse caso... Prazer!</p>
-                <div className="login-input-group">
-                  <div className="login-input-wrapper">
-                    <Mail size={18} />
-                    <input type="email" placeholder="Email" />
-                  </div>
-                  <div className="login-input-wrapper">
-                    <Lock size={18} />
-                    <input type="password" placeholder="Senha" />
-                  </div>
-                </div>
               </div>
 
               <button className="btn-bora-pedir" onClick={signInWithGoogle}>
-                Booooooora pedir!
+                Entrar com Google
               </button>
+              <p className="login-hint-text">
+                O Google é a forma mais rápida de pedir!
+              </p>
             </div>
           </div>
         </main>

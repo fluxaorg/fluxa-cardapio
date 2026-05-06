@@ -14,24 +14,27 @@ interface Flavor {
   id: string;
   name: string;
   description: string;
-  image?: string;
+  color: string;
+  pattern?: string;
 }
 
 const PIZZA_SIZES: PizzaSize[] = [
   { id: 'broto', name: 'Pizza Broto', price: 46, maxFlavors: 1 },
   { id: 'pequena', name: 'Pizza Pequena', price: 61, maxFlavors: 2 },
-  { id: 'media', name: 'Pizza Média', price: 75, maxFlavors: 2 },
-  { id: 'grande', name: 'Pizza Grande', price: 85, maxFlavors: 3 },
+  { id: 'media', name: 'Pizza Média', price: 75, maxFlavors: 3 },
+  { id: 'grande', name: 'Pizza Grande', price: 85, maxFlavors: 4 },
   { id: 'gigante', name: 'PIZZA GIGANTE', price: 105, maxFlavors: 4 },
 ];
 
 const FLAVORS: Flavor[] = [
-  { id: 'calabresa', name: 'Calabresa', description: 'Molho de tomate, mussarela, calabresa e cebola.', image: '🍖' },
-  { id: 'frango', name: 'Frango Catupiry', description: 'Molho de tomate, mussarela, frango desfiado e catupiry.', image: '🍗' },
-  { id: 'margherita', name: 'Margherita', description: 'Molho de tomate, mussarela, manjericão fresco e tomate.', image: '🌿' },
-  { id: '4queijos', name: '4 Queijos', description: 'Mussarela, catupiry, provolone e parmesão.', image: '🧀' },
-  { id: 'portuguesa', name: 'Portuguesa', description: 'Mussarela, presunto, ovos, cebola, ervilha e azeitona.', image: '🥚' },
-  { id: 'bacon', name: 'Bacon', description: 'Mussarela, bacon crocante e cebola.', image: '🥓' },
+  { id: 'calabresa', name: 'Calabresa', description: 'Molho de tomate, mussarela, calabresa e cebola.', color: '#C41C3B', pattern: 'calabresa' },
+  { id: 'frango', name: 'Frango Catupiry', description: 'Molho de tomate, mussarela, frango desfiado e catupiry.', color: '#F2D06B', pattern: 'frango' },
+  { id: 'margherita', name: 'Margherita', description: 'Molho de tomate, mussarela, manjericão fresco e tomate.', color: '#4CAF50', pattern: 'margherita' },
+  { id: '4queijos', name: '4 Queijos', description: 'Mussarela, catupiry, provolone e parmesão.', color: '#FFD700', pattern: 'cheese' },
+  { id: 'portuguesa', name: 'Portuguesa', description: 'Mussarela, presunto, ovos, cebola, ervilha e azeitona.', color: '#FFA500', pattern: 'portuguesa' },
+  { id: 'bacon', name: 'Bacon', description: 'Mussarela, bacon crocante e cebola.', color: '#8B4513', pattern: 'bacon' },
+  { id: 'pepperoni', name: 'Pepperoni', description: 'Mussarela, fatias de pepperoni e orégano.', color: '#FF0000', pattern: 'pepperoni' },
+  { id: 'vegetariana', name: 'Vegetariana', description: 'Brócolis, milho, ervilha e palmito.', color: '#228B22', pattern: 'vegetariana' },
 ];
 
 export default function Pizzas() {
@@ -62,43 +65,33 @@ export default function Pizzas() {
     const angleStep = 360 / numSlices;
 
     return (
-      <div className="pizza-visualizer">
-        <svg viewBox="0 0 240 240" width="240" height="240">
+      <div className="pizza-visualizer-container">
+        <svg viewBox="0 0 240 240" width="220" height="220" className="pizza-svg">
           <defs>
-            {/* Calabresa Pattern */}
             <pattern id="pattern-calabresa" patternUnits="userSpaceOnUse" width="40" height="40">
               <circle cx="20" cy="20" r="18" fill="#E04A4A" />
               <circle cx="20" cy="20" r="12" fill="#C41C3B" />
-              <circle cx="15" cy="15" r="3" fill="#A01630" opacity="0.3" />
             </pattern>
-            {/* Frango Pattern */}
             <pattern id="pattern-frango" patternUnits="userSpaceOnUse" width="30" height="30">
-              <path d="M5,5 L25,5 L15,25 Z" fill="#F2D06B" transform="rotate(15)" />
-              <path d="M10,10 L20,10 L15,20 Z" fill="#D4AF37" transform="rotate(-20)" />
+              <path d="M5,5 L25,5 L15,25 Z" fill="#F2D06B" />
             </pattern>
-            {/* Margherita Pattern */}
             <pattern id="pattern-margherita" patternUnits="userSpaceOnUse" width="50" height="50">
-              <circle cx="25" cy="25" r="15" fill="#E63946" /> {/* Tomato */}
-              <path d="M20,10 Q25,0 30,10 T40,10" fill="#4CAF50" /> {/* Basil */}
+              <circle cx="25" cy="25" r="12" fill="#E63946" />
+              <circle cx="10" cy="10" r="5" fill="#4CAF50" />
             </pattern>
-            {/* Gloss Filter */}
-            <filter id="gloss">
-              <feSpecularLighting surfaceScale="5" specularConstant=".75" specularExponent="20" lightingColor="#white">
-                <fePointLight x="-50" y="-50" z="300" />
-              </feSpecularLighting>
-            </filter>
+            <pattern id="pattern-pepperoni" patternUnits="userSpaceOnUse" width="40" height="40">
+              <circle cx="20" cy="20" r="15" fill="#FF4D4D" />
+              <circle cx="20" cy="20" r="13" fill="#D63031" />
+            </pattern>
           </defs>
 
-          {/* Outer Crust Shadow */}
-          <circle cx="120" cy="120" r="115" fill="rgba(0,0,0,0.1)" />
-          
-          {/* Main Crust */}
+          {/* Crust */}
           <circle cx="120" cy="120" r="110" fill="#D49A6A" />
           <circle cx="120" cy="120" r="102" fill="#FDE6D2" />
 
           {/* Slices */}
           {selectedFlavors.length === 0 ? (
-            <circle cx="120" cy="120" r="102" fill="#FDE6D2" opacity="0.5" stroke="#D49A6A" strokeWidth="1" strokeDasharray="5,5" />
+            <circle cx="120" cy="120" r="102" fill="#FDE6D2" opacity="0.4" />
           ) : (
             selectedFlavors.map((flavor, i) => {
               const startAngle = i * angleStep;
@@ -112,31 +105,25 @@ export default function Pizzas() {
               const largeArcFlag = angleStep > 180 ? 1 : 0;
               const d = `M 120 120 L ${x1} ${y1} A 102 102 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
 
-              let patternId = '';
-              if (flavor.id === 'calabresa') patternId = 'url(#pattern-calabresa)';
-              else if (flavor.id === 'frango') patternId = 'url(#pattern-frango)';
-              else if (flavor.id === 'margherita') patternId = 'url(#pattern-margherita)';
-              else patternId = '#F2D06B'; // Default cheese color
-
               return (
-                <g key={flavor.id}>
-                  <path d={d} fill={patternId} stroke="#D49A6A" strokeWidth="2" />
-                  {/* Subtle cheese texture overlay */}
-                  <path d={d} fill="white" opacity="0.1" />
-                </g>
+                <path 
+                  key={flavor.id} 
+                  d={d} 
+                  fill={flavor.pattern ? `url(#pattern-${flavor.pattern})` : flavor.color} 
+                  stroke="#D49A6A" 
+                  strokeWidth="1.5" 
+                />
               );
             })
           )}
 
-          {/* Slice dividers (visible if > 1 slice) */}
+          {/* Slice lines */}
           {numSlices > 1 && selectedFlavors.length > 0 && Array.from({ length: numSlices }).map((_, i) => {
             const angle = i * angleStep;
             const x = 120 + 102 * Math.cos((angle - 90) * Math.PI / 180);
             const y = 120 + 102 * Math.sin((angle - 90) * Math.PI / 180);
-            return <line key={i} x1="120" y1="120" x2={x} y2={y} stroke="#D49A6A" strokeWidth="2" />;
+            return <line key={i} x1="120" y1="120" x2={x} y2={y} stroke="#D49A6A" strokeWidth="1" />;
           })}
-          
-          <circle cx="120" cy="120" r="102" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="4" />
         </svg>
       </div>
     );
@@ -150,50 +137,44 @@ export default function Pizzas() {
             titleMedium={step === 1 ? "monte sua" : "escolha os"} 
             titleGiant={step === 1 ? "pizza!" : "sabores!"} 
             subtitle={step === 1 ? "escolha o tamanho perfeito" : `você pode escolher até ${selectedSize?.maxFlavors} sabores`} 
-            showEyes={false} 
-            showStackedLanches={false} 
           />
           
           {step === 2 && (
-            <div className="pizza-summary-box">
+            <div className="pizza-visual-preview hide-mobile">
               {renderPizzaChart()}
-              <div className="summary-info">
-                <p className="summary-size">{selectedSize?.name}</p>
-                <p className="summary-price">R$ {selectedSize?.price.toFixed(2)}</p>
-                <div className="selected-flavors-list">
-                  {selectedFlavors.map(f => (
-                    <span key={f.id} className="flavor-tag">{f.name}</span>
-                  ))}
-                </div>
-              </div>
             </div>
           )}
         </div>
 
-        <div className="split-right pizza-builder-content">
+        <div className="split-right pizza-builder-panel">
           {step === 1 ? (
-            <div className="size-selection-grid">
+            <div className="size-list">
               {PIZZA_SIZES.map(size => (
-                <div key={size.id} className="size-card" onClick={() => handleSizeSelect(size)}>
-                  <div className="size-info">
+                <div key={size.id} className="size-row-card" onClick={() => handleSizeSelect(size)}>
+                  <div className="size-main-info">
                     <h3>{size.name}</h3>
-                    <p>Até {size.maxFlavors} {size.maxFlavors === 1 ? 'sabor' : 'sabores'}</p>
+                    <p>Até {size.maxFlavors} sabores</p>
                   </div>
-                  <div className="size-price-action">
-                    <span className="price">R$ {size.price.toFixed(2)}</span>
+                  <div className="size-right-info">
+                    <span className="size-price">R$ {size.price.toFixed(2)}</span>
                     <ChevronRight size={20} />
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="flavor-selection-container">
-              <button className="back-btn" onClick={() => { setStep(1); setSelectedFlavors([]); }}>
-                <ArrowLeft size={20} />
-                <span>Mudar tamanho</span>
-              </button>
+            <div className="builder-step-2">
+              <div className="builder-header-sticky">
+                <button className="back-link" onClick={() => { setStep(1); setSelectedFlavors([]); }}>
+                  <ArrowLeft size={18} />
+                  <span>Mudar tamanho</span>
+                </button>
+                <div className="builder-pizza-mobile show-mobile">
+                   {renderPizzaChart()}
+                </div>
+              </div>
 
-              <div className="flavors-grid">
+              <div className="flavors-selection-grid">
                 {FLAVORS.map(flavor => {
                   const isSelected = selectedFlavors.find(f => f.id === flavor.id);
                   const isDisabled = !isSelected && selectedFlavors.length >= (selectedSize?.maxFlavors || 0);
@@ -201,23 +182,23 @@ export default function Pizzas() {
                   return (
                     <div 
                       key={flavor.id} 
-                      className={`flavor-card ${isSelected ? 'selected' : ''} ${isDisabled ? 'disabled' : ''}`}
+                      className={`flavor-item-card ${isSelected ? 'is-selected' : ''} ${isDisabled ? 'is-disabled' : ''}`}
                       onClick={() => !isDisabled && toggleFlavor(flavor)}
                     >
-                      <div className="flavor-emoji">{flavor.image}</div>
-                      <div className="flavor-info">
+                      <div className="flavor-color-dot" style={{ backgroundColor: flavor.color }}></div>
+                      <div className="flavor-details">
                         <h4>{flavor.name}</h4>
                         <p>{flavor.description}</p>
                       </div>
-                      {isSelected && <div className="selected-badge"><Check size={14} /></div>}
+                      {isSelected && <Check className="check-icon" size={16} />}
                     </div>
                   );
                 })}
               </div>
 
-              <div className="builder-footer">
+              <div className="builder-action-bar">
                 <button 
-                  className={`btn-confirm-pizza ${selectedFlavors.length === 0 ? 'disabled' : ''}`}
+                  className={`btn-add-cart ${selectedFlavors.length === 0 ? 'inactive' : ''}`}
                   disabled={selectedFlavors.length === 0}
                 >
                   Adicionar ao Carrinho • R$ {selectedSize?.price.toFixed(2)}
