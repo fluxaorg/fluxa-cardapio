@@ -42,17 +42,17 @@
 .arc-text-container {
   position: absolute;
   bottom: -160px; 
-  left: 80px;
+  left: 110px;
   z-index: 10;
-  transform: rotate(35deg); /* Positioned more towards the top-right to avoid screen edge */
+  transform: rotate(105deg); /* Aligned with the vertical right edge of the red circle */
   pointer-events: none;
 }
 
 .arc-text {
   font-family: 'DM Sans', sans-serif;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 700;
   fill: #888;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
 }
