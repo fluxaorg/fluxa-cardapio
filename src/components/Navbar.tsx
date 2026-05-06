@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, BookOpen, Pizza, Megaphone, User, Search, ShoppingBag } from 'lucide-react';
 import { useCompany } from '../context/CompanyContext';
+import { useCart } from '../context/CartContext';
 import './Navbar.css';
 
 export default function Navbar() {
   const location = useLocation();
   const { company } = useCompany();
+  const { items, setIsOpen } = useCart();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const slug = company?.slug || '';
@@ -61,9 +63,10 @@ export default function Navbar() {
           <button className="navbar-search" aria-label="Search" onClick={() => setIsSearchOpen(!isSearchOpen)}>
             <Search size={22} />
           </button>
-          <button className="navbar-cart" onClick={() => console.log('Open Cart')}>
+          <button className="navbar-cart" onClick={() => setIsOpen(true)}>
             <ShoppingBag size={16} color="white" />
             <span>Carrinho</span>
+            {items.length > 0 && <span className="cart-badge">{items.length}</span>}
           </button>
         </div>
       </div>

@@ -15,7 +15,7 @@
 .home-bento-grid {
   display: grid;
   grid-template-columns: 240px 1fr 1fr;
-  grid-template-rows: 280px 350px;
+  grid-template-rows: 320px 400px;
   gap: 16px;
   width: 100%;
   padding-right: 80px;
@@ -26,6 +26,7 @@
   background-color: #F0EFEF;
   border-radius: 40px;
   overflow: hidden;
+  height: 100%;
 }
 
 .bento-item img {
@@ -61,11 +62,15 @@
 .bento-fries {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
+  height: 240px;
+  align-self: start;
 }
 
 .bento-burger {
   grid-column: 3 / 4;
   grid-row: 1 / 2;
+  height: 240px;
+  align-self: start;
 }
 
 .bento-coke {

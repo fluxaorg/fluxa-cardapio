@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import HeroSection from '../components/HeroSection';
 import { ArrowLeft, ChevronRight, Check } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 import './Pizzas.css';
 
 interface PizzaSize {
@@ -38,6 +39,7 @@ const FLAVORS: Flavor[] = [
 ];
 
 export default function Pizzas() {
+  const { addItem } = useCart();
   const [step, setStep] = useState(1);
   const [selectedSize, setSelectedSize] = useState<PizzaSize | null>(null);
   const [selectedFlavors, setSelectedFlavors] = useState<Flavor[]>([]);
@@ -58,6 +60,24 @@ export default function Pizzas() {
         setSelectedFlavors([...selectedFlavors, flavor]);
       }
     }
+  };
+
+  const handleAddCart = () => {
+    if (!selectedSize || selectedFlavors.length === 0) return;
+
+    addItem({
+      productId: `pizza-${selectedSize.id}`,
+      name: `${selectedSize.name} (${selectedFlavors.map(f => f.name).join(' / ')})`,
+      price: selectedSize.price,
+      qty: 1,
+      image_url: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=200&q=80',
+      description: selectedFlavors.map(f => f.name).join(', '),
+      options: { size: selectedSize.id, flavors: selectedFlavors.map(f => f.id) }
+    } as any);
+
+    setStep(1);
+    setSelectedFlavors([]);
+    setSelectedSize(null);
   };
 
   const renderPizzaChart = () => {
@@ -196,10 +216,10 @@ export default function Pizzas() {
                 })}
               </div>
 
-              <div className="builder-action-bar">
                 <button 
                   className={`btn-add-cart ${selectedFlavors.length === 0 ? 'inactive' : ''}`}
                   disabled={selectedFlavors.length === 0}
+                  onClick={handleAddCart}
                 >
                   Adicionar ao Carrinho • R$ {selectedSize?.price.toFixed(2)}
                 </button>

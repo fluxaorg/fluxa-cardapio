@@ -42,9 +42,9 @@
 .arc-text-container {
   position: absolute;
   bottom: -160px; 
-  left: 80px;
+  left: 90px;
   z-index: 10;
-  transform: rotate(45deg); /* Moved up and pulled in to avoid screen edge */
+  transform: rotate(50deg); /* Fine-tuned to avoid overlap with black circle */
   pointer-events: none;
 }
 

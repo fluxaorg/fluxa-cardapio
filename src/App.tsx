@@ -10,12 +10,16 @@ import Pizzas from './pages/Pizzas';
 import Promocoes from './pages/Promocoes';
 import { AuthProvider } from './context/AuthContext';
 import { CompanyProvider } from './context/CompanyContext';
+import { CartProvider } from './context/CartContext';
+import CartSidebar from './components/CartSidebar';
 
 function TenantApp() {
   return (
     <CompanyProvider>
-      <Navbar />
-      <Routes>
+      <CartProvider>
+        <Navbar />
+        <CartSidebar />
+        <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/perfil" element={<Profile />} />
@@ -25,6 +29,7 @@ function TenantApp() {
         <Route path="/produto/:id" element={<ProductDetail />} />
         <Route path="/checkout" element={<Checkout />} />
       </Routes>
+      </CartProvider>
     </CompanyProvider>
   );
 }
