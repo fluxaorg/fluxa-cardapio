@@ -44,7 +44,7 @@
   bottom: -160px; 
   left: 110px;
   z-index: 10;
-  transform: rotate(105deg); /* Aligned with the vertical right edge of the red circle */
+  transform: rotate(80deg); /* Moved up along the right curve */
   pointer-events: none;
 }
 
