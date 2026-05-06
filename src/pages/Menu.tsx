@@ -16,7 +16,7 @@ type Product = {
   description: string;
   price: number;
   image_url: string;
-  category_id: string;
+  category: string;
 };
 
 export default function Menu() {
@@ -40,8 +40,6 @@ export default function Menu() {
 
       if (cats && cats.length > 0) {
         setCategories(cats);
-        // Find if there's a 'Pizzas' category to set as default or handle redirect
-        const pizzaCat = cats.find(c => c.name.toLowerCase() === 'pizzas');
         setActiveCategoryId(cats[0].id);
       }
 
