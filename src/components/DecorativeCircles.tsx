@@ -14,10 +14,9 @@ export default function DecorativeCircles() {
 
       {/* Texto em arco: tecnologia fluxa */}
       <div className="arc-text-container">
-        <svg viewBox="0 0 240 120" width="240" height="120" className="arc-svg">
-          {/* O arco é aproximadamente 180° côncavo para cima. */}
-          <path id="curve" d="M 20 100 A 100 100 0 0 1 220 100" fill="transparent" />
-          <text width="240">
+        <svg viewBox="0 0 400 400" width="400" height="400" className="arc-svg">
+          <path id="curve" d="M 20 380 A 180 180 0 0 1 380 380" fill="transparent" />
+          <text width="400">
             <textPath href="#curve" startOffset="50%" textAnchor="middle" className="arc-text">
               tecnologia fluxa
             </textPath>

@@ -4,6 +4,7 @@
   grid-template-rows: 140px 140px;
   gap: 16px;
   height: 100%;
+  padding-right: 80px; /* Push it away from the right edge */
 }
 
 .bento-card {
@@ -174,4 +175,39 @@
     grid-row: 4 / 5;
     height: 280px;
   }
+}
+
+.profile-right-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: var(--color-black);
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 24px;
+}
+
+.back-btn:hover {
+  color: var(--color-red);
+}
+
+.profile-tab-content {
+  flex: 1;
+  background-color: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 40px;
+  margin-right: 80px;
 }

@@ -6,6 +6,8 @@ import Profile from './pages/Profile';
 import Menu from './pages/Menu';
 import ProductDetail from './pages/ProductDetail';
 import Checkout from './pages/Checkout';
+import Pizzas from './pages/Pizzas';
+import Promocoes from './pages/Promocoes';
 import { CompanyProvider } from './context/CompanyContext';
 
 function TenantApp() {
@@ -17,6 +19,8 @@ function TenantApp() {
         <Route path="/login" element={<Login />} />
         <Route path="/perfil" element={<Profile />} />
         <Route path="/menu" element={<Menu />} />
+        <Route path="/pizzas" element={<Pizzas />} />
+        <Route path="/promocoes" element={<Promocoes />} />
         <Route path="/produto/:id" element={<ProductDetail />} />
         <Route path="/checkout" element={<Checkout />} />
       </Routes>

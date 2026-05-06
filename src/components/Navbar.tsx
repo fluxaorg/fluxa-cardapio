@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, BookOpen, Pizza, Megaphone, User, Search, ShoppingBag } from 'lucide-react';
 import { useCompany } from '../context/CompanyContext';
@@ -6,6 +7,7 @@ import './Navbar.css';
 export default function Navbar() {
   const location = useLocation();
   const { company } = useCompany();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const slug = company?.slug || '';
   const basePath = slug ? `/${slug}` : '';
@@ -25,11 +27,11 @@ export default function Navbar() {
         <Link to={`${basePath}/`} className="navbar-logo-block">
           <div className="navbar-logo-inner">
             {company?.logo_url ? (
-              <img src={company.logo_url} alt="Logo" style={{ width: '20px', height: '20px', objectFit: 'cover', borderRadius: '4px' }} />
+              <img src={company.logo_url} alt="Logo" style={{ width: '28px', height: '28px', objectFit: 'cover', borderRadius: '4px' }} />
             ) : (
-              <Pizza size={20} color="white" />
+              <Pizza size={28} color="black" />
             )}
-            <span className="navbar-logo-text">{company?.name || 'Quioski Lanches'}</span>
+            <span className="navbar-logo-text">{company?.name || 'Quiosque Lanches'}</span>
           </div>
           <span className="navbar-logo-sub">by fluxa</span>
         </Link>
@@ -53,10 +55,13 @@ export default function Navbar() {
 
         {/* Right: Actions */}
         <div className="navbar-actions">
-          <button className="navbar-search" aria-label="Search">
+          <div className={`navbar-search-wrapper ${isSearchOpen ? 'open' : ''}`}>
+            <input type="text" placeholder="Buscar..." className="navbar-search-input" />
+          </div>
+          <button className="navbar-search" aria-label="Search" onClick={() => setIsSearchOpen(!isSearchOpen)}>
             <Search size={22} />
           </button>
-          <button className="navbar-cart">
+          <button className="navbar-cart" onClick={() => console.log('Open Cart')}>
             <ShoppingBag size={16} color="white" />
             <span>Carrinho</span>
           </button>

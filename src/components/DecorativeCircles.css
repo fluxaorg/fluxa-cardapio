@@ -41,10 +41,10 @@
 
 .arc-text-container {
   position: absolute;
-  bottom: 240px; 
-  left: 200px;
+  bottom: -150px; 
+  left: 110px;
   z-index: 3;
-  transform: rotate(-15deg);
+  transform: rotate(20deg);
 }
 
 .arc-text {

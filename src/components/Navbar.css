@@ -78,6 +78,37 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  position: relative;
+}
+
+.navbar-search-wrapper {
+  position: absolute;
+  right: 140px; /* offset from cart and search buttons */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  transition: all 0.3s ease;
+}
+
+.navbar-search-wrapper.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.navbar-search-input {
+  border: none;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  color: var(--color-black);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  outline: none;
+  width: 200px;
 }
 
 .navbar-search {
@@ -86,6 +117,9 @@
   align-items: center;
   justify-content: center;
   padding: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .navbar-search:hover {

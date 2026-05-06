@@ -36,8 +36,7 @@ export default function Menu() {
       const { data: cats } = await supabase
         .from('food_categories')
         .select('*')
-        .eq('company_id', company!.id)
-        .order('sort_order', { ascending: true });
+        .eq('company_id', company!.id);
 
       if (cats && cats.length > 0) {
         setCategories(cats);
@@ -47,8 +46,7 @@ export default function Menu() {
       const { data: prods } = await supabase
         .from('food_menu_items')
         .select('*')
-        .eq('company_id', company!.id)
-        .order('name', { ascending: true });
+        .eq('company_id', company!.id);
 
       if (prods) {
         setProducts(prods);
