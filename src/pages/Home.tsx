@@ -21,19 +21,19 @@ export default function Home() {
           <div className="home-bento-grid">
             {/* Top row */}
             <div className="bento-col-left">
-              <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80" alt="Pizza" className="bento-img img-large" />
+              <div className="bento-placeholder img-large" style={{ backgroundColor: '#F0EFEF', borderRadius: '24px', width: '100%', height: '100%' }}></div>
             </div>
             <div className="bento-col-right">
-              <img src="https://images.unsplash.com/photo-1576107232684-1279f3908594?w=400&q=80" alt="Fries" className="bento-img img-small" />
-              <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" alt="Burger" className="bento-img img-small" />
+              <div className="bento-placeholder img-small" style={{ backgroundColor: '#F0EFEF', borderRadius: '24px', width: '100%', height: '100%' }}></div>
+              <div className="bento-placeholder img-small" style={{ backgroundColor: '#F0EFEF', borderRadius: '24px', width: '100%', height: '100%' }}></div>
             </div>
             
             {/* Bottom row */}
             <div className="bento-col-left-bottom">
-              <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400&q=80" alt="Soda" className="bento-img img-med-vert" />
+              <div className="bento-placeholder img-med-vert" style={{ backgroundColor: '#F0EFEF', borderRadius: '24px', width: '100%', height: '100%' }}></div>
             </div>
             <div className="bento-col-right-bottom">
-              <img src="https://images.unsplash.com/photo-1632712852654-e054413b91c8?w=800&q=80" alt="Cheese" className="bento-img img-med-horiz" />
+              <div className="bento-placeholder img-med-horiz" style={{ backgroundColor: '#F0EFEF', borderRadius: '24px', width: '100%', height: '100%' }}></div>
             </div>
           </div>
         </div>

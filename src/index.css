@@ -64,8 +64,6 @@ body {
 .main-section {
   position: relative;
   width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
 }
 
 .bg-white-block {

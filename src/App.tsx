@@ -28,7 +28,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/quioski-lanches" replace />} />
+        <Route path="/" element={<Navigate to="/quiosque" replace />} />
         <Route path="/:slug/*" element={<TenantApp />} />
       </Routes>
     </Router>
