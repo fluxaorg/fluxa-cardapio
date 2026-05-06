@@ -60,7 +60,6 @@ export default function Pizzas() {
   const renderPizzaChart = () => {
     const numSlices = selectedFlavors.length || 1;
     const angleStep = 360 / numSlices;
-    const radius = 100;
 
     return (
       <div className="pizza-visualizer">
