@@ -24,16 +24,13 @@ export default function Home() {
               <div className="bento-badge">PIZZAS</div>
             </div>
 
-            {/* Top Right Cluster: Fries & Burger */}
-            <div className="bento-group-right">
-              <div className="bento-item bento-fries">
-                <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?q=80&w=500" alt="Fries" />
-                <div className="bento-badge">BATATAS</div>
-              </div>
-              <div className="bento-item bento-burger">
-                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500" alt="Lanches" />
-                <div className="bento-badge">LANCHES</div>
-              </div>
+            <div className="bento-item bento-fries">
+              <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?q=80&w=500" alt="Fries" />
+              <div className="bento-badge">BATATAS</div>
+            </div>
+            <div className="bento-item bento-burger">
+              <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500" alt="Lanches" />
+              <div className="bento-badge">LANCHES</div>
             </div>
             
             {/* Bottom Left: Coca-Cola */}
