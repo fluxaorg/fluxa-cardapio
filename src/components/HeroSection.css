@@ -23,7 +23,7 @@
 }
 
 .hero-title-medium {
-  font-size: 36px;
+  font-size: 42px;
   font-weight: 500;
   color: var(--color-black);
   line-height: 1.1;
@@ -36,7 +36,7 @@
 }
 
 .hero-title-giant {
-  font-size: 88px;
+  font-size: 110px;
   font-weight: 900;
   color: var(--color-black);
   line-height: 0.9;
@@ -53,12 +53,12 @@
 }
 
 .hero-subtitle {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 400;
   color: var(--color-text-secondary);
-  max-width: 280px;
+  max-width: 320px;
   line-height: 1.5;
-  margin-top: 16px;
+  margin-top: 20px;
 }
 
 /* Stacked Lanches */

@@ -40,6 +40,8 @@ export default function Menu() {
 
       if (cats && cats.length > 0) {
         setCategories(cats);
+        // Find if there's a 'Pizzas' category to set as default or handle redirect
+        const pizzaCat = cats.find(c => c.name.toLowerCase() === 'pizzas');
         setActiveCategoryId(cats[0].id);
       }
 
@@ -56,7 +58,10 @@ export default function Menu() {
   }, [company?.id]);
 
   const filteredProducts = activeCategoryId 
-    ? products.filter(p => p.category_id === activeCategoryId)
+    ? products.filter(p => {
+        const cat = categories.find(c => c.id === activeCategoryId);
+        return p.category === cat?.name;
+      })
     : products;
 
   return (
@@ -73,7 +78,13 @@ export default function Menu() {
           {categories.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => setActiveCategoryId(cat.id)}
+              onClick={() => {
+                if (cat.name.toLowerCase() === 'pizzas') {
+                  navigate(`${basePath}/pizzas`);
+                } else {
+                  setActiveCategoryId(cat.id);
+                }
+              }}
               className={`category-pill ${cat.id === activeCategoryId ? 'active' : ''}`}
             >
               {cat.name}

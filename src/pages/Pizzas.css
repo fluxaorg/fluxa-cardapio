@@ -1,0 +1,218 @@
+.pizza-builder-content {
+  padding-right: 80px; /* Keep consistent with Profile Bento Grid */
+  display: flex;
+  flex-direction: column;
+}
+
+.size-selection-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.size-card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.size-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.size-info h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-black);
+  margin-bottom: 4px;
+}
+
+.size-info p {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.size-price-action {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.size-price-action .price {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-red);
+}
+
+/* Flavor Selection */
+.flavor-selection-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.flavors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+  overflow-y: auto;
+  padding-bottom: 80px; /* space for footer */
+  max-height: calc(100vh - 250px);
+}
+
+.flavor-card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.flavor-card:hover:not(.disabled) {
+  border-color: var(--color-red-vivid);
+}
+
+.flavor-card.selected {
+  border-color: var(--color-red);
+  background-color: #fff9f9;
+}
+
+.flavor-card.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.flavor-emoji {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: var(--color-bg);
+  border-radius: 12px;
+}
+
+.flavor-info h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-black);
+  margin-bottom: 2px;
+}
+
+.flavor-info p {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  line-height: 1.3;
+}
+
+.selected-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: var(--color-red);
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(196, 28, 59, 0.4);
+}
+
+/* Summary Box */
+.pizza-summary-box {
+  margin-top: 40px;
+  background-color: #F9F9F9;
+  border-radius: var(--radius-card);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: fit-content;
+}
+
+.summary-info .summary-size {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.summary-info .summary-price {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--color-black);
+  margin: 4px 0 12px;
+}
+
+.selected-flavors-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.flavor-tag {
+  background-color: var(--color-black);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.pizza-visualizer {
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+}
+
+.pizza-slice {
+  transition: fill 0.3s ease, opacity 0.3s ease;
+}
+
+/* Footer Action */
+.builder-footer {
+  margin-top: auto;
+  padding: 16px 0;
+  background-color: white;
+  border-top: 1px solid var(--color-border);
+  position: sticky;
+  bottom: 0;
+}
+
+.btn-confirm-pizza {
+  width: 100%;
+  background-color: var(--color-red);
+  color: white;
+  padding: 16px;
+  border-radius: var(--radius-btn);
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-confirm-pizza:hover:not(.disabled) {
+  background-color: var(--color-red-vivid);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(196, 28, 59, 0.3);
+}
+
+.btn-confirm-pizza.disabled {
+  background-color: #CCC;
+  cursor: not-allowed;
+}

@@ -41,16 +41,18 @@
 
 .arc-text-container {
   position: absolute;
-  bottom: -150px; 
-  left: 110px;
-  z-index: 3;
-  transform: rotate(20deg);
+  bottom: -225px; 
+  left: -225px;
+  z-index: 10;
+  transform: rotate(-35deg); 
+  pointer-events: none;
 }
 
 .arc-text {
-  font-family: var(--font-family);
-  font-size: 20px;
-  font-weight: 700;
-  fill: #888888;
-  letter-spacing: 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  fill: #888;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }

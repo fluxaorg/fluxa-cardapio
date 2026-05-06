@@ -40,11 +40,13 @@
 }
 
 .navbar-logo-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
   color: #666;
   font-size: 10px;
   line-height: 1;
   margin-top: 2px;
-  padding-left: 28px; /* align with text depending on logo width */
+  padding-left: 36px; /* slightly increased to align with bigger logo */
 }
 
 .navbar-links {
