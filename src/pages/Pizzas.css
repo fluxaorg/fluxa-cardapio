@@ -199,6 +199,51 @@
   padding-bottom: 0;
 }
 
+/* Contador de sabores */
+.pizza-flavor-counter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  background: rgba(217, 30, 54, 0.06);
+  border-radius: 999px;
+  padding: 10px 20px;
+  align-self: center;
+}
+
+.pfc-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--color-red);
+  background: white;
+  color: var(--color-red);
+  font-size: 20px;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.pfc-btn:hover:not(:disabled) { background: var(--color-red); color: white; }
+.pfc-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.pfc-label {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--color-black);
+  min-width: 90px;
+  text-align: center;
+}
+
+.pfc-hint {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
 .pizza-s2-header {
   display: flex;
   align-items: center;

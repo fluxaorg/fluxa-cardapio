@@ -13,7 +13,6 @@ export default function Home() {
             titleGiant="pedido!"
             subtitle="Escolha seu pedido, e receba em minutos!"
             showUnderline={true}
-            showLanches={true}
           />
         </div>
         

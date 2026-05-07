@@ -13,10 +13,10 @@
 }
 
 .hero-top-label {
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 22px;
+  font-weight: 500;
   color: var(--color-black);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .hero-bullet {

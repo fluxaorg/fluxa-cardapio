@@ -43,11 +43,23 @@ export default function Pizzas() {
   const [step, setStep] = useState(1);
   const [selectedSize, setSelectedSize] = useState<PizzaSize | null>(null);
   const [selectedFlavors, setSelectedFlavors] = useState<Flavor[]>([]);
+  const [desiredFlavorCount, setDesiredFlavorCount] = useState(1);
 
   const handleSizeSelect = (size: PizzaSize) => {
     setSelectedSize(size);
     setSelectedFlavors([]);
+    setDesiredFlavorCount(size.maxFlavors);
     setStep(2);
+  };
+
+  const changeDesiredCount = (delta: number) => {
+    if (!selectedSize) return;
+    const next = Math.max(1, Math.min(selectedSize.maxFlavors, desiredFlavorCount + delta));
+    setDesiredFlavorCount(next);
+    // Remove flavors beyond new count
+    if (selectedFlavors.length > next) {
+      setSelectedFlavors(selectedFlavors.slice(0, next));
+    }
   };
 
   const toggleFlavor = (flavor: Flavor) => {
@@ -56,7 +68,7 @@ export default function Pizzas() {
     if (isSelected) {
       setSelectedFlavors(selectedFlavors.filter((f) => f.id !== flavor.id));
     } else {
-      if (selectedFlavors.length < selectedSize.maxFlavors) {
+      if (selectedFlavors.length < desiredFlavorCount) {
         setSelectedFlavors([...selectedFlavors, flavor]);
       }
     }
@@ -79,7 +91,7 @@ export default function Pizzas() {
   };
 
   const renderPizzaChart = () => {
-    const n = selectedFlavors.length || 1;
+    const n = desiredFlavorCount || 1;
     const cx = 120, cy = 120, R = 102;
 
     return (
@@ -158,30 +170,33 @@ export default function Pizzas() {
         <circle cx={cx} cy={cy} r={R} fill="#E8A870"/>
         <circle cx={cx} cy={cy} r={R} fill="#D94E2F" opacity="0.18"/>
 
-        {/* Slices */}
-        {selectedFlavors.length === 0 ? (
-          <circle cx={cx} cy={cy} r={R} fill="#F5E5D0" opacity="0.6"/>
-        ) : (
-          selectedFlavors.map((flavor, i) => {
-            const angleStep = 360 / n;
-            const startAngle = i * angleStep;
-            const endAngle = (i + 1) * angleStep;
-            const x1 = cx + R * Math.cos((startAngle - 90) * Math.PI / 180);
-            const y1 = cy + R * Math.sin((startAngle - 90) * Math.PI / 180);
-            const x2 = cx + R * Math.cos((endAngle - 90) * Math.PI / 180);
-            const y2 = cy + R * Math.sin((endAngle - 90) * Math.PI / 180);
-            const largeArcFlag = angleStep > 180 ? 1 : 0;
-            const d = `M ${cx} ${cy} L ${x1} ${y1} A ${R} ${R} 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
-            return (
-              <path key={flavor.id} d={d}
-                fill={`url(#pat-${flavor.pattern})`}
-                stroke="#C8852A" strokeWidth="1.5"/>
-            );
-          })
-        )}
+        {/* Slices — sempre n fatias, preenchidas ou vazias */}
+        {Array.from({ length: n }).map((_, i) => {
+          const angleStep = 360 / n;
+          const startAngle = i * angleStep;
+          const endAngle = (i + 1) * angleStep;
+          const x1 = cx + R * Math.cos((startAngle - 90) * Math.PI / 180);
+          const y1 = cy + R * Math.sin((startAngle - 90) * Math.PI / 180);
+          const x2 = cx + R * Math.cos((endAngle - 90) * Math.PI / 180);
+          const y2 = cy + R * Math.sin((endAngle - 90) * Math.PI / 180);
+          const largeArcFlag = angleStep > 180 ? 1 : 0;
+          const flavor = selectedFlavors[i];
+          if (n === 1) {
+            return flavor
+              ? <circle key={i} cx={cx} cy={cy} r={R} fill={`url(#pat-${flavor.pattern})`} stroke="#C8852A" strokeWidth="1.5"/>
+              : <circle key={i} cx={cx} cy={cy} r={R} fill="#F5E5D0" opacity="0.55"/>;
+          }
+          const d = `M ${cx} ${cy} L ${x1.toFixed(1)} ${y1.toFixed(1)} A ${R} ${R} 0 ${largeArcFlag} 1 ${x2.toFixed(1)} ${y2.toFixed(1)} Z`;
+          return (
+            <path key={i} d={d}
+              fill={flavor ? `url(#pat-${flavor.pattern})` : '#F5E5D0'}
+              opacity={flavor ? 1 : 0.55}
+              stroke="#C8852A" strokeWidth="1.5"/>
+          );
+        })}
 
         {/* Dividers */}
-        {n > 1 && selectedFlavors.length > 0 && Array.from({ length: n }).map((_, i) => {
+        {n > 1 && Array.from({ length: n }).map((_, i) => {
           const angle = i * (360 / n);
           const x = cx + R * Math.cos((angle - 90) * Math.PI / 180);
           const y = cy + R * Math.sin((angle - 90) * Math.PI / 180);
@@ -217,6 +232,7 @@ export default function Pizzas() {
         <main className="main-section bg-white-block split-layout">
           <div className="split-left">
             <HeroSection
+              topLabel="Opaaa, Monte sua pizza!"
               titleMedium="monte sua"
               titleGiant="pizza!"
               subtitle="escolha o tamanho perfeito"
@@ -260,6 +276,26 @@ export default function Pizzas() {
           </div>
         </div>
 
+        {/* Contador de sabores */}
+        {selectedSize && selectedSize.maxFlavors > 1 && (
+          <div className="pizza-flavor-counter">
+            <button
+              className="pfc-btn"
+              onClick={() => changeDesiredCount(-1)}
+              disabled={desiredFlavorCount <= 1}
+            >−</button>
+            <span className="pfc-label">
+              {desiredFlavorCount} sabor{desiredFlavorCount > 1 ? 'es' : ''}
+            </span>
+            <button
+              className="pfc-btn"
+              onClick={() => changeDesiredCount(1)}
+              disabled={desiredFlavorCount >= (selectedSize?.maxFlavors || 1)}
+            >+</button>
+            <span className="pfc-hint">fatias maiores com menos sabores</span>
+          </div>
+        )}
+
         {/* Chart — always visible, centered */}
         <div className="pizza-s2-chart-area">
           <div className="pizza-visualizer-container">
@@ -267,8 +303,8 @@ export default function Pizzas() {
           </div>
           <p className="pizza-s2-caption">
             {selectedFlavors.length === 0
-              ? `Escolha até ${selectedSize?.maxFlavors} sabor${selectedSize?.maxFlavors === 1 ? '' : 'es'}`
-              : `${selectedFlavors.length} de ${selectedSize?.maxFlavors} sabor${selectedSize?.maxFlavors === 1 ? '' : 'es'} escolhido${selectedFlavors.length > 1 ? 's' : ''}`
+              ? `Escolha ${desiredFlavorCount} sabor${desiredFlavorCount > 1 ? 'es' : ''}`
+              : `${selectedFlavors.length} de ${desiredFlavorCount} sabor${desiredFlavorCount > 1 ? 'es' : ''} escolhido${selectedFlavors.length > 1 ? 's' : ''}`
             }
           </p>
         </div>
@@ -277,7 +313,7 @@ export default function Pizzas() {
         <div className="flavors-selection-grid pizza-s2-flavors">
           {FLAVORS.map((flavor) => {
             const isSelected = !!selectedFlavors.find((f) => f.id === flavor.id);
-            const isDisabled = !isSelected && selectedFlavors.length >= (selectedSize?.maxFlavors || 0);
+            const isDisabled = !isSelected && selectedFlavors.length >= desiredFlavorCount;
             return (
               <div
                 key={flavor.id}
