@@ -1,19 +1,40 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { Filter, Plus, Minus } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useCompany } from '../context/CompanyContext';
 import { useCart } from '../context/CartContext';
 import './ProductDetail.css';
 
+const INGREDIENT_EMOJI: Record<string, string> = {
+  tomate: '🍅', cebola: '🧅', pimenta: '🌶️', alface: '🥬',
+  queijo: '🧀', ovo: '🥚', bacon: '🥓', frango: '🍗',
+  presunto: '🍖', pepino: '🥒', milho: '🌽', palmito: '🌿',
+  catupiry: '🫙', mussarela: '🧀', manjericão: '🌱', maionese: '🫙',
+  mostarda: '🌿', calabresa: '🌭', linguiça: '🌭', azeitona: '🫒',
+  ervilha: '🌱', brócolis: '🥦', champignon: '🍄', pão: '🍞',
+};
+
+function parseIngredients(desc: string | null | undefined) {
+  if (!desc) return [];
+  const lower = desc.toLowerCase();
+  return Object.entries(INGREDIENT_EMOJI)
+    .filter(([name]) => lower.includes(name))
+    .map(([name, emoji]) => ({ id: name, emoji, label: name.charAt(0).toUpperCase() + name.slice(1) }));
+}
+
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { company } = useCompany();
   const { addItem, items, total, setIsOpen } = useCart();
 
   const slug = company?.slug || '';
   const basePath = slug ? `/${slug}` : '';
+
+  // Preço promocional vindo da URL (?promoPrice=X)
+  const urlPromoPrice = searchParams.get('promoPrice') ? parseFloat(searchParams.get('promoPrice')!) : null;
 
   const [product, setProduct] = useState<any>(null);
   const [suggestions, setSuggestions] = useState<any[]>([]);
@@ -66,14 +87,13 @@ export default function ProductDetail() {
 
   const handleAdd = () => {
     if (!product) return;
-    const effectivePrice =
-      product.promo_price && product.promo_price < product.price
-        ? product.promo_price
-        : product.price;
+    const price = urlPromoPrice ??
+      (product.promo_price && product.promo_price < product.price
+        ? product.promo_price : product.price);
     addItem({
       productId: product.id,
       name: product.name,
-      price: effectivePrice,
+      price,
       qty,
       image_url: product.image_url,
       description: product.description,
@@ -90,10 +110,14 @@ export default function ProductDetail() {
   if (loading) return <div className="page-loading">Carregando...</div>;
   if (!product) return <div className="page-loading">Produto não encontrado.</div>;
 
+  // Prioridade: promoPrice da URL > promo_price do produto > preço normal
   const effectivePrice =
-    product.promo_price && product.promo_price < product.price
+    urlPromoPrice ??
+    (product.promo_price && product.promo_price < product.price
       ? product.promo_price
-      : product.price;
+      : product.price);
+
+  const ingredients = parseIngredients(product.description);
 
   return (
     <div className="page-container detail-layout">
@@ -148,24 +172,23 @@ export default function ProductDetail() {
               ))}
             </div>
 
-            <div className="remove-section">
-              <span className="remove-label">Deseja remover algo?</span>
-              <div className="remove-grid">
-                {[
-                  { id: 'tomate', emoji: '🍅' },
-                  { id: 'cebola', emoji: '🧅' },
-                  { id: 'pimenta', emoji: '🌶️' },
-                ].map((ing) => (
-                  <button
-                    key={ing.id}
-                    className={`remove-card ${removedItems.includes(ing.id) ? 'removed' : ''}`}
-                    onClick={() => toggleItem(ing.id)}
-                  >
-                    <span className="remove-emoji">{ing.emoji}</span>
-                  </button>
-                ))}
+            {ingredients.length > 0 && (
+              <div className="remove-section">
+                <span className="remove-label">Deseja remover algo?</span>
+                <div className="remove-grid">
+                  {ingredients.map((ing) => (
+                    <button
+                      key={ing.id}
+                      className={`remove-card ${removedItems.includes(ing.id) ? 'removed' : ''}`}
+                      onClick={() => toggleItem(ing.id)}
+                      title={ing.label}
+                    >
+                      <span className="remove-emoji">{ing.emoji}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="qty-action-row">
               <div className="qty-controls">
