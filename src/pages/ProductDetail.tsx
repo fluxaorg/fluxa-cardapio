@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Filter, Plus, Minus, ArrowLeft } from 'lucide-react';
+import { Filter, Plus, Minus } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useCompany } from '../context/CompanyContext';
 import { useCart } from '../context/CartContext';
