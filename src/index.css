@@ -53,7 +53,6 @@ body {
   color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
 }
 
 /* Utilities */
@@ -70,15 +69,40 @@ body {
 .bg-white-block {
   background-color: var(--color-surface);
   border-radius: var(--radius-section);
-  height: calc(100vh - 107px);
   min-height: calc(100vh - 107px);
-  max-height: calc(100vh - 107px);
   margin-bottom: 5px;
   padding: 32px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.03);
   display: flex;
   flex-direction: column;
+  position: relative;
   overflow: hidden;
+}
+
+.split-layout {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  align-items: stretch;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.split-left {
+  flex: 0 0 40%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 8px;
+}
+
+.split-right {
+  flex: 0 0 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Button Resets */
@@ -145,5 +169,13 @@ input::placeholder {
   
   .text-hero-giant {
     font-size: 64px;
+  }
+
+  .split-layout {
+    flex-direction: column;
+  }
+  
+  .split-left, .split-right {
+    flex: 1 1 100%;
   }
 }

@@ -1,27 +1,4 @@
-.split-layout {
-  display: flex;
-  gap: 32px;
-  align-items: stretch;
-  flex: 1;
-  min-height: 0;
-  width: 100%;
-}
 
-.split-left {
-  flex: 0 0 40%;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding-top: 8px;
-}
-
-.split-right {
-  flex: 0 0 60%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 .home-bento-grid {
   display: grid;
@@ -100,13 +77,6 @@
 }
 
 @media (max-width: 768px) {
-  .split-layout {
-    flex-direction: column;
-  }
-  
-  .split-left, .split-right {
-    flex: 1 1 100%;
-  }
 
   .home-bento-grid {
     grid-template-columns: 1fr;
