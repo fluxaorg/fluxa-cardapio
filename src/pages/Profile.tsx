@@ -1,14 +1,20 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import { useAuth } from '../context/AuthContext';
-import { Mail, Lock, ArrowLeft } from 'lucide-react';
+import { useCompany } from '../context/CompanyContext';
+import { ArrowLeft } from 'lucide-react';
 import './Profile.css';
 
 type ProfileTab = 'home' | 'enderecos' | 'recentes' | 'cupons' | 'pedidos';
 
 export default function Profile() {
-  const { user, signInWithGoogle, signOut, loading } = useAuth();
+  const { user, signOut, loading } = useAuth();
+  const { company } = useCompany();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<ProfileTab>('home');
+
+  const basePath = company?.slug ? `/${company.slug}` : '';
 
   if (loading) {
     return <div className="page-loading">Carregando...</div>;
@@ -19,10 +25,11 @@ export default function Profile() {
       <div className="page-container">
         <main className="main-section bg-white-block split-layout">
           <div className="split-left">
-            <HeroSection 
-              titleMedium="faaala" 
-              titleGiant="fulano!" 
-              subtitle="faz teu login aí, bora pedir!" 
+            <HeroSection
+              titleMedium="faaala"
+              titleGiant="fulano!"
+              subtitle="faz teu login aí, bora pedir!"
+              showEyes={true}
             />
           </div>
           <div className="split-right login-panel">
@@ -30,20 +37,10 @@ export default function Profile() {
               <div className="f-logo-circle">
                 <span className="f-letter">f</span>
               </div>
-              
+
               <div className="login-form-section">
                 <h2 className="login-title">Entrar</h2>
                 <p className="login-subtitle">é bom te ver de volta!</p>
-                <div className="login-input-group">
-                  <div className="login-input-wrapper">
-                    <Mail size={18} />
-                    <input type="email" placeholder="Email" />
-                  </div>
-                  <div className="login-input-wrapper">
-                    <Lock size={18} />
-                    <input type="password" placeholder="Senha" />
-                  </div>
-                </div>
               </div>
 
               <div className="login-divider"></div>
@@ -53,11 +50,11 @@ export default function Profile() {
                 <p className="login-subtitle">nesse caso... Prazer!</p>
               </div>
 
-              <button className="btn-bora-pedir" onClick={signInWithGoogle}>
-                Entrar com Google
+              <button className="btn-bora-pedir" onClick={() => navigate(`${basePath}/login`)}>
+                Booooooora pedir!
               </button>
               <p className="login-hint-text">
-                O Google é a forma mais rápida de pedir!
+                Entre ou cadastre-se para fazer seu pedido!
               </p>
             </div>
           </div>
@@ -94,7 +91,7 @@ export default function Profile() {
             showEyes={activeTab === 'home'}
           />
         </div>
-        
+
         <div className="split-right profile-right-panel">
           {activeTab !== 'home' && (
             <button className="back-btn" onClick={() => setActiveTab('home')}>
@@ -123,7 +120,7 @@ export default function Profile() {
                     <span className="recentes-hint">peça dnv...</span>
                   </div>
                 </div>
-                
+
                 <div className="bento-card card-logout" onClick={signOut}>
                   <div className="card-logout-content">
                     <span className="logout-title">Logout</span>

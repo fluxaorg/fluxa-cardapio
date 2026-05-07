@@ -15,10 +15,10 @@
 .home-bento-grid {
   display: grid;
   grid-template-columns: 240px 1fr 1fr;
-  grid-template-rows: 320px 400px;
+  grid-template-rows: 320px 240px;
   gap: 16px;
   width: 100%;
-  padding-right: 80px;
+  padding-right: 40px;
 }
 
 .bento-item {
@@ -62,14 +62,14 @@
 .bento-fries {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
-  height: 240px;
+  height: 200px;
   align-self: start;
 }
 
 .bento-burger {
   grid-column: 3 / 4;
   grid-row: 1 / 2;
-  height: 240px;
+  height: 200px;
   align-self: start;
 }
 
@@ -81,6 +81,7 @@
 .bento-sticks {
   grid-column: 2 / 4;
   grid-row: 2 / 3;
+  margin-top: 0;
 }
 
 @media (max-width: 1200px) {

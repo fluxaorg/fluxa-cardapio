@@ -135,6 +135,12 @@
   gap: 8px;
 }
 
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .qty-btn {
   width: 44px;
   height: 44px;

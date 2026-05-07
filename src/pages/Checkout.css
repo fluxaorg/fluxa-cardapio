@@ -25,3 +25,52 @@
   font-weight: 700;
   color: var(--color-black);
 }
+
+/* Payment methods list */
+.payment-methods-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.payment-method-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  background: #f7f7f7;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-black);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.payment-method-btn:hover {
+  background: #f0f0f0;
+}
+
+.payment-method-btn.selected {
+  background: #fff5f5;
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+
+.pm-icon {
+  font-size: 20px;
+}
+
+.pm-label {
+  flex: 1;
+}
+
+.pm-check {
+  color: var(--color-red);
+  flex-shrink: 0;
+}

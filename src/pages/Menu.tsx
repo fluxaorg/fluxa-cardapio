@@ -119,7 +119,7 @@ export default function Menu() {
               onClick={() => navigate(`${basePath}/produto/${p.id}`)}
             >
               <img
-                src={p.image_url || 'https://via.placeholder.com/200'}
+                src={p.image_url || ''} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                 alt={p.name}
                 className="product-card-img"
               />

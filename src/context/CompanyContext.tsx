@@ -42,10 +42,12 @@ export const CompanyProvider: React.FC<{ children: React.ReactNode }> = ({ child
         .from('food_companies')
         .select('*')
         .eq('slug', slug)
-        .single();
-        
+        .maybeSingle();
+
       if (error) {
         console.error('Error fetching company:', error);
+        setError('Restaurante não encontrado');
+      } else if (!data) {
         setError('Restaurante não encontrado');
       } else {
         setCompany(data);

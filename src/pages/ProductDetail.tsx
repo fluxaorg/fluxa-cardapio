@@ -179,7 +179,7 @@ export default function ProductDetail() {
                   style={{ cursor: 'pointer' }}
                 >
                   <img
-                    src={s.image_url || 'https://via.placeholder.com/50'}
+                    src={s.image_url || ''} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                     alt={s.name}
                   />
                   <div className="related-info">
