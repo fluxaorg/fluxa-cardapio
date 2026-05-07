@@ -2,10 +2,11 @@
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 500px;
-  height: 500px;
+  width: 480px;
+  height: 480px;
   pointer-events: none;
   z-index: 5;
+  overflow: visible;
 }
 
 .circle {
@@ -14,37 +15,36 @@
 }
 
 .circle-1 {
-  width: 450px;
-  height: 450px;
-  background-color: var(--color-circle-black);
-  bottom: -150px;
-  left: -180px;
+  width: 420px;
+  height: 420px;
+  background-color: #1A1A1A;
+  bottom: -140px;
+  left: -160px;
 }
 
 .circle-2 {
-  width: 350px;
-  height: 350px;
-  background-color: var(--color-circle-black);
-  bottom: -80px;
-  left: 20px;
+  width: 310px;
+  height: 310px;
+  background-color: #1A1A1A;
+  bottom: -60px;
+  left: 15px;
   z-index: 1;
 }
 
 .circle-3 {
-  width: 320px;
-  height: 320px;
-  background-color: var(--color-circle-red);
-  bottom: -120px;
-  left: 120px;
+  width: 280px;
+  height: 280px;
+  background-color: #C41C3B;
+  bottom: -100px;
+  left: 100px;
   z-index: 2;
 }
 
 .arc-text-container {
   position: absolute;
-  bottom: -160px; 
-  left: 90px;
+  bottom: 30px;
+  left: 80px;
   z-index: 10;
-  transform: rotate(50deg); /* Fine-tuned to avoid overlap with black circle */
   pointer-events: none;
 }
 
@@ -52,7 +52,7 @@
   font-family: 'DM Sans', sans-serif;
   font-size: 11px;
   font-weight: 700;
-  fill: #888;
-  letter-spacing: 0.3em;
+  fill: #888888;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
 }

@@ -1,9 +1,10 @@
 .hero-section {
   height: 100%;
-  min-height: 500px;
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  overflow: visible;
 }
 
 .hero-content {
@@ -23,29 +24,31 @@
 }
 
 .hero-title-medium {
-  font-size: 42px;
+  font-size: 40px;
   font-weight: 500;
   color: var(--color-black);
-  line-height: 1.1;
+  line-height: 1.0;
+  margin: 0;
 }
 
 .hero-giant-wrapper {
   position: relative;
   display: inline-block;
-  margin-top: -4px;
+  margin-top: 0;
 }
 
 .hero-title-giant {
-  font-size: 110px;
+  font-size: 100px;
   font-weight: 900;
   color: var(--color-black);
-  line-height: 0.9;
-  letter-spacing: -0.02em;
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  margin: 0;
 }
 
 .hero-underline {
   position: absolute;
-  bottom: -10px;
+  bottom: -12px;
   left: 0;
   width: 100%;
   height: 20px;
@@ -53,45 +56,26 @@
 }
 
 .hero-subtitle {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   color: var(--color-text-secondary);
-  max-width: 320px;
+  max-width: 300px;
   line-height: 1.5;
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
-/* Stacked Lanches */
-.stacked-lanches {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  color: var(--color-black);
-  font-style: italic;
-  pointer-events: none;
-}
-
-.l-1 { font-size: 24px; opacity: 0.1; font-weight: 700; }
-.l-2 { font-size: 28px; opacity: 0.2; font-weight: 700; }
-.l-3 { font-size: 32px; opacity: 0.7; font-weight: 800; }
-.l-4 { font-size: 28px; opacity: 0.2; font-weight: 700; }
-.l-5 { font-size: 24px; opacity: 0.1; font-weight: 700; }
-
-/* Eyes */
+/* Eyes character */
 .hero-eyes {
   display: inline-flex;
   align-items: flex-end;
   position: absolute;
-  right: -60px;
-  bottom: 15px;
+  right: -58px;
+  bottom: 12px;
 }
 
 .eye-circle-large {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   background-color: var(--color-black);
   border-radius: 50%;
   display: flex;
@@ -102,24 +86,37 @@
 }
 
 .eye-circle-small {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   background-color: var(--color-black);
   border-radius: 50%;
-  margin-left: -8px;
-  margin-bottom: -4px;
+  margin-left: -10px;
+  align-self: flex-end;
   z-index: 1;
 }
 
+/* Stacked LANCHES (Home only) */
+.stacked-lanches {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: var(--color-black);
+  pointer-events: none;
+  font-style: normal;
+}
+
+.l-1 { font-size: 11px; opacity: 0.10; font-weight: 300; }
+.l-2 { font-size: 14px; opacity: 0.18; font-weight: 400; }
+.l-3 { font-size: 18px; opacity: 0.45; font-weight: 700; }
+.l-4 { font-size: 14px; opacity: 0.18; font-weight: 400; }
+.l-5 { font-size: 11px; opacity: 0.10; font-weight: 300; }
+
 @media (max-width: 768px) {
-  .hero-title-giant {
-    font-size: 64px;
-  }
-  .hero-eyes {
-    right: -40px;
-    bottom: 10px;
-  }
-  .stacked-lanches {
-    display: none; /* Hide on mobile to save space */
-  }
+  .hero-title-giant { font-size: 64px; }
+  .hero-title-medium { font-size: 28px; }
+  .hero-eyes { right: -40px; bottom: 8px; }
+  .stacked-lanches { display: none; }
 }

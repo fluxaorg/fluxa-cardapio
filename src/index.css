@@ -70,6 +70,7 @@ body {
 .bg-white-block {
   background-color: var(--color-surface);
   border-radius: var(--radius-section);
+  height: calc(100vh - 107px);
   min-height: calc(100vh - 107px);
   max-height: calc(100vh - 107px);
   margin-bottom: 5px;
