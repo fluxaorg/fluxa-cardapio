@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Filter, Plus } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useCompany } from '../context/CompanyContext';
 import { supabase } from '../lib/supabase';
 import './Menu.css';
@@ -21,9 +21,12 @@ type Product = {
 
 export default function Menu() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { company } = useCompany();
   const slug = company?.slug || '';
   const basePath = slug ? `/${slug}` : '';
+
+  const searchQuery = searchParams.get('q') || '';
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
@@ -55,55 +58,79 @@ export default function Menu() {
     fetchData();
   }, [company?.id]);
 
-  const filteredProducts = activeCategoryId 
-    ? products.filter(p => {
-        const cat = categories.find(c => c.id === activeCategoryId);
-        return p.category === cat?.name;
-      })
-    : products;
+  // Limpa filtro de categoria ao buscar
+  useEffect(() => {
+    if (searchQuery && categories.length > 0) {
+      setActiveCategoryId(null);
+    }
+  }, [searchQuery]);
+
+  const filteredProducts = products.filter((p) => {
+    const matchesSearch = searchQuery
+      ? p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (p.description || '').toLowerCase().includes(searchQuery.toLowerCase())
+      : true;
+
+    const matchesCategory =
+      !searchQuery && activeCategoryId
+        ? p.category === categories.find((c) => c.id === activeCategoryId)?.name
+        : true;
+
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <div className="page-container">
       <main className="main-section bg-white-block menu-section">
         <div className="menu-header">
-          <h1 className="menu-title">Categorias</h1>
+          <h1 className="menu-title">
+            {searchQuery ? `Resultados para "${searchQuery}"` : 'Categorias'}
+          </h1>
           <button className="menu-filter-btn">
             <Filter size={22} color="var(--color-red)" />
           </button>
         </div>
 
-        <div className="menu-categories">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => {
-                if (cat.name.toLowerCase() === 'pizzas') {
-                  navigate(`${basePath}/pizzas`);
-                } else {
-                  setActiveCategoryId(cat.id);
-                }
-              }}
-              className={`category-pill ${cat.id === activeCategoryId ? 'active' : ''}`}
-            >
-              {cat.name}
-            </button>
-          ))}
-        </div>
+        {!searchQuery && (
+          <div className="menu-categories">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => {
+                  if (cat.name.toLowerCase() === 'pizzas') {
+                    navigate(`${basePath}/pizzas`);
+                  } else {
+                    setActiveCategoryId(cat.id);
+                  }
+                }}
+                className={`category-pill ${cat.id === activeCategoryId ? 'active' : ''}`}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
+        )}
 
         <div className="menu-grid">
           {filteredProducts.map((p) => (
-            <div 
-              key={p.id} 
-              className="product-card" 
+            <div
+              key={p.id}
+              className="product-card"
               onClick={() => navigate(`${basePath}/produto/${p.id}`)}
             >
-              <img src={p.image_url || 'https://via.placeholder.com/200'} alt={p.name} className="product-card-img" />
+              <img
+                src={p.image_url || 'https://via.placeholder.com/200'}
+                alt={p.name}
+                className="product-card-img"
+              />
               <div className="product-card-info">
                 <h3 className="product-card-name">{p.name}</h3>
                 <p className="product-card-desc">{p.description}</p>
-                <span className="product-card-price">a partir de R$ {p.price?.toFixed(2)}</span>
+                <span className="product-card-price">
+                  a partir de R$ {p.price?.toFixed(2)}
+                </span>
               </div>
-              <button 
+              <button
                 className="product-card-add"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -115,7 +142,11 @@ export default function Menu() {
             </div>
           ))}
           {filteredProducts.length === 0 && (
-            <p style={{ color: '#888', gridColumn: '1 / -1', textAlign: 'center', padding: '40px' }}>Nenhum produto nesta categoria.</p>
+            <p style={{ color: '#888', gridColumn: '1 / -1', textAlign: 'center', padding: '40px' }}>
+              {searchQuery
+                ? `Nenhum produto encontrado para "${searchQuery}".`
+                : 'Nenhum produto nesta categoria.'}
+            </p>
           )}
         </div>
       </main>

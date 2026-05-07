@@ -1,11 +1,21 @@
-import { X, Plus, Minus, Trash2 } from 'lucide-react';
+import { X, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useCompany } from '../context/CompanyContext';
 import './CartSidebar.css';
 
 export default function CartSidebar() {
   const { items, isOpen, setIsOpen, updateQty, removeItem, total } = useCart();
+  const { company } = useCompany();
+  const navigate = useNavigate();
+  const basePath = company?.slug ? `/${company.slug}` : '';
 
   if (!isOpen) return null;
+
+  const handleConfirm = () => {
+    setIsOpen(false);
+    navigate(`${basePath}/checkout`);
+  };
 
   return (
     <div className="cart-overlay" onClick={() => setIsOpen(false)}>
@@ -26,10 +36,14 @@ export default function CartSidebar() {
           ) : (
             items.map((item) => (
               <div key={item.id} className="cart-item">
-                <img src={item.image_url} alt={item.name} className="cart-item-img" />
+                {item.image_url ? (
+                  <img src={item.image_url} alt={item.name} className="cart-item-img" />
+                ) : (
+                  <div className="cart-item-img" style={{ background: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px' }}>🍴</div>
+                )}
                 <div className="cart-item-details">
                   <span className="cart-item-name">{item.name}</span>
-                  <span className="cart-item-price">R$ {item.price.toFixed(2)}</span>
+                  <span className="cart-item-price">R$ {(item.price * item.qty).toFixed(2)}</span>
                   <div className="cart-item-actions">
                     <button onClick={() => updateQty(item.id, item.qty - 1)}><Minus size={14} /></button>
                     <span>{item.qty}</span>
@@ -50,12 +64,12 @@ export default function CartSidebar() {
               <span>Total</span>
               <span>R$ {total.toFixed(2)}</span>
             </div>
-            <button className="confirm-btn">Confirmar Pedido</button>
+            <button className="confirm-btn" onClick={handleConfirm}>
+              Confirmar Pedido
+            </button>
           </div>
         )}
       </aside>
     </div>
   );
 }
-
-import { ShoppingBag } from 'lucide-react';

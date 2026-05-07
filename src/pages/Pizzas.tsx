@@ -16,26 +16,26 @@ interface Flavor {
   name: string;
   description: string;
   color: string;
-  pattern?: string;
+  pattern: string;
 }
 
 const PIZZA_SIZES: PizzaSize[] = [
-  { id: 'broto', name: 'Pizza Broto', price: 46, maxFlavors: 1 },
-  { id: 'pequena', name: 'Pizza Pequena', price: 61, maxFlavors: 2 },
-  { id: 'media', name: 'Pizza Média', price: 75, maxFlavors: 3 },
-  { id: 'grande', name: 'Pizza Grande', price: 85, maxFlavors: 4 },
-  { id: 'gigante', name: 'PIZZA GIGANTE', price: 105, maxFlavors: 4 },
+  { id: 'broto',    name: 'Pizza Broto',   price: 46,  maxFlavors: 1 },
+  { id: 'pequena',  name: 'Pizza Pequena', price: 61,  maxFlavors: 2 },
+  { id: 'media',    name: 'Pizza Média',   price: 75,  maxFlavors: 3 },
+  { id: 'grande',   name: 'Pizza Grande',  price: 85,  maxFlavors: 4 },
+  { id: 'gigante',  name: 'PIZZA GIGANTE', price: 105, maxFlavors: 4 },
 ];
 
 const FLAVORS: Flavor[] = [
-  { id: 'calabresa', name: 'Calabresa', description: 'Molho de tomate, mussarela, calabresa e cebola.', color: '#C41C3B', pattern: 'calabresa' },
-  { id: 'frango', name: 'Frango Catupiry', description: 'Molho de tomate, mussarela, frango desfiado e catupiry.', color: '#F2D06B', pattern: 'frango' },
-  { id: 'margherita', name: 'Margherita', description: 'Molho de tomate, mussarela, manjericão fresco e tomate.', color: '#4CAF50', pattern: 'margherita' },
-  { id: '4queijos', name: '4 Queijos', description: 'Mussarela, catupiry, provolone e parmesão.', color: '#FFD700', pattern: 'cheese' },
-  { id: 'portuguesa', name: 'Portuguesa', description: 'Mussarela, presunto, ovos, cebola, ervilha e azeitona.', color: '#FFA500', pattern: 'portuguesa' },
-  { id: 'bacon', name: 'Bacon', description: 'Mussarela, bacon crocante e cebola.', color: '#8B4513', pattern: 'bacon' },
-  { id: 'pepperoni', name: 'Pepperoni', description: 'Mussarela, fatias de pepperoni e orégano.', color: '#FF0000', pattern: 'pepperoni' },
-  { id: 'vegetariana', name: 'Vegetariana', description: 'Brócolis, milho, ervilha e palmito.', color: '#228B22', pattern: 'vegetariana' },
+  { id: 'calabresa',   name: 'Calabresa',        description: 'Molho de tomate, mussarela, calabresa e cebola.',            color: '#B22222', pattern: 'calabresa'   },
+  { id: 'frango',      name: 'Frango Catupiry',   description: 'Molho de tomate, mussarela, frango desfiado e catupiry.',    color: '#D4A017', pattern: 'frango'      },
+  { id: 'margherita',  name: 'Margherita',        description: 'Molho de tomate, mussarela, manjericão fresco e tomate.',    color: '#4CAF50', pattern: 'margherita'  },
+  { id: '4queijos',    name: '4 Queijos',         description: 'Mussarela, catupiry, provolone e parmesão.',                color: '#FFD700', pattern: 'queijos'     },
+  { id: 'portuguesa',  name: 'Portuguesa',        description: 'Mussarela, presunto, ovos, cebola, ervilha e azeitona.',    color: '#FF8C00', pattern: 'portuguesa'  },
+  { id: 'bacon',       name: 'Bacon',             description: 'Mussarela, bacon crocante e cebola.',                       color: '#8B4513', pattern: 'bacon'       },
+  { id: 'pepperoni',   name: 'Pepperoni',         description: 'Mussarela, fatias de pepperoni e orégano.',                 color: '#CC2200', pattern: 'pepperoni'  },
+  { id: 'vegetariana', name: 'Vegetariana',       description: 'Brócolis, milho, ervilha e palmito.',                       color: '#2E8B57', pattern: 'vegetariana' },
 ];
 
 export default function Pizzas() {
@@ -46,15 +46,15 @@ export default function Pizzas() {
 
   const handleSizeSelect = (size: PizzaSize) => {
     setSelectedSize(size);
+    setSelectedFlavors([]);
     setStep(2);
   };
 
   const toggleFlavor = (flavor: Flavor) => {
     if (!selectedSize) return;
-
-    const isSelected = selectedFlavors.find(f => f.id === flavor.id);
+    const isSelected = selectedFlavors.find((f) => f.id === flavor.id);
     if (isSelected) {
-      setSelectedFlavors(selectedFlavors.filter(f => f.id !== flavor.id));
+      setSelectedFlavors(selectedFlavors.filter((f) => f.id !== flavor.id));
     } else {
       if (selectedFlavors.length < selectedSize.maxFlavors) {
         setSelectedFlavors([...selectedFlavors, flavor]);
@@ -64,17 +64,15 @@ export default function Pizzas() {
 
   const handleAddCart = () => {
     if (!selectedSize || selectedFlavors.length === 0) return;
-
     addItem({
       productId: `pizza-${selectedSize.id}`,
-      name: `${selectedSize.name} (${selectedFlavors.map(f => f.name).join(' / ')})`,
+      name: `${selectedSize.name} (${selectedFlavors.map((f) => f.name).join(' / ')})`,
       price: selectedSize.price,
       qty: 1,
-      image_url: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=200&q=80',
-      description: selectedFlavors.map(f => f.name).join(', '),
-      options: { size: selectedSize.id, flavors: selectedFlavors.map(f => f.id) }
+      image_url: '',
+      description: selectedFlavors.map((f) => f.name).join(', '),
+      options: { size: selectedSize.id, flavors: selectedFlavors.map((f) => f.id) },
     } as any);
-
     setStep(1);
     setSelectedFlavors([]);
     setSelectedSize(null);
@@ -82,67 +80,168 @@ export default function Pizzas() {
 
   const renderPizzaChart = () => {
     const numSlices = selectedFlavors.length || 1;
-    const angleStep = 360 / numSlices;
+    const cx = 120, cy = 120, R = 102;
 
     return (
       <div className="pizza-visualizer-container">
-        <svg viewBox="0 0 240 240" width="220" height="220" className="pizza-svg">
+        <svg viewBox="0 0 240 240" width="240" height="240" className="pizza-svg">
           <defs>
-            <pattern id="pattern-calabresa" patternUnits="userSpaceOnUse" width="40" height="40">
-              <circle cx="20" cy="20" r="18" fill="#E04A4A" />
-              <circle cx="20" cy="20" r="12" fill="#C41C3B" />
+            {/* Calabresa: rodelas vermelhas com borda escura */}
+            <pattern id="pat-calabresa" patternUnits="userSpaceOnUse" width="36" height="36">
+              <rect width="36" height="36" fill="#C0392B" opacity="0.15"/>
+              <circle cx="18" cy="18" r="11" fill="#8B0000" opacity="0.9"/>
+              <circle cx="18" cy="18" r="8"  fill="#B22222"/>
+              <circle cx="18" cy="18" r="4"  fill="#7B0000" opacity="0.6"/>
+              <circle cx="22" cy="14" r="1.5" fill="#FF6B6B" opacity="0.7"/>
             </pattern>
-            <pattern id="pattern-frango" patternUnits="userSpaceOnUse" width="30" height="30">
-              <path d="M5,5 L25,5 L15,25 Z" fill="#F2D06B" />
+            {/* Frango: pedaços amarelados irregulares */}
+            <pattern id="pat-frango" patternUnits="userSpaceOnUse" width="34" height="34">
+              <rect width="34" height="34" fill="#D4A017" opacity="0.18"/>
+              <ellipse cx="17" cy="17" rx="10" ry="7"  fill="#F0C040" opacity="0.9" transform="rotate(25,17,17)"/>
+              <ellipse cx="10" cy="10" rx="5"  ry="3.5" fill="#E8B830" opacity="0.7" transform="rotate(-15,10,10)"/>
+              <ellipse cx="25" cy="24" rx="4"  ry="3"   fill="#F5D060" opacity="0.6" transform="rotate(10,25,24)"/>
             </pattern>
-            <pattern id="pattern-margherita" patternUnits="userSpaceOnUse" width="50" height="50">
-              <circle cx="25" cy="25" r="12" fill="#E63946" />
-              <circle cx="10" cy="10" r="5" fill="#4CAF50" />
+            {/* Margherita: tomates vermelhos + folhas verdes */}
+            <pattern id="pat-margherita" patternUnits="userSpaceOnUse" width="40" height="40">
+              <rect width="40" height="40" fill="#E8F5E9" opacity="0.2"/>
+              <circle cx="20" cy="20" r="10" fill="#E53935"/>
+              <circle cx="20" cy="20" r="7"  fill="#C62828"/>
+              <line x1="14" y1="20" x2="26" y2="20" stroke="#FF8A80" strokeWidth="1" opacity="0.5"/>
+              <line x1="20" y1="14" x2="20" y2="26" stroke="#FF8A80" strokeWidth="1" opacity="0.5"/>
+              <ellipse cx="8"  cy="8"  rx="5" ry="3" fill="#388E3C" transform="rotate(-30,8,8)"/>
+              <ellipse cx="32" cy="32" rx="5" ry="3" fill="#43A047" transform="rotate(20,32,32)"/>
             </pattern>
-            <pattern id="pattern-pepperoni" patternUnits="userSpaceOnUse" width="40" height="40">
-              <circle cx="20" cy="20" r="15" fill="#FF4D4D" />
-              <circle cx="20" cy="20" r="13" fill="#D63031" />
+            {/* 4 Queijos: manchas amarelo-douradas derretidas */}
+            <pattern id="pat-queijos" patternUnits="userSpaceOnUse" width="38" height="38">
+              <rect width="38" height="38" fill="#FFF176" opacity="0.3"/>
+              <ellipse cx="19" cy="19" rx="12" ry="9"  fill="#FFD600" opacity="0.7" transform="rotate(15,19,19)"/>
+              <ellipse cx="10" cy="28" rx="7"  ry="5"  fill="#FFC107" opacity="0.6" transform="rotate(-10,10,28)"/>
+              <ellipse cx="28" cy="10" rx="6"  ry="4"  fill="#FFEE58" opacity="0.6" transform="rotate(30,28,10)"/>
+            </pattern>
+            {/* Portuguesa: azeitonas + ervilhas + presunto */}
+            <pattern id="pat-portuguesa" patternUnits="userSpaceOnUse" width="38" height="38">
+              <rect width="38" height="38" fill="#FFA500" opacity="0.12"/>
+              <circle cx="19" cy="19" r="5" fill="#2D2D2D"/>
+              <circle cx="19" cy="19" r="2" fill="#555"/>
+              <circle cx="8"  cy="10" r="3" fill="#5D8A4E"/>
+              <circle cx="30" cy="28" r="3" fill="#5D8A4E"/>
+              <ellipse cx="10" cy="28" rx="7" ry="4" fill="#F4A460" opacity="0.7" transform="rotate(20,10,28)"/>
+              <ellipse cx="28" cy="10" rx="6" ry="3.5" fill="#F4A460" opacity="0.6" transform="rotate(-15,28,10)"/>
+            </pattern>
+            {/* Bacon: tiras diagonais marrons */}
+            <pattern id="pat-bacon" patternUnits="userSpaceOnUse" width="30" height="20">
+              <rect width="30" height="20" fill="#8B4513" opacity="0.15"/>
+              <rect x="0" y="3"  width="30" height="4" fill="#6B2E0D" opacity="0.85" transform="rotate(-8,15,5)"/>
+              <rect x="0" y="12" width="30" height="3" fill="#A0522D" opacity="0.7"  transform="rotate(-8,15,13)"/>
+              <rect x="0" y="6"  width="30" height="2" fill="#CD853F" opacity="0.5"  transform="rotate(-8,15,7)"/>
+            </pattern>
+            {/* Pepperoni: discos vermelhos com detalhes */}
+            <pattern id="pat-pepperoni" patternUnits="userSpaceOnUse" width="38" height="38">
+              <rect width="38" height="38" fill="#CC2200" opacity="0.1"/>
+              <circle cx="19" cy="19" r="13" fill="#CC2200"/>
+              <circle cx="19" cy="19" r="11" fill="#B71C1C"/>
+              <circle cx="14" cy="14" r="2"  fill="#FF5252" opacity="0.6"/>
+              <circle cx="24" cy="15" r="1.5" fill="#FF5252" opacity="0.5"/>
+              <circle cx="18" cy="25" r="1.5" fill="#FF5252" opacity="0.5"/>
+              <circle cx="24" cy="24" r="2"   fill="#FF5252" opacity="0.5"/>
+            </pattern>
+            {/* Vegetariana: brócolis + milho + ervilha */}
+            <pattern id="pat-vegetariana" patternUnits="userSpaceOnUse" width="36" height="36">
+              <rect width="36" height="36" fill="#2E8B57" opacity="0.12"/>
+              <circle cx="12" cy="12" r="6" fill="#228B22"/>
+              <circle cx="10" cy="10" r="3" fill="#32CD32" opacity="0.8"/>
+              <circle cx="14" cy="14" r="3" fill="#2E8B57" opacity="0.8"/>
+              <circle cx="26" cy="14" r="4" fill="#FFD700" opacity="0.9"/>
+              <circle cx="28" cy="12" r="3" fill="#FFC000" opacity="0.7"/>
+              <circle cx="14" cy="26" r="3" fill="#6DBF67"/>
+              <circle cx="26" cy="26" r="3" fill="#4CAF50"/>
             </pattern>
           </defs>
 
-          {/* Crust */}
-          <circle cx="120" cy="120" r="110" fill="#D49A6A" />
-          <circle cx="120" cy="120" r="102" fill="#FDE6D2" />
+          {/* Crust externo */}
+          <circle cx={cx} cy={cy} r={R + 10} fill="#C8852A"/>
+          <circle cx={cx} cy={cy} r={R + 8}  fill="#D4953A"/>
+          {/* Char marks na borda */}
+          {Array.from({ length: 16 }).map((_, k) => {
+            const a = (k * Math.PI * 2 / 16);
+            const br = R + 8;
+            return (
+              <circle
+                key={k}
+                cx={cx + br * Math.cos(a)}
+                cy={cy + br * Math.sin(a)}
+                r="2.5"
+                fill="#7A4A1A"
+                opacity="0.35"
+              />
+            );
+          })}
+          {/* Base da pizza (molho) */}
+          <circle cx={cx} cy={cy} r={R} fill="#E8A870"/>
+          <circle cx={cx} cy={cy} r={R} fill="#D94E2F" opacity="0.18"/>
 
-          {/* Slices */}
+          {/* Fatias */}
           {selectedFlavors.length === 0 ? (
-            <circle cx="120" cy="120" r="102" fill="#FDE6D2" opacity="0.4" />
+            <circle cx={cx} cy={cy} r={R} fill="#F5E5D0" opacity="0.6"/>
           ) : (
             selectedFlavors.map((flavor, i) => {
+              const angleStep = 360 / numSlices;
               const startAngle = i * angleStep;
-              const endAngle = (i + 1) * angleStep;
-              
-              const x1 = 120 + 102 * Math.cos((startAngle - 90) * Math.PI / 180);
-              const y1 = 120 + 102 * Math.sin((startAngle - 90) * Math.PI / 180);
-              const x2 = 120 + 102 * Math.cos((endAngle - 90) * Math.PI / 180);
-              const y2 = 120 + 102 * Math.sin((endAngle - 90) * Math.PI / 180);
-              
+              const endAngle   = (i + 1) * angleStep;
+              const x1 = cx + R * Math.cos((startAngle - 90) * Math.PI / 180);
+              const y1 = cy + R * Math.sin((startAngle - 90) * Math.PI / 180);
+              const x2 = cx + R * Math.cos((endAngle   - 90) * Math.PI / 180);
+              const y2 = cy + R * Math.sin((endAngle   - 90) * Math.PI / 180);
               const largeArcFlag = angleStep > 180 ? 1 : 0;
-              const d = `M 120 120 L ${x1} ${y1} A 102 102 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
+              const d = `M ${cx} ${cy} L ${x1} ${y1} A ${R} ${R} 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
 
               return (
-                <path 
-                  key={flavor.id} 
-                  d={d} 
-                  fill={flavor.pattern ? `url(#pattern-${flavor.pattern})` : flavor.color} 
-                  stroke="#D49A6A" 
-                  strokeWidth="1.5" 
+                <path
+                  key={flavor.id}
+                  d={d}
+                  fill={`url(#pat-${flavor.pattern})`}
+                  stroke="#C8852A"
+                  strokeWidth="1.5"
                 />
               );
             })
           )}
 
-          {/* Slice lines */}
-          {numSlices > 1 && selectedFlavors.length > 0 && Array.from({ length: numSlices }).map((_, i) => {
-            const angle = i * angleStep;
-            const x = 120 + 102 * Math.cos((angle - 90) * Math.PI / 180);
-            const y = 120 + 102 * Math.sin((angle - 90) * Math.PI / 180);
-            return <line key={i} x1="120" y1="120" x2={x} y2={y} stroke="#D49A6A" strokeWidth="1" />;
+          {/* Linhas divisoras entre fatias */}
+          {numSlices > 1 && selectedFlavors.length > 0 &&
+            Array.from({ length: numSlices }).map((_, i) => {
+              const angle = i * (360 / numSlices);
+              const x = cx + R * Math.cos((angle - 90) * Math.PI / 180);
+              const y = cy + R * Math.sin((angle - 90) * Math.PI / 180);
+              return (
+                <line key={i} x1={cx} y1={cy} x2={x} y2={y}
+                  stroke="#C8852A" strokeWidth="1.5" opacity="0.8"/>
+              );
+            })
+          }
+
+          {/* Labels dos sabores nas fatias */}
+          {selectedFlavors.map((flavor, i) => {
+            const angleStep = 360 / numSlices;
+            const midAngle = (i * angleStep + (i + 1) * angleStep) / 2;
+            const lr = R * 0.6;
+            const lx = cx + lr * Math.cos((midAngle - 90) * Math.PI / 180);
+            const ly = cy + lr * Math.sin((midAngle - 90) * Math.PI / 180);
+            const short = flavor.name.length > 9 ? flavor.name.slice(0, 8) + '…' : flavor.name;
+            return (
+              <text
+                key={flavor.id}
+                x={lx} y={ly}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontSize={numSlices <= 2 ? 11 : numSlices <= 3 ? 9 : 8}
+                fontWeight="800"
+                fill="white"
+                style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.7))', pointerEvents: 'none' }}
+              >
+                {short}
+              </text>
+            );
           })}
         </svg>
       </div>
@@ -153,12 +252,16 @@ export default function Pizzas() {
     <div className="page-container">
       <main className="main-section bg-white-block split-layout">
         <div className="split-left">
-          <HeroSection 
-            titleMedium={step === 1 ? "monte sua" : "escolha os"} 
-            titleGiant={step === 1 ? "pizza!" : "sabores!"} 
-            subtitle={step === 1 ? "escolha o tamanho perfeito" : `você pode escolher até ${selectedSize?.maxFlavors} sabores`} 
+          <HeroSection
+            titleMedium={step === 1 ? 'monte sua' : 'escolha os'}
+            titleGiant={step === 1 ? 'pizza!' : 'sabores!'}
+            subtitle={
+              step === 1
+                ? 'escolha o tamanho perfeito'
+                : `você pode escolher até ${selectedSize?.maxFlavors} sabor${selectedSize?.maxFlavors === 1 ? '' : 'es'}`
+            }
           />
-          
+
           {step === 2 && (
             <div className="pizza-visual-preview hide-mobile">
               {renderPizzaChart()}
@@ -169,11 +272,11 @@ export default function Pizzas() {
         <div className="split-right pizza-builder-panel">
           {step === 1 ? (
             <div className="size-list">
-              {PIZZA_SIZES.map(size => (
+              {PIZZA_SIZES.map((size) => (
                 <div key={size.id} className="size-row-card" onClick={() => handleSizeSelect(size)}>
                   <div className="size-main-info">
                     <h3>{size.name}</h3>
-                    <p>Até {size.maxFlavors} sabores</p>
+                    <p>Até {size.maxFlavors} sabor{size.maxFlavors === 1 ? '' : 'es'}</p>
                   </div>
                   <div className="size-right-info">
                     <span className="size-price">R$ {size.price.toFixed(2)}</span>
@@ -190,18 +293,18 @@ export default function Pizzas() {
                   <span>Mudar tamanho</span>
                 </button>
                 <div className="builder-pizza-mobile show-mobile">
-                   {renderPizzaChart()}
+                  {renderPizzaChart()}
                 </div>
               </div>
 
               <div className="flavors-selection-grid">
-                {FLAVORS.map(flavor => {
-                  const isSelected = selectedFlavors.find(f => f.id === flavor.id);
+                {FLAVORS.map((flavor) => {
+                  const isSelected = !!selectedFlavors.find((f) => f.id === flavor.id);
                   const isDisabled = !isSelected && selectedFlavors.length >= (selectedSize?.maxFlavors || 0);
-                  
+
                   return (
-                    <div 
-                      key={flavor.id} 
+                    <div
+                      key={flavor.id}
                       className={`flavor-item-card ${isSelected ? 'is-selected' : ''} ${isDisabled ? 'is-disabled' : ''}`}
                       onClick={() => !isDisabled && toggleFlavor(flavor)}
                     >
@@ -216,14 +319,13 @@ export default function Pizzas() {
                 })}
               </div>
 
-                <button 
-                  className={`btn-add-cart ${selectedFlavors.length === 0 ? 'inactive' : ''}`}
-                  disabled={selectedFlavors.length === 0}
-                  onClick={handleAddCart}
-                >
-                  Adicionar ao Carrinho • R$ {selectedSize?.price.toFixed(2)}
-                </button>
-              </div>
+              <button
+                className={`btn-add-cart ${selectedFlavors.length === 0 ? 'inactive' : ''}`}
+                disabled={selectedFlavors.length === 0}
+                onClick={handleAddCart}
+              >
+                Adicionar ao Carrinho • R$ {selectedSize?.price.toFixed(2)}
+              </button>
             </div>
           )}
         </div>
