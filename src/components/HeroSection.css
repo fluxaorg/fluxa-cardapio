@@ -34,7 +34,7 @@
 .hero-giant-wrapper {
   position: relative;
   display: inline-block;
-  margin-top: 0;
+  margin-top: -12px;
 }
 
 .hero-title-giant {

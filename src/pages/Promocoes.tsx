@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
 import { useCompany } from '../context/CompanyContext';
+import { useCart } from '../context/CartContext';
 import { supabase } from '../lib/supabase';
+import { ShoppingBag } from 'lucide-react';
 import './Promocoes.css';
 
 interface Promotion {
@@ -28,6 +30,7 @@ const DAY_NAMES = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 
 
 export default function Promocoes() {
   const { company } = useCompany();
+  const { addItem } = useCart();
   const navigate = useNavigate();
   const basePath = company?.slug ? `/${company.slug}` : '';
 
@@ -119,28 +122,50 @@ export default function Promocoes() {
 
                   {(promoItems[promo.id] || []).length > 0 && (
                     <div className="promo-items-row">
-                      {(promoItems[promo.id] || []).map((item) => (
-                        <div
-                          key={item.id}
-                          className="promo-item-card"
-                          onClick={() => navigate(`${basePath}/produto/${item.id}`)}
-                        >
-                          {item.image_url ? (
-                            <img src={item.image_url} alt={item.name} className="promo-item-img" />
-                          ) : (
-                            <div className="promo-item-placeholder">🍴</div>
-                          )}
-                          <div className="promo-item-info">
-                            <span className="promo-item-name">{item.name}</span>
-                            <div className="promo-item-prices">
-                              <span className="promo-item-original">R$ {item.price.toFixed(2)}</span>
-                              <span className="promo-item-discounted">
-                                R$ {discountedPrice(item.price, promo.discount_pct).toFixed(2)}
-                              </span>
+                      {(promoItems[promo.id] || []).map((item) => {
+                        const promoPrice = discountedPrice(item.price, promo.discount_pct);
+                        return (
+                          <div key={item.id} className="promo-item-card">
+                            {item.image_url ? (
+                              <img
+                                src={item.image_url}
+                                alt={item.name}
+                                className="promo-item-img"
+                                onClick={() => navigate(`${basePath}/produto/${item.id}`)}
+                                style={{ cursor: 'pointer' }}
+                              />
+                            ) : (
+                              <div
+                                className="promo-item-placeholder"
+                                onClick={() => navigate(`${basePath}/produto/${item.id}`)}
+                                style={{ cursor: 'pointer' }}
+                              >🍴</div>
+                            )}
+                            <div className="promo-item-info">
+                              <span className="promo-item-name">{item.name}</span>
+                              <div className="promo-item-prices">
+                                <span className="promo-item-original">R$ {item.price.toFixed(2)}</span>
+                                <span className="promo-item-discounted">R$ {promoPrice.toFixed(2)}</span>
+                              </div>
+                              <button
+                                className="promo-item-add-btn"
+                                onClick={() => addItem({
+                                  id: Math.random().toString(36).slice(2),
+                                  productId: item.id,
+                                  name: item.name,
+                                  price: promoPrice,
+                                  qty: 1,
+                                  image_url: item.image_url || '',
+                                  description: `Promoção: -${promo.discount_pct}%`,
+                                  options: { promo: true },
+                                })}
+                              >
+                                <ShoppingBag size={12} /> Adicionar
+                              </button>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   )}
                 </div>

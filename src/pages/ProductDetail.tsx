@@ -245,37 +245,22 @@ export default function ProductDetail() {
                 <span className="sidebar-item-name">{item.name}</span>
                 <span className="sidebar-item-desc">{item.description?.substring(0, 40)}{item.description && item.description.length > 40 ? '…' : ''}</span>
               </div>
-              <span className="sidebar-item-price">{item.price * item.qty}$</span>
+              <span className="sidebar-item-price">R$ {(item.price * item.qty).toFixed(2)}</span>
             </div>
           ))}
           {items.length === 0 && (
             <div className="empty-cart-card">
-              Aqui é os meios, faça no mesmo estilo
+              Adicione itens ao carrinho!
             </div>
           )}
         </div>
 
         <div className="sidebar-divider"></div>
 
-        <div className="sidebar-coupon">
-          <span className="coupon-label">CUPOM</span>
-          <span className="coupon-val">PROMO20</span>
-        </div>
-        
-        <div className="sidebar-divider" style={{marginTop: '-8px'}}></div>
-
         <div className="sidebar-summary">
-          <div className="summary-row">
-            <span>Desconto</span>
-            <span>-5%</span>
-          </div>
-          <div className="summary-row">
-            <span>Taxa de entrega</span>
-            <span>10$</span>
-          </div>
           <div className="summary-row total-row">
             <span>Total</span>
-            <span>{total + 10}$</span>
+            <span>R$ {total.toFixed(2)}</span>
           </div>
         </div>
 

@@ -151,3 +151,24 @@
   font-weight: 900;
   color: var(--color-red);
 }
+
+.promo-item-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  background: var(--color-red);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  justify-content: center;
+  font-family: var(--font-family);
+  transition: opacity 0.15s;
+}
+
+.promo-item-add-btn:hover { opacity: 0.85; }
