@@ -5,6 +5,7 @@ import { useCompany } from '../context/CompanyContext';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
 import { Check, MapPin } from 'lucide-react';
+import HeroSection from '../components/HeroSection';
 import './ProductDetail.css';
 import './Checkout.css';
 
@@ -146,19 +147,23 @@ export default function Checkout() {
   if (confirmed) {
     return (
       <div className="page-container">
-        <div className="confirmed-screen">
-          {/* Light Rays — replicando @magicui/light-rays com conic-gradient */}
-          <div className="light-rays-spinner" />
-          <div className="light-rays-glow" />
-
-          <div className="confirmed-content">
-            <div className="confirmed-check-circle">
-              <Check size={48} color="white" strokeWidth={3} />
-            </div>
-            <h1 className="confirmed-title">aeeee, pedido<br />confirmado!</h1>
-            <p className="confirmed-subtitle">só esperar uns minutinhos ta?! 🙏</p>
+        <main className="main-section bg-white-block split-layout">
+          <div className="split-left">
+            <HeroSection
+              titleMedium="aeeee,"
+              titleGiant="pedido confirmado!"
+              subtitle="só esperar uns minutinhos ta?! 🙏"
+            />
           </div>
-        </div>
+          <div className="split-right" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ width: 100, height: 100, background: 'var(--color-red)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', boxShadow: '0 8px 32px rgba(217,30,54,0.35)' }}>
+                <Check size={52} color="white" strokeWidth={3} />
+              </div>
+              <p style={{ color: 'var(--color-text-secondary)', fontSize: 16 }}>Redirecionando...</p>
+            </div>
+          </div>
+        </main>
       </div>
     );
   }
