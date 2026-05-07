@@ -1,5 +1,8 @@
 .menu-section {
-  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 }
 
 .menu-header {
@@ -48,8 +51,16 @@
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 14px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  flex: 1;
+  min-height: 0;
+  align-content: start;
+  padding-bottom: 8px;
 }
+
+.menu-grid::-webkit-scrollbar { display: none; }
 
 .product-card {
   background-color: var(--color-white);

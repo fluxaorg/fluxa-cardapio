@@ -8,15 +8,10 @@ export default function DecorativeCircles() {
       <div className="circle circle-3"></div>
 
       <div className="arc-text-container">
-        <svg viewBox="0 0 320 150" width="320" height="150">
-          <path id="arcPath" d="M 20 130 A 150 150 0 0 1 300 130" fill="transparent" />
+        <svg viewBox="0 0 400 400" width="400" height="400" className="arc-svg">
+          <path id="curve" d="M 35 200 A 165 165 0 0 1 365 200" fill="transparent" />
           <text>
-            <textPath
-              href="#arcPath"
-              startOffset="50%"
-              textAnchor="middle"
-              className="arc-text"
-            >
+            <textPath href="#curve" startOffset="50%" textAnchor="middle" className="arc-text">
               tecnologia fluxa
             </textPath>
           </text>

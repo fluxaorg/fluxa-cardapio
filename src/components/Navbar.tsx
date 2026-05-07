@@ -55,7 +55,7 @@ export default function Navbar() {
             {company?.logo_url ? (
               <img src={company.logo_url} alt="Logo" style={{ width: '28px', height: '28px', objectFit: 'cover', borderRadius: '4px' }} />
             ) : (
-              <Pizza size={22} color="#FFFFFF" />
+              <Pizza size={24} color="black" />
             )}
             <span className="navbar-logo-text">{company?.name || 'Quiosque Lanches'}</span>
           </div>

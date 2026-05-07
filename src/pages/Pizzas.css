@@ -194,9 +194,9 @@
   display: flex !important;
   flex-direction: column;
   gap: 0;
-  overflow-y: auto;
+  overflow: hidden;
   justify-content: flex-start !important;
-  padding-bottom: 100px;
+  padding-bottom: 0;
 }
 
 .pizza-s2-header {
@@ -236,8 +236,14 @@
 
 .pizza-s2-flavors {
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  padding-bottom: 16px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  flex: 1;
+  min-height: 0;
+  padding-bottom: 8px;
 }
+
+.pizza-s2-flavors::-webkit-scrollbar { display: none; }
 
 .pizza-s2-footer {
   position: sticky;
