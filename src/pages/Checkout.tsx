@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useCompany } from '../context/CompanyContext';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
-import { Check } from 'lucide-react';
+import { Check, MapPin } from 'lucide-react';
 import './ProductDetail.css';
 import './Checkout.css';
 
@@ -14,6 +14,15 @@ const PAYMENT_METHODS = [
   { id: 'debito',  label: 'Cartão de Débito',  icon: '💳' },
   { id: 'dinheiro',label: 'Dinheiro',          icon: '💵' },
 ];
+
+interface SavedAddress {
+  id: string;
+  label: string;
+  street: string | null;
+  number: string | null;
+  complement: string | null;
+  city: string | null;
+}
 
 export default function Checkout() {
   const { items, total, clearCart } = useCart();
@@ -27,6 +36,9 @@ export default function Checkout() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
+  // Endereços salvos
+  const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null); // 'new' ou id
   const [street, setStreet] = useState('');
   const [number, setNumber] = useState('');
   const [complement, setComplement] = useState('');
@@ -34,6 +46,46 @@ export default function Checkout() {
 
   const deliveryFee = 10;
   const finalTotal = total + deliveryFee;
+
+  // Carrega endereços salvos do usuário
+  useEffect(() => {
+    if (!user) return;
+    supabase
+      .from('food_customer_addresses')
+      .select('id, label, street, number, complement, city')
+      .eq('user_id', user.id)
+      .then(({ data }) => {
+        if (data && data.length > 0) {
+          setSavedAddresses(data);
+          // Pré-seleciona o primeiro
+          setSelectedAddressId(data[0].id);
+          setStreet(data[0].street || '');
+          setNumber(data[0].number || '');
+          setComplement(data[0].complement || '');
+          setCity(data[0].city || '');
+        } else {
+          setSelectedAddressId('new');
+        }
+      });
+  }, [user]);
+
+  const selectAddress = (addr: SavedAddress) => {
+    setSelectedAddressId(addr.id);
+    setStreet(addr.street || '');
+    setNumber(addr.number || '');
+    setComplement(addr.complement || '');
+    setCity(addr.city || '');
+  };
+
+  const selectNew = () => {
+    setSelectedAddressId('new');
+    setStreet('');
+    setNumber('');
+    setComplement('');
+    setCity('');
+  };
+
+  const resolvedAddress = `${street}${number ? `, ${number}` : ''}${complement ? ` - ${complement}` : ''}${city ? ` · ${city}` : ''}`;
 
   const handleConfirm = async () => {
     if (!selectedPayment || items.length === 0 || !company?.id) return;
@@ -62,7 +114,7 @@ export default function Checkout() {
           order_source: 'cardapio-v9',
           tipo_pedido: 'delivery',
           user_id: user?.id || null,
-          address: `${street}${number ? `, ${number}` : ''}${complement ? ` - ${complement}` : ''}${city ? ` - ${city}` : ''}`,
+          address: resolvedAddress,
         })
         .select()
         .single();
@@ -84,7 +136,7 @@ export default function Checkout() {
       setConfirmed(true);
       clearCart();
       setTimeout(() => navigate(`${basePath}/menu`), 3000);
-    } catch (e: any) {
+    } catch {
       setError('Erro ao confirmar pedido. Tente novamente.');
     } finally {
       setSaving(false);
@@ -93,7 +145,7 @@ export default function Checkout() {
 
   if (confirmed) {
     return (
-      <div className="page-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+      <div className="page-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ textAlign: 'center', padding: '40px' }}>
           <div style={{ width: 80, height: 80, background: 'var(--color-red)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
             <Check size={40} color="white" strokeWidth={3} />
@@ -107,23 +159,20 @@ export default function Checkout() {
 
   return (
     <div className="page-container detail-layout">
-      {/* Esquerda: resumo dos itens */}
+      {/* Esquerda: itens */}
       <main className="main-section bg-white-block detail-left">
         <div className="detail-header">
           <h1 className="detail-header-title" style={{ color: 'var(--color-black)', opacity: 1 }}>
             Resumo do pedido
           </h1>
         </div>
-
         {items.length === 0 ? (
           <div style={{ padding: '60px 0', textAlign: 'center', color: 'var(--color-text-secondary)' }}>
             <p style={{ fontSize: 18 }}>Seu carrinho está vazio.</p>
             <button
               style={{ marginTop: 16, background: 'var(--color-red)', color: 'white', padding: '12px 28px', borderRadius: 12, fontWeight: 700, fontSize: 15 }}
               onClick={() => navigate(`${basePath}/menu`)}
-            >
-              Ver Menu
-            </button>
+            >Ver Menu</button>
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 8 }}>
@@ -145,51 +194,60 @@ export default function Checkout() {
         )}
       </main>
 
-      {/* Direita: pagamento */}
+      {/* Direita: endereço + pagamento */}
       <aside className="main-section bg-white-block detail-sidebar checkout-sidebar">
         <div className="sidebar-header">
           <div>
             <h2 className="sidebar-title">Meu pedido</h2>
-            <p className="checkout-subtitle">Forma de pagamento</p>
+            <p className="checkout-subtitle">Entrega e pagamento</p>
           </div>
           <span className="sidebar-count">{items.length} {items.length === 1 ? 'Item' : 'Itens'}</span>
         </div>
 
-        {/* Endereço de entrega */}
+        {/* Endereços salvos */}
         <div className="checkout-address-section">
-          <p className="checkout-address-title">Endereço de entrega</p>
-          <div className="checkout-addr-row">
-            <input
-              className="checkout-addr-input checkout-addr-street"
-              placeholder="Rua / Avenida *"
-              value={street}
-              onChange={e => setStreet(e.target.value)}
-            />
-            <input
-              className="checkout-addr-input checkout-addr-number"
-              placeholder="Nº"
-              value={number}
-              onChange={e => setNumber(e.target.value)}
-            />
-          </div>
-          <input
-            className="checkout-addr-input"
-            placeholder="Complemento (opcional)"
-            value={complement}
-            onChange={e => setComplement(e.target.value)}
-            style={{ marginTop: 8 }}
-          />
-          <input
-            className="checkout-addr-input"
-            placeholder="Cidade"
-            value={city}
-            onChange={e => setCity(e.target.value)}
-            style={{ marginTop: 8 }}
-          />
+          <p className="checkout-address-title">
+            <MapPin size={14} style={{ display: 'inline', marginRight: 6, verticalAlign: 'middle' }} />
+            Endereço de entrega
+          </p>
+
+          {savedAddresses.length > 0 && (
+            <div className="checkout-saved-addresses">
+              {savedAddresses.map(addr => (
+                <button
+                  key={addr.id}
+                  className={`checkout-addr-option ${selectedAddressId === addr.id ? 'selected' : ''}`}
+                  onClick={() => selectAddress(addr)}
+                >
+                  <span className="addr-option-label">{addr.label}</span>
+                  <span className="addr-option-street">{addr.street}{addr.number ? `, ${addr.number}` : ''}{addr.city ? ` · ${addr.city}` : ''}</span>
+                </button>
+              ))}
+              <button
+                className={`checkout-addr-option ${selectedAddressId === 'new' ? 'selected' : ''}`}
+                onClick={selectNew}
+              >
+                <span className="addr-option-label">+ Novo endereço</span>
+              </button>
+            </div>
+          )}
+
+          {/* Formulário (sempre visível para novo, ou se não tem salvos) */}
+          {(selectedAddressId === 'new' || savedAddresses.length === 0) && (
+            <div className="checkout-addr-form">
+              <div className="checkout-addr-row">
+                <input className="checkout-addr-input checkout-addr-street" placeholder="Rua / Avenida *" value={street} onChange={e => setStreet(e.target.value)} />
+                <input className="checkout-addr-input checkout-addr-number" placeholder="Nº" value={number} onChange={e => setNumber(e.target.value)} />
+              </div>
+              <input className="checkout-addr-input" placeholder="Complemento (opcional)" value={complement} onChange={e => setComplement(e.target.value)} style={{ marginTop: 8 }} />
+              <input className="checkout-addr-input" placeholder="Cidade" value={city} onChange={e => setCity(e.target.value)} style={{ marginTop: 8 }} />
+            </div>
+          )}
         </div>
 
         <div className="sidebar-divider"></div>
 
+        {/* Métodos de pagamento */}
         <div className="payment-methods-list">
           {PAYMENT_METHODS.map((pm) => (
             <button

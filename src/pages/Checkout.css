@@ -38,6 +38,51 @@
 .checkout-addr-street { flex: 1; }
 .checkout-addr-number { width: 80px; flex-shrink: 0; }
 
+/* Endereços salvos */
+.checkout-saved-addresses {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.checkout-addr-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  padding: 10px 14px;
+  background: #f7f7f7;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+}
+
+.checkout-addr-option:hover { background: #f0f0f0; }
+
+.checkout-addr-option.selected {
+  background: #fff5f5;
+  border-color: var(--color-red);
+}
+
+.addr-option-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-black);
+}
+
+.addr-option-street {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.checkout-addr-form {
+  margin-top: 4px;
+}
+
 .checkout-subtitle {
   font-size: 12px;
   font-weight: 400;
