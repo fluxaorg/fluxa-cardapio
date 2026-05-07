@@ -1,8 +1,9 @@
 .promo-right-panel {
-  overflow-y: auto;
-  scrollbar-width: none;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
-.promo-right-panel::-webkit-scrollbar { display: none; }
 
 .promo-loading, .promo-empty {
   display: flex;
@@ -18,32 +19,40 @@
 .promo-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   width: 100%;
+  flex: 1;
+  min-height: 0;
 }
 
 .promo-card {
   background: var(--color-white);
-  border-radius: 20px;
-  padding: 20px;
+  border-radius: 16px;
+  padding: 14px 16px;
   box-shadow: var(--shadow-card);
   border: 1px solid var(--color-border);
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .promo-card-header {
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 16px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-shrink: 0;
 }
 
 .promo-badge {
   background: var(--color-red);
   color: white;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 900;
-  padding: 8px 14px;
-  border-radius: 12px;
+  padding: 6px 12px;
+  border-radius: 10px;
   flex-shrink: 0;
   letter-spacing: -0.02em;
 }
@@ -53,12 +62,12 @@
 }
 
 .promo-card-title {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 900;
   color: var(--color-black);
   line-height: 1.1;
-  letter-spacing: -0.03em;
-  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+  margin-bottom: 2px;
 }
 
 .promo-day-tag {
@@ -82,44 +91,47 @@
 /* Grid de itens da promoção */
 .promo-items-row {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   overflow-x: auto;
+  overflow-y: hidden;
   padding-bottom: 4px;
   scrollbar-width: none;
+  flex: 1;
+  min-height: 0;
+  align-items: flex-start;
 }
 .promo-items-row::-webkit-scrollbar { display: none; }
 
 .promo-item-card {
   flex-shrink: 0;
-  width: 140px;
+  width: 120px;
   background: #fafafa;
   border: 1px solid var(--color-border);
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.15s;
 }
-.promo-item-card:hover { transform: translateY(-2px); }
 
 .promo-item-img {
   width: 100%;
-  height: 90px;
+  height: 72px;
   object-fit: cover;
   display: block;
+  cursor: pointer;
 }
 
 .promo-item-placeholder {
   width: 100%;
-  height: 90px;
+  height: 72px;
   background: linear-gradient(135deg, #f5deb3, #e8d7c6);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .promo-item-info {
-  padding: 8px 10px 10px;
+  padding: 6px 8px 8px;
 }
 
 .promo-item-name {

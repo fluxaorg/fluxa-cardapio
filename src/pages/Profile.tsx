@@ -45,6 +45,11 @@ export default function Profile() {
   const [activeTab, setActiveTab] = useState<ProfileTab>('home');
   const basePath = company?.slug ? `/${company.slug}` : '';
 
+  // Nome do usuário
+  const [displayName, setDisplayName] = useState('');
+  const [nameInput, setNameInput] = useState('');
+  const [savingName, setSavingName] = useState(false);
+
   // Dados dos tabs
   const [orders, setOrders] = useState<Order[]>([]);
   const [coupons, setCoupons] = useState<any[]>([]);
@@ -54,6 +59,22 @@ export default function Profile() {
   // Formulário de endereço
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [addrForm, setAddrForm] = useState({ label: 'Casa', street: '', number: '', complement: '', city: '', cep: '' });
+
+  // Carrega nome do usuário dos metadados Supabase
+  useEffect(() => {
+    if (user?.user_metadata?.display_name) {
+      setDisplayName(user.user_metadata.display_name);
+      setNameInput(user.user_metadata.display_name);
+    }
+  }, [user]);
+
+  async function saveName() {
+    if (!nameInput.trim()) return;
+    setSavingName(true);
+    await supabase.auth.updateUser({ data: { display_name: nameInput.trim() } });
+    setDisplayName(nameInput.trim());
+    setSavingName(false);
+  }
 
   useEffect(() => {
     if (user && activeTab !== 'home') loadTabData(activeTab);
@@ -150,7 +171,11 @@ export default function Profile() {
       case 'recentes': return { small: 'pedidos', large: 'recentes', sub: 'peça novamente rapidinho' };
       case 'cupons': return { small: 'meus', large: 'cupons', sub: 'seus descontos disponíveis' };
       case 'pedidos': return { small: 'meus', large: 'pedidos', sub: 'acompanhe o histórico' };
-      default: return { small: 'oláaaa', large: 'fulano!', sub: 'o que manda hoje? me conta ai...' };
+      default: return {
+        small: 'oláaaa',
+        large: displayName ? `${displayName}!` : 'fulano!',
+        sub: 'o que manda hoje? me conta ai...'
+      };
     }
   };
 
@@ -256,7 +281,24 @@ export default function Profile() {
           {/* ── ENDEREÇOS ── */}
           {activeTab === 'enderecos' && (
             <div className="tab-content-scroll">
-              {dataLoading ? <p className="tab-loading">Carregando...</p> : (
+              {/* Campo de nome */}
+              <div className="profile-name-field">
+                <p className="profile-name-label">Seu nome</p>
+                <div className="profile-name-row">
+                  <input
+                    className="profile-name-input"
+                    placeholder="Como quer ser chamado?"
+                    value={nameInput}
+                    onChange={e => setNameInput(e.target.value)}
+                    onKeyDown={e => e.key === 'Enter' && saveName()}
+                  />
+                  <button className="profile-name-save" onClick={saveName} disabled={savingName}>
+                    {savingName ? '...' : 'Salvar'}
+                  </button>
+                </div>
+              </div>
+
+          {dataLoading ? <p className="tab-loading">Carregando...</p> : (
                 <>
                   <div className="addresses-list">
                     {addresses.map((addr) => (

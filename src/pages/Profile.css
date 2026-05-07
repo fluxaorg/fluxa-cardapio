@@ -467,3 +467,57 @@
 .cupon-title { font-size: 16px; font-weight: 800; color: var(--color-black); }
 .cupon-desc { font-size: 13px; color: var(--color-text-secondary); }
 .cupon-validity { font-size: 11px; color: var(--color-text-secondary); }
+
+/* Campo de nome */
+.profile-name-field {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.profile-name-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-black);
+  margin-bottom: 8px;
+}
+
+.profile-name-row {
+  display: flex;
+  gap: 10px;
+}
+
+.profile-name-input {
+  flex: 1;
+  height: 44px;
+  background: #f5f5f5;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-family: var(--font-family);
+  color: var(--color-black);
+  transition: border-color 0.15s;
+}
+
+.profile-name-input:focus {
+  outline: none;
+  border-color: var(--color-red);
+  background: #fff;
+}
+
+.profile-name-save {
+  height: 44px;
+  padding: 0 18px;
+  background: var(--color-black);
+  color: white;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-family);
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+}
+
+.profile-name-save:disabled { opacity: 0.5; }
+.profile-name-save:hover:not(:disabled) { opacity: 0.8; }
