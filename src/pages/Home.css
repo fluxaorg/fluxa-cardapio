@@ -1,6 +1,9 @@
 .split-layout {
   display: flex;
   gap: 32px;
+  align-items: center;
+  margin: auto 0;
+  width: 100%;
 }
 
 .split-left {
@@ -14,8 +17,8 @@
 
 .home-bento-grid {
   display: grid;
-  grid-template-columns: 220px 1fr 1fr;
-  grid-template-rows: 260px 260px;
+  grid-template-columns: 200px 1fr 1fr;
+  grid-template-rows: 220px 220px;
   gap: 14px;
   width: 100%;
 }
