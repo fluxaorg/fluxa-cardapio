@@ -232,7 +232,6 @@ export default function Pizzas() {
         <main className="main-section bg-white-block split-layout">
           <div className="split-left">
             <HeroSection
-              topLabel="Opaaa, Monte sua pizza!"
               titleMedium="monte sua"
               titleGiant="pizza!"
               subtitle="escolha o tamanho perfeito"
