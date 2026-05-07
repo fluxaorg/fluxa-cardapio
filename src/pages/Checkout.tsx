@@ -145,13 +145,19 @@ export default function Checkout() {
 
   if (confirmed) {
     return (
-      <div className="page-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ textAlign: 'center', padding: '40px' }}>
-          <div style={{ width: 80, height: 80, background: 'var(--color-red)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
-            <Check size={40} color="white" strokeWidth={3} />
+      <div className="page-container">
+        <div className="confirmed-screen">
+          {/* Light Rays — replicando @magicui/light-rays com conic-gradient */}
+          <div className="light-rays-spinner" />
+          <div className="light-rays-glow" />
+
+          <div className="confirmed-content">
+            <div className="confirmed-check-circle">
+              <Check size={48} color="white" strokeWidth={3} />
+            </div>
+            <h1 className="confirmed-title">aeeee, pedido<br />confirmado!</h1>
+            <p className="confirmed-subtitle">só esperar uns minutinhos ta?! 🙏</p>
           </div>
-          <h2 style={{ fontSize: 32, fontWeight: 800, marginBottom: 8 }}>Pedido confirmado!</h2>
-          <p style={{ color: 'var(--color-text-secondary)', fontSize: 16 }}>Seu pedido está sendo preparado. Redirecionando...</p>
         </div>
       </div>
     );

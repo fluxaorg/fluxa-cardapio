@@ -80,6 +80,25 @@ export default function Profile() {
     if (user && activeTab !== 'home') loadTabData(activeTab);
   }, [activeTab, user]);
 
+  // Realtime: atualiza pedidos automaticamente sem F5
+  useEffect(() => {
+    if (!user || (activeTab !== 'pedidos' && activeTab !== 'recentes')) return;
+
+    const channel = supabase
+      .channel(`profile_orders_${user.id}_${activeTab}`)
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'food_orders',
+        filter: `user_id=eq.${user.id}`,
+      }, () => {
+        loadTabData(activeTab);
+      })
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
+  }, [user?.id, activeTab]);
+
   async function loadTabData(tab: ProfileTab) {
     if (!user) return;
     setDataLoading(true);
