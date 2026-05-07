@@ -38,12 +38,26 @@ const FLAVORS: Flavor[] = [
   { id: 'vegetariana', name: 'Vegetariana',      description: 'Brócolis, milho, ervilha e palmito.',                    color: '#2E8B57', pattern: 'vegetariana' },
 ];
 
+const PIZZA_CRUSTS = [
+  { id: 'sem',        name: 'Sem borda',              price: 0,    emoji: '🍕' },
+  { id: 'queijo',     name: 'Borda de Queijo',        price: 6,    emoji: '🧀' },
+  { id: 'catupiry',   name: 'Borda de Catupiry',      price: 8,    emoji: '🫙' },
+  { id: 'cheddar',    name: 'Borda de Cheddar',       price: 8,    emoji: '🟡' },
+  { id: 'integral',   name: 'Pão Integral',           price: 4,    emoji: '🌾' },
+  { id: 'pq',         name: 'Pão de Queijo',          price: 6,    emoji: '🧆' },
+  { id: 'choco_preto',name: 'Pão de Chocolate Preto', price: 9,    emoji: '🍫' },
+  { id: 'choco_bco',  name: 'Pão de Chocolate Branco',price: 9,    emoji: '🤍' },
+  { id: 'pq_recheado',name: 'Pão de Queijo Recheado', price: 10,   emoji: '🫕' },
+  { id: 'doce_leite', name: 'Borda Doce de Leite',    price: 10,   emoji: '🍬' },
+];
+
 export default function Pizzas() {
   const { addItem } = useCart();
   const [step, setStep] = useState(1);
   const [selectedSize, setSelectedSize] = useState<PizzaSize | null>(null);
   const [selectedFlavors, setSelectedFlavors] = useState<Flavor[]>([]);
   const [desiredFlavorCount, setDesiredFlavorCount] = useState(1);
+  const [selectedCrust, setSelectedCrust] = useState(PIZZA_CRUSTS[0]);
 
   const handleSizeSelect = (size: PizzaSize) => {
     setSelectedSize(size);
@@ -76,18 +90,20 @@ export default function Pizzas() {
 
   const handleAddCart = () => {
     if (!selectedSize || selectedFlavors.length === 0) return;
+    const crustExtra = selectedCrust.price;
     addItem({
       productId: `pizza-${selectedSize.id}`,
-      name: `${selectedSize.name} (${selectedFlavors.map((f) => f.name).join(' / ')})`,
-      price: selectedSize.price,
+      name: `${selectedSize.name} (${selectedFlavors.map((f) => f.name).join(' / ')})${selectedCrust.id !== 'sem' ? ` — Borda ${selectedCrust.name}` : ''}`,
+      price: selectedSize.price + crustExtra,
       qty: 1,
       image_url: '',
       description: selectedFlavors.map((f) => f.name).join(', '),
-      options: { size: selectedSize.id, flavors: selectedFlavors.map((f) => f.id) },
+      options: { size: selectedSize.id, flavors: selectedFlavors.map((f) => f.id), crust: selectedCrust.id },
     } as any);
     setStep(1);
     setSelectedFlavors([]);
     setSelectedSize(null);
+    setSelectedCrust(PIZZA_CRUSTS[0]);
   };
 
   const renderPizzaChart = () => {
@@ -330,6 +346,24 @@ export default function Pizzas() {
           })}
         </div>
 
+        {/* Seleção de borda */}
+        <div className="pizza-crust-section">
+          <p className="pizza-crust-title">Escolha a borda</p>
+          <div className="pizza-crust-grid">
+            {PIZZA_CRUSTS.map(crust => (
+              <button
+                key={crust.id}
+                className={`pizza-crust-btn ${selectedCrust.id === crust.id ? 'selected' : ''}`}
+                onClick={() => setSelectedCrust(crust)}
+              >
+                <span className="crust-emoji">{crust.emoji}</span>
+                <span className="crust-name">{crust.name}</span>
+                {crust.price > 0 && <span className="crust-price">+R$ {crust.price.toFixed(2)}</span>}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Sticky add button */}
         <div className="pizza-s2-footer">
           <button
@@ -337,7 +371,7 @@ export default function Pizzas() {
             disabled={selectedFlavors.length === 0}
             onClick={handleAddCart}
           >
-            Adicionar ao Carrinho • R$ {selectedSize?.price.toFixed(2)}
+            Adicionar ao Carrinho • R$ {((selectedSize?.price || 0) + selectedCrust.price).toFixed(2)}
           </button>
         </div>
       </main>
