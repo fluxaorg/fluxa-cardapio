@@ -27,11 +27,17 @@ export default function Checkout() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
+  const [street, setStreet] = useState('');
+  const [number, setNumber] = useState('');
+  const [complement, setComplement] = useState('');
+  const [city, setCity] = useState('');
+
   const deliveryFee = 10;
   const finalTotal = total + deliveryFee;
 
   const handleConfirm = async () => {
     if (!selectedPayment || items.length === 0 || !company?.id) return;
+    if (!street.trim()) { setError('Informe o endereço de entrega.'); return; }
     setSaving(true);
     setError('');
     try {
@@ -56,6 +62,7 @@ export default function Checkout() {
           order_source: 'cardapio-v9',
           tipo_pedido: 'delivery',
           user_id: user?.id || null,
+          address: `${street}${number ? `, ${number}` : ''}${complement ? ` - ${complement}` : ''}${city ? ` - ${city}` : ''}`,
         })
         .select()
         .single();
@@ -147,6 +154,41 @@ export default function Checkout() {
           </div>
           <span className="sidebar-count">{items.length} {items.length === 1 ? 'Item' : 'Itens'}</span>
         </div>
+
+        {/* Endereço de entrega */}
+        <div className="checkout-address-section">
+          <p className="checkout-address-title">Endereço de entrega</p>
+          <div className="checkout-addr-row">
+            <input
+              className="checkout-addr-input checkout-addr-street"
+              placeholder="Rua / Avenida *"
+              value={street}
+              onChange={e => setStreet(e.target.value)}
+            />
+            <input
+              className="checkout-addr-input checkout-addr-number"
+              placeholder="Nº"
+              value={number}
+              onChange={e => setNumber(e.target.value)}
+            />
+          </div>
+          <input
+            className="checkout-addr-input"
+            placeholder="Complemento (opcional)"
+            value={complement}
+            onChange={e => setComplement(e.target.value)}
+            style={{ marginTop: 8 }}
+          />
+          <input
+            className="checkout-addr-input"
+            placeholder="Cidade"
+            value={city}
+            onChange={e => setCity(e.target.value)}
+            style={{ marginTop: 8 }}
+          />
+        </div>
+
+        <div className="sidebar-divider"></div>
 
         <div className="payment-methods-list">
           {PAYMENT_METHODS.map((pm) => (

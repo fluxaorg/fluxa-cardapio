@@ -95,7 +95,7 @@ export default function Pizzas() {
     const cx = 120, cy = 120, R = 102;
 
     return (
-      <svg viewBox="0 0 240 240" width="150" height="150" className="pizza-svg">
+      <svg viewBox="0 0 240 240" width="185" height="185" className="pizza-svg">
         <defs>
           <pattern id="pat-calabresa" patternUnits="userSpaceOnUse" width="36" height="36">
             <rect width="36" height="36" fill="#C0392B" opacity="0.15"/>
