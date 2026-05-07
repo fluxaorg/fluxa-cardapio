@@ -21,6 +21,7 @@ export default function ProductDetail() {
   const [size, setSize] = useState('G');
   const [removedItems, setRemovedItems] = useState<string[]>([]);
   const [qty, setQty] = useState(1);
+  const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
     if (!id) return;
@@ -39,8 +40,15 @@ export default function ProductDetail() {
       if (data) {
         setProduct(data);
 
-        // Busca sugestões da mesma categoria
+        // Busca categorias
         if (company?.id) {
+          const { data: cats } = await supabase
+            .from('food_categories')
+            .select('id, name')
+            .eq('company_id', company.id);
+          if (cats) setCategories(cats);
+
+          // Busca sugestões
           const { data: suggs } = await supabase
             .from('food_menu_items')
             .select('id, name, price, image_url, category')
@@ -92,14 +100,30 @@ export default function ProductDetail() {
       {/* Left Area */}
       <main className="main-section bg-white-block detail-left">
         <div className="detail-header">
-          <button className="back-btn-round" onClick={() => navigate(-1)}>
-            <ArrowLeft size={20} />
-          </button>
-          <h1 className="detail-header-title">Detalhes do produto</h1>
+          <h1 className="detail-header-title">Detalhes do produto...</h1>
           <button className="menu-filter-btn">
-            <Filter size={22} color="var(--color-red)" />
+            <Filter size={24} color="#D91E36" strokeWidth={2.5} />
           </button>
         </div>
+
+        {categories.length > 0 && (
+          <div className="menu-categories" style={{ marginTop: '0px', marginBottom: '40px' }}>
+            <button
+              className={`category-pill active`}
+            >
+              {product?.category || 'Pizzas'}
+            </button>
+            {categories.filter(c => c.name !== product?.category).map(c => (
+              <button
+                key={c.id}
+                className={`category-pill`}
+                onClick={() => navigate(`${basePath}/`)}
+              >
+                {c.name}
+              </button>
+            ))}
+          </div>
+        )}
 
         <div className="product-area">
           <img
@@ -205,36 +229,53 @@ export default function ProductDetail() {
       {/* Right Sidebar - Meu Pedido */}
       <aside className="main-section detail-sidebar">
         <div className="sidebar-header">
-          <h2 className="sidebar-title">Meu pedido</h2>
+          <h2 className="sidebar-title">Meu pedido<br/><span style={{fontSize: '12px', fontWeight: 400, color: '#888'}}>Forma de pagamento</span></h2>
           <span className="sidebar-count">{items.length} {items.length === 1 ? 'Item' : 'Itens'}</span>
         </div>
 
         <div className="sidebar-items">
           {items.map((item) => (
-            <div key={item.id} className="sidebar-item">
+            <div key={item.id} className="sidebar-item-card">
               {item.image_url ? (
                 <img src={item.image_url} alt={item.name} />
               ) : (
-                <div style={{ width: 70, height: 70, borderRadius: 12, background: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0 }}>🍴</div>
+                <div className="sidebar-item-placeholder">🍴</div>
               )}
               <div className="sidebar-item-info">
                 <span className="sidebar-item-name">{item.name}</span>
                 <span className="sidebar-item-desc">{item.description?.substring(0, 40)}{item.description && item.description.length > 40 ? '…' : ''}</span>
               </div>
-              <span className="sidebar-item-price">R$ {(item.price * item.qty).toFixed(0)}</span>
+              <span className="sidebar-item-price">{item.price * item.qty}$</span>
             </div>
           ))}
           {items.length === 0 && (
-            <p className="empty-side-hint">Seu carrinho está vazio.</p>
+            <div className="empty-cart-card">
+              Aqui é os meios, faça no mesmo estilo
+            </div>
           )}
         </div>
 
         <div className="sidebar-divider"></div>
 
+        <div className="sidebar-coupon">
+          <span className="coupon-label">CUPOM</span>
+          <span className="coupon-val">PROMO20</span>
+        </div>
+        
+        <div className="sidebar-divider" style={{marginTop: '-8px'}}></div>
+
         <div className="sidebar-summary">
+          <div className="summary-row">
+            <span>Desconto</span>
+            <span>-5%</span>
+          </div>
+          <div className="summary-row">
+            <span>Taxa de entrega</span>
+            <span>10$</span>
+          </div>
           <div className="summary-row total-row">
             <span>Total</span>
-            <span>R$ {total.toFixed(2)}</span>
+            <span>{total + 10}$</span>
           </div>
         </div>
 

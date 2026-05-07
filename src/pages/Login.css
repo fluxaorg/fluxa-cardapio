@@ -7,13 +7,13 @@
 
 .login-card {
   background-color: var(--color-white);
-  border-radius: 20px;
-  padding: 36px 40px;
+  border-radius: 24px;
+  padding: 40px 48px;
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
   max-height: calc(100vh - 140px);
   overflow-y: auto;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,19 +47,21 @@
 }
 
 .login-title {
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 700;
   color: var(--color-black);
   text-align: center;
-  margin-bottom: 4px;
+  margin-bottom: 0px;
+  letter-spacing: -0.03em;
 }
 
 .login-subtitle {
-  font-size: 15px;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 500;
   color: var(--color-text-secondary);
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
 }
 
 .login-input {
@@ -75,41 +77,45 @@
 }
 
 .login-divider {
-  width: 80px;
+  width: 60%;
   height: 1px;
   background-color: var(--color-border);
-  margin: 24px 0;
+  margin: 32px 0;
 }
 
 .login-btn-submit {
   width: 100%;
   height: 56px;
-  background-color: var(--color-red);
+  background-color: #D91E36;
   color: var(--color-white);
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
-  border-radius: var(--radius-btn);
-  margin-top: 24px;
+  border-radius: 999px; /* Fully rounded */
+  margin-top: 16px;
+  letter-spacing: -0.02em;
 }
 
 .login-btn-submit:hover {
   background-color: var(--color-red-vivid);
-  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(217, 30, 54, 0.2);
 }
 
 .login-btn-section {
   width: 100%;
   height: 48px;
-  background-color: var(--color-black);
-  color: var(--color-white);
-  font-size: 15px;
+  background-color: transparent;
+  color: var(--color-black);
+  font-size: 16px;
   font-weight: 700;
-  border-radius: var(--radius-btn);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
   margin-top: 8px;
+  transition: all 0.2s;
 }
 
 .login-btn-section:hover {
-  opacity: 0.85;
+  background-color: var(--color-bg);
 }
 
 .login-btn-section:disabled,
