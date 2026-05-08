@@ -131,7 +131,7 @@
   width: 100%;
 }
 
-/* Mobile */
+/* Mobile — tudo compacto para caber sem scroll */
 @media (max-width: 768px) {
   .login-right-col {
     height: auto;
@@ -141,10 +141,19 @@
   .login-card {
     max-height: none;
     overflow-y: visible;
-    padding: 24px 20px;
+    padding: 16px 18px;
     border-radius: 16px;
     width: 100%;
+    gap: 0;
   }
-  .login-title { font-size: 26px; }
-  .login-subtitle { font-size: 14px; }
+  .login-icon-wrapper { margin-bottom: 10px; }
+  .login-icon-circle  { width: 44px; height: 44px; }
+  .login-icon-f       { font-size: 20px; }
+  .login-title        { font-size: 22px; margin-bottom: 0; }
+  .login-subtitle     { font-size: 12px; margin-bottom: 10px; }
+  .login-section      { margin-bottom: 0; }
+  .login-input        { height: 40px; font-size: 13px; margin-bottom: 6px; border-radius: 8px; }
+  .login-divider      { margin: 10px 0; }
+  .login-btn-section  { height: 38px; font-size: 13px; margin-top: 4px; }
+  .login-btn-submit   { height: 44px; font-size: 15px; margin-top: 10px; border-radius: 12px; }
 }

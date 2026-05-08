@@ -62,6 +62,7 @@
   .decorative-circles-container {
     width: 280px;
     height: 280px;
+    z-index: 0; /* atrás de qualquer conteúdo */
   }
   .circle-1 { width: 260px; height: 260px; bottom: -90px; left: -100px; }
   .circle-2 { width: 220px; height: 220px; bottom: -40px; left: 10px; }
