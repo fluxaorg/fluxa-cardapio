@@ -77,15 +77,6 @@
 }
 
 @media (max-width: 768px) {
-
-  .home-bento-grid {
-    grid-template-columns: 1fr;
-    padding-right: 0;
-  }
-  
-  .bento-pizza, .bento-fries, .bento-burger, .bento-coke, .bento-sticks {
-    grid-column: 1 / 2;
-    grid-row: auto;
-    height: 200px;
-  }
+  /* Esconde bento grid no mobile — só o texto da hero */
+  .split-right { display: none !important; }
 }
