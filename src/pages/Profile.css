@@ -526,21 +526,27 @@
 
 /* Profile mobile — bento compacto, sem sobreposição */
 @media (max-width: 768px) {
-  /* Bento: 2 colunas — linha 1/2 menor, linha 3 maior para Pedidos */
+  /* Bento: 3 linhas — recentes+logout ocupam 2 linhas (tap target 80px cada) */
   .profile-bento-grid {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 80px 80px 110px; /* linha 3 maior para Pedidos */
+    grid-template-rows: 80px 80px 110px;
     gap: 8px;
     max-height: none;
     width: 100%;
   }
 
-  /* Layout dos cards */
+  /* Endereços: ocupa linhas 1+2 */
   .card-enderecos              { grid-column: 1/2; grid-row: 1/3; padding: 14px; }
-  .bento-card-group-top-right  { grid-column: 2/3; grid-row: 1/2; display: flex; flex-direction: column; gap: 6px; }
-  .card-recentes, .card-logout { flex: 1; padding: 12px; min-height: 0; justify-content: center; }
-  .card-cupons                 { grid-column: 1/2; grid-row: 3/4; padding: 12px; }
-  .card-pedidos                { grid-column: 2/3; grid-row: 2/4; padding: 14px; } /* row 2→4 ocupa 2 linhas */
+
+  /* Recentes + Logout: grupo ocupa linhas 1+2 = 168px → cada card ~80px */
+  .bento-card-group-top-right  { grid-column: 2/3; grid-row: 1/3; display: flex; flex-direction: column; gap: 8px; }
+  .card-recentes, .card-logout { flex: 1; padding: 14px 12px; min-height: 44px; justify-content: center; }
+
+  /* Cupons: linha 3 esquerda */
+  .card-cupons  { grid-column: 1/2; grid-row: 3/4; padding: 12px; }
+
+  /* Meus Pedidos: linha 3 direita — mais abaixo */
+  .card-pedidos { grid-column: 2/3; grid-row: 3/4; padding: 14px; }
 
   /* Endereços */
   .syl            { font-size: 26px; line-height: 0.85; }
