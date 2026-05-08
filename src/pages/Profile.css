@@ -529,9 +529,10 @@
   /* Bento: 3 linhas — recentes+logout ocupam 2 linhas (tap target 80px cada) */
   .profile-bento-grid {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 80px 80px 110px;
+    grid-template-rows: 80px 80px 90px; /* cupons menor para não sobrepor */
     gap: 8px;
-    max-height: none;
+    height: auto !important;   /* cancela height: 100% do desktop */
+    max-height: none !important;
     width: 100%;
   }
 
