@@ -370,11 +370,43 @@
   .hide-mobile { display: none; }
   .show-mobile { display: flex; }
   .pizza-builder-panel { padding-right: 0; }
-  .builder-pizza-mobile {
-    margin: 10px 0;
-    justify-content: center;
-  }
+
+  /* Tamanhos de pizza: padding compacto */
+  .size-row-card { padding: 14px 16px; }
+  .size-main-info h3 { font-size: clamp(16px, 5vw, 22px); }
+  .size-main-info p  { font-size: 13px; }
+  .size-price        { font-size: clamp(16px, 5vw, 22px); }
+  .size-list         { gap: 8px; }
+
+  /* Step 2 */
+  .pizza-step2-layout { padding: 0; }
+  .pizza-s2-header    { padding-bottom: 10px; margin-bottom: 12px; }
+  .pizza-s2-title h2  { font-size: 17px; }
+  .pizza-s2-title p   { font-size: 12px; }
+  .pizza-s2-chart-area { margin-bottom: 10px; }
   .pizza-s2-flavors {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
   }
+  .flavor-item-card { padding: 8px 10px; border-radius: 10px; }
+  .flavor-details h4 { font-size: 12px; }
+  .flavor-details p  { font-size: 10px; }
+  .flavor-color-dot  { width: 10px; height: 10px; }
+
+  /* Contador de sabores */
+  .pizza-flavor-counter { padding: 6px 12px; margin-bottom: 10px; }
+  .pfc-btn   { width: 30px; height: 30px; font-size: 18px; }
+  .pfc-label { font-size: 13px; min-width: 70px; }
+  .pfc-hint  { font-size: 11px; }
+
+  /* Bordas */
+  .pizza-crust-btn  { padding: 8px 10px; min-width: 70px; }
+  .crust-emoji      { font-size: 18px; }
+  .crust-name       { font-size: 10px; }
+  .crust-price      { font-size: 9px; }
+  .pizza-crust-grid-step3 { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
+
+  /* Footer */
+  .pizza-s2-footer    { padding: 10px 0 4px; }
+  .btn-add-cart       { padding: 14px; font-size: 15px; border-radius: 14px; }
 }

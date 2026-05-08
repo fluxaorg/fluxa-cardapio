@@ -201,87 +201,116 @@ input::placeholder {
   }
 }
 
-/* Mobile (<768px) */
+/* ═══════════════════════════════════════════
+   MOBILE — iPhone 375px+
+   Regra: tudo cabe na tela, sem scroll horizontal
+═══════════════════════════════════════════ */
 @media (max-width: 768px) {
+
+  /* Base */
   body {
     overflow-x: hidden;
     overflow-y: auto;
-    padding-bottom: 64px;
+    padding-bottom: 72px;
     max-width: 100vw;
+    font-size: 14px;
   }
 
-  .navbar { display: none; } /* usa BottomNav */
+  .navbar { display: none; }
 
   .page-container {
-    margin: 8px;
-    max-width: calc(100vw - 16px);
+    margin: 6px;
+    max-width: calc(100vw - 12px);
     overflow-x: hidden;
   }
 
+  /* Container principal — sem altura fixa no mobile */
   .bg-white-block {
-    padding: 20px 16px;
-    border-radius: 16px;
-    height: auto;
-    min-height: unset;
-    max-height: none;
+    height: auto !important;
+    min-height: unset !important;
+    max-height: none !important;
+    padding: 16px 14px;
+    border-radius: 14px;
     overflow-x: hidden;
     overflow-y: visible;
+    display: flex;
+    flex-direction: column;
   }
 
   .main-section { padding: 0; }
 
   /* Split layout: coluna única */
   .split-layout {
-    flex-direction: column;
-    gap: 16px;
-    flex: unset;
+    flex-direction: column !important;
+    gap: 12px;
+    flex: unset !important;
+    min-height: unset !important;
     overflow-x: hidden;
   }
 
   .split-left, .split-right {
-    flex: 1 1 100%;
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    min-height: unset;
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: unset !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
   }
 
-  .text-hero-giant { font-size: clamp(42px, 12vw, 80px); }
-  .text-hero-medium { font-size: clamp(20px, 5vw, 32px); }
+  /* Tipografia adaptativa */
+  .text-hero-giant  { font-size: clamp(38px, 11vw, 64px) !important; }
+  .text-hero-medium { font-size: clamp(16px, 5vw, 24px)  !important; }
+  .text-title-section { font-size: clamp(20px, 6vw, 28px); }
 
-  /* ProductDetail: coluna única sem scroll horizontal */
+  /* ProductDetail: coluna única */
   .detail-layout {
-    flex-direction: column;
+    flex-direction: column !important;
+    gap: 0;
     overflow-x: hidden;
   }
   .detail-left, .detail-sidebar {
-    flex: 1 1 100%;
-    width: 100%;
-    max-width: 100%;
-    position: static;
-    max-height: none;
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    position: static !important;
+    max-height: none !important;
+    padding: 0 !important;
   }
   .product-area {
     flex-direction: column;
+    gap: 14px;
   }
   .detail-img {
     width: 100%;
-    height: 220px;
+    height: 200px;
+    border-radius: 14px;
   }
-  .qty-action-row {
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .size-selector {
-    flex-wrap: wrap;
-  }
+  .detail-title { font-size: clamp(20px, 6vw, 28px); }
+  .detail-desc  { font-size: 13px; margin-bottom: 14px; }
+  .qty-action-row { flex-wrap: wrap; gap: 8px; }
+  .qty-btn { width: 38px; height: 38px; }
+  .size-selector { flex-wrap: wrap; gap: 6px; }
+  .size-pill { padding: 6px 14px; font-size: 13px; }
+  .remove-grid { flex-wrap: wrap; gap: 6px; }
+  .remove-card { width: 48px; height: 48px; }
+  .remove-emoji { font-size: 22px; }
 
-  /* Sugestões: só o carrossel horizontal é swipeable */
+  /* Sidebar "Meu Pedido" no ProductDetail */
+  .sidebar-header { margin-bottom: 14px; }
+  .sidebar-title { font-size: 18px; }
+  .sidebar-divider { margin: 14px 0; }
+  .sidebar-btn-confirm { height: 52px; font-size: 16px; border-radius: 14px; }
+
+  /* Sugestões: só carrossel */
   .related-carousel {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
-  .remove-grid {
-    flex-wrap: wrap;
-  }
+  .related-carousel::-webkit-scrollbar { display: none; }
+  .related-card { width: 150px; }
+
+  /* Navbar links ocultos (usa BottomNav) */
+  .navbar-links { display: none; }
 }

@@ -284,3 +284,31 @@
   color: var(--color-red);
   flex-shrink: 0;
 }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  /* Tela de confirmação compacta */
+  .confirmed-screen { height: auto; min-height: calc(100vh - 80px); padding: 0; }
+  .confirmed-content { padding: 32px 20px; }
+  .confirmed-check-circle { width: 72px; height: 72px; margin-bottom: 20px; }
+  .confirmed-title { font-size: clamp(28px, 9vw, 44px); }
+  .confirmed-subtitle { font-size: 16px; }
+
+  /* Endereço */
+  .checkout-address-section { margin-top: 12px; }
+  .checkout-address-title { font-size: 13px; }
+  .checkout-addr-input { height: 40px; font-size: 13px; border-radius: 8px; }
+  .checkout-saved-addresses { gap: 6px; }
+  .checkout-addr-option { padding: 8px 12px; border-radius: 10px; }
+  .addr-option-label { font-size: 13px; }
+  .addr-option-street { font-size: 11px; }
+
+  /* Pagamento */
+  .payment-methods-list { gap: 7px; margin-top: 10px; }
+  .payment-method-btn { padding: 11px 14px; font-size: 13px; border-radius: 10px; }
+  .pm-icon { font-size: 18px; }
+
+  /* Mesa confirm */
+  .mesa-confirm-info { padding: 16px 12px; }
+  .mesa-confirm-text { font-size: 14px; }
+}
