@@ -131,6 +131,41 @@
   width: 100%;
 }
 
+/* Link de troca entre Entrar / Cadastrar */
+.login-switch {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  text-align: center;
+  width: 100%;
+}
+
+.login-switch-btn {
+  background: none;
+  border: none;
+  color: var(--color-red);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-family);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+/* Centraliza o card no mobile */
+@media (max-width: 768px) {
+  .login-right-col {
+    align-items: center;
+    justify-content: center;
+  }
+  .login-card {
+    width: 100%;
+    align-items: center;
+  }
+  .login-switch { font-size: 13px; }
+  .login-switch-btn { font-size: 13px; }
+}
+
 /* Mobile — tudo compacto para caber sem scroll */
 @media (max-width: 768px) {
   .login-right-col {

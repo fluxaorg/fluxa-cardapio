@@ -11,41 +11,40 @@ export default function Login() {
   const navigate = useNavigate();
   const basePath = company?.slug ? `/${company.slug}` : '';
 
+  const [mode, setMode] = useState<'login' | 'signup'>('login');
+
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [signupEmail, setSignupEmail] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
-  const [loadingLogin, setLoadingLogin] = useState(false);
-  const [loadingSignup, setLoadingSignup] = useState(false);
-  const [errorLogin, setErrorLogin] = useState('');
-  const [errorSignup, setErrorSignup] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleLogin = async () => {
     if (!loginEmail || !loginPassword) return;
-    setLoadingLogin(true);
-    setErrorLogin('');
+    setLoading(true); setError('');
     try {
       await signInWithEmail(loginEmail, loginPassword);
       navigate(`${basePath}/perfil`);
     } catch (err: any) {
-      setErrorLogin(err.message || 'Email ou senha incorretos.');
-    } finally {
-      setLoadingLogin(false);
-    }
+      setError(err.message || 'Email ou senha incorretos.');
+    } finally { setLoading(false); }
   };
 
   const handleSignup = async () => {
     if (!signupEmail || !signupPassword) return;
-    setLoadingSignup(true);
-    setErrorSignup('');
+    setLoading(true); setError('');
     try {
       await signUpWithEmail(signupEmail, signupPassword);
       navigate(`${basePath}/perfil`);
     } catch (err: any) {
-      setErrorSignup(err.message || 'Erro ao cadastrar. Tente novamente.');
-    } finally {
-      setLoadingSignup(false);
-    }
+      setError(err.message || 'Erro ao cadastrar.');
+    } finally { setLoading(false); }
+  };
+
+  const switchMode = (next: 'login' | 'signup') => {
+    setMode(next);
+    setError('');
   };
 
   return (
@@ -68,67 +67,51 @@ export default function Login() {
               </div>
             </div>
 
-            {/* Entrar */}
-            <div className="login-section">
-              <h3 className="login-title">Entrar</h3>
-              <p className="login-subtitle">é bom te ver de volta!</p>
-              <input
-                type="email"
-                placeholder="Email"
-                className="login-input"
-                value={loginEmail}
-                onChange={(e) => setLoginEmail(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-              />
-              <input
-                type="password"
-                placeholder="Senha"
-                className="login-input"
-                value={loginPassword}
-                onChange={(e) => setLoginPassword(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-              />
-              {errorLogin && <p className="login-error">{errorLogin}</p>}
-              <button
-                className="login-btn-section"
-                onClick={handleLogin}
-                disabled={loadingLogin}
-              >
-                {loadingLogin ? 'Entrando...' : 'Entrar'}
-              </button>
-            </div>
-
-            <div className="login-divider"></div>
-
-            {/* Cadastrar */}
-            <div className="login-section">
-              <h3 className="login-title">Cadastrar</h3>
-              <p className="login-subtitle">nesse caso... Prazer!</p>
-              <input
-                type="email"
-                placeholder="Email"
-                className="login-input"
-                value={signupEmail}
-                onChange={(e) => setSignupEmail(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSignup()}
-              />
-              <input
-                type="password"
-                placeholder="Senha"
-                className="login-input"
-                value={signupPassword}
-                onChange={(e) => setSignupPassword(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSignup()}
-              />
-              {errorSignup && <p className="login-error">{errorSignup}</p>}
-              <button
-                className="login-btn-submit"
-                onClick={handleSignup}
-                disabled={loadingSignup}
-              >
-                {loadingSignup ? 'Cadastrando...' : 'Booooooora pedir!'}
-              </button>
-            </div>
+            {mode === 'login' ? (
+              /* ── Entrar ── */
+              <div className="login-section">
+                <h3 className="login-title">Entrar</h3>
+                <p className="login-subtitle">é bom te ver de volta!</p>
+                <input type="email" placeholder="Email" className="login-input"
+                  value={loginEmail} onChange={e => setLoginEmail(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleLogin()} />
+                <input type="password" placeholder="Senha" className="login-input"
+                  value={loginPassword} onChange={e => setLoginPassword(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleLogin()} />
+                {error && <p className="login-error">{error}</p>}
+                <button className="login-btn-section" onClick={handleLogin} disabled={loading}>
+                  {loading ? 'Entrando...' : 'Entrar'}
+                </button>
+                <p className="login-switch">
+                  Não tem cadastro?{' '}
+                  <button className="login-switch-btn" onClick={() => switchMode('signup')}>
+                    Cadastre-se
+                  </button>
+                </p>
+              </div>
+            ) : (
+              /* ── Cadastrar ── */
+              <div className="login-section">
+                <h3 className="login-title">Cadastrar</h3>
+                <p className="login-subtitle">nesse caso... Prazer!</p>
+                <input type="email" placeholder="Email" className="login-input"
+                  value={signupEmail} onChange={e => setSignupEmail(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleSignup()} />
+                <input type="password" placeholder="Senha" className="login-input"
+                  value={signupPassword} onChange={e => setSignupPassword(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleSignup()} />
+                {error && <p className="login-error">{error}</p>}
+                <button className="login-btn-submit" onClick={handleSignup} disabled={loading}>
+                  {loading ? 'Cadastrando...' : 'Booooooora pedir!'}
+                </button>
+                <p className="login-switch">
+                  Já tem conta?{' '}
+                  <button className="login-switch-btn" onClick={() => switchMode('login')}>
+                    Entrar
+                  </button>
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </main>
