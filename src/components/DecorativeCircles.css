@@ -60,11 +60,11 @@
 /* Mobile: círculos bem menores */
 @media (max-width: 768px) {
   .decorative-circles-container {
-    width: 200px;
-    height: 200px;
+    width: 280px;
+    height: 280px;
   }
-  .circle-1 { width: 160px; height: 160px; bottom: -55px; left: -65px; }
-  .circle-2 { width: 120px; height: 120px; bottom: -25px; left: 5px; }
-  .circle-3 { width: 110px; height: 110px; bottom: -40px; left: 40px; }
+  .circle-1 { width: 260px; height: 260px; bottom: -90px; left: -100px; }
+  .circle-2 { width: 220px; height: 220px; bottom: -40px; left: 10px; }
+  .circle-3 { width: 210px; height: 210px; bottom: -65px; left: 65px; }
   .arc-text-container { display: none; }
 }
