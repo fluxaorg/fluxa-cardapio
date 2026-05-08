@@ -539,8 +539,8 @@
   /* Todos os cards com overflow hidden — nenhum vaza */
   .bento-card, .bento-card-group-top-right { overflow: hidden; }
 
-  /* Endereços: ocupa linhas 1+2 */
-  .card-enderecos { grid-column: 1/2; grid-row: 1/3; padding: 14px; overflow: hidden; }
+  /* Endereços: ocupa as 3 linhas — sobrepõe cupons */
+  .card-enderecos { grid-column: 1/2; grid-row: 1/4; padding: 14px; z-index: 2; position: relative; }
 
   /* Recentes + Logout: grupo ocupa linhas 1+2 = 168px → cada card ~80px */
   .bento-card-group-top-right  { grid-column: 2/3; grid-row: 1/3; display: flex; flex-direction: column; gap: 8px; }
