@@ -1,14 +1,13 @@
 import { X, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { useCompany } from '../context/CompanyContext';
+import { useBasePath } from '../hooks/useBasePath';
 import './CartSidebar.css';
 
 export default function CartSidebar() {
   const { items, isOpen, setIsOpen, updateQty, removeItem, total } = useCart();
-  const { company } = useCompany();
   const navigate = useNavigate();
-  const basePath = company?.slug ? `/${company.slug}` : '';
+  const basePath = useBasePath(); // inclui /mesa/:num quando em mesa mode
 
   if (!isOpen) return null;
 

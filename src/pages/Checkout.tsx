@@ -99,7 +99,11 @@ export default function Checkout() {
         .insert({
           company_id: company.id,
           order_number: orderNum,
-          cliente_nome: user?.email?.split('@')[0] || 'Convidado',
+          // Mesa: pedido anônimo — não usa dados do login do cliente
+          // Delivery: usa display_name se disponível, senão parte do email
+          cliente_nome: isMesaMode
+            ? 'Convidado'
+            : (user?.user_metadata?.display_name || user?.email?.split('@')[0] || 'Convidado'),
           status: 'recebido',
           total: finalTotal,
           payment_method: isMesaMode ? 'Na mesa' : selectedPayment,
@@ -107,7 +111,7 @@ export default function Checkout() {
           order_source: 'cardapio-v9',
           tipo_pedido: isMesaMode ? 'mesa' : 'delivery',
           mesa_numero: isMesaMode ? parseInt(mesaNumber!) : null,
-          user_id: user?.id || null,
+          user_id: isMesaMode ? null : (user?.id || null), // mesa nunca vincula ao user
           address: resolvedAddress,
         })
         .select().single();
