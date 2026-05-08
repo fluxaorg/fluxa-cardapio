@@ -138,7 +138,13 @@ export default function Pizzas() {
     setSelectedSize(size);
     setSelectedFlavors([]);
     setDesiredFlavorCount(size.maxFlavors);
+    setSelectedCrust(PIZZA_CRUSTS[0]);
     setStep(2);
+  };
+
+  const goToStep3 = () => {
+    if (selectedFlavors.length === 0) return;
+    setStep(3);
   };
 
   const changeDesiredCount = (delta: number) => {
@@ -349,7 +355,55 @@ export default function Pizzas() {
     );
   }
 
-  /* ── STEP 2: Flavor selection — single column with chart on top ── */
+  /* ── STEP 3: Crust selection ── */
+  if (step === 3) {
+    return (
+      <div className="page-container">
+        <main className="main-section bg-white-block pizza-step2-layout">
+          <div className="pizza-s2-header">
+            <button className="back-link" onClick={() => setStep(2)}>
+              <ArrowLeft size={18} />
+              <span>Voltar aos sabores</span>
+            </button>
+            <div className="pizza-s2-title">
+              <h2>Escolha a borda</h2>
+              <p>{selectedSize?.name} — {selectedFlavors.map(f => f.name).join(' / ')}</p>
+            </div>
+          </div>
+
+          {/* Gráfico mini no step 3 */}
+          <div className="pizza-s2-chart-area" style={{ marginBottom: 12 }}>
+            <div className="pizza-visualizer-container">
+              {renderPizzaChart()}
+            </div>
+          </div>
+
+          {/* Bordas em grid */}
+          <div className="pizza-crust-grid-step3">
+            {crusts.map(crust => (
+              <button
+                key={crust.id}
+                className={`pizza-crust-btn ${selectedCrust.id === crust.id ? 'selected' : ''}`}
+                onClick={() => setSelectedCrust(crust)}
+              >
+                <span className="crust-emoji">{crust.emoji}</span>
+                <span className="crust-name">{crust.name}</span>
+                {crust.price > 0 && <span className="crust-price">+R$ {crust.price.toFixed(2)}</span>}
+              </button>
+            ))}
+          </div>
+
+          <div className="pizza-s2-footer">
+            <button className="btn-add-cart" onClick={handleAddCart}>
+              Adicionar ao Carrinho • R$ {((selectedSize?.price || 0) + selectedCrust.price).toFixed(2)}
+            </button>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  /* ── STEP 2: Flavor selection — chart on top ── */
   return (
     <div className="page-container">
       <main className="main-section bg-white-block pizza-step2-layout">
@@ -421,32 +475,14 @@ export default function Pizzas() {
           })}
         </div>
 
-        {/* Seleção de borda */}
-        <div className="pizza-crust-section">
-          <p className="pizza-crust-title">Escolha a borda</p>
-          <div className="pizza-crust-grid">
-            {crusts.map(crust => (
-              <button
-                key={crust.id}
-                className={`pizza-crust-btn ${selectedCrust.id === crust.id ? 'selected' : ''}`}
-                onClick={() => setSelectedCrust(crust)}
-              >
-                <span className="crust-emoji">{crust.emoji}</span>
-                <span className="crust-name">{crust.name}</span>
-                {crust.price > 0 && <span className="crust-price">+R$ {crust.price.toFixed(2)}</span>}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Sticky add button */}
+        {/* Botão para ir à etapa 3 (borda) */}
         <div className="pizza-s2-footer">
           <button
             className={`btn-add-cart ${selectedFlavors.length === 0 ? 'inactive' : ''}`}
             disabled={selectedFlavors.length === 0}
-            onClick={handleAddCart}
+            onClick={goToStep3}
           >
-            Adicionar ao Carrinho • R$ {((selectedSize?.price || 0) + selectedCrust.price).toFixed(2)}
+            Próximo: Escolha a Borda →
           </button>
         </div>
       </main>

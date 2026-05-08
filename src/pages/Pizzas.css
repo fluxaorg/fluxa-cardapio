@@ -100,19 +100,19 @@
 
 .flavors-selection-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
   padding-bottom: 100px;
 }
 
 .flavor-item-card {
   background: white;
-  border-radius: 20px;
-  padding: 16px;
+  border-radius: 14px;
+  padding: 10px 12px;
   display: flex;
   align-items: center;
-  gap: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   cursor: pointer;
   border: 2px solid transparent;
   transition: all 0.2s ease;
@@ -146,15 +146,20 @@
 }
 
 .flavor-details h4 {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 700;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 
 .flavor-details p {
-  font-size: 12px;
+  font-size: 11px;
   color: #888;
-  line-height: 1.3;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .check-icon {
@@ -338,6 +343,19 @@
 .crust-emoji { font-size: 22px; }
 .crust-name  { font-size: 11px; font-weight: 700; color: var(--color-black); text-align: center; line-height: 1.2; }
 .crust-price { font-size: 10px; font-weight: 700; color: var(--color-red); }
+
+/* Grid de bordas no step 3 */
+.pizza-crust-grid-step3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  padding-bottom: 8px;
+}
+.pizza-crust-grid-step3::-webkit-scrollbar { display: none; }
 
 .pizza-s2-footer {
   position: sticky;
