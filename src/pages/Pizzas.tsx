@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import HeroSection from '../components/HeroSection';
 import { ArrowLeft, ChevronRight, Check } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useCompany } from '../context/CompanyContext';
+import { supabase } from '../lib/supabase';
 import './Pizzas.css';
 
 interface PizzaSize {
@@ -51,13 +53,86 @@ const PIZZA_CRUSTS = [
   { id: 'doce_leite', name: 'Borda Doce de Leite',    price: 10,   emoji: '🍬' },
 ];
 
+// Mapeamento de cor/padrão por nome do sabor
+const FLAVOR_COLORS: Record<string, { color: string; pattern: string }> = {
+  calabresa: { color: '#B22222', pattern: 'calabresa' },
+  frango:    { color: '#D4A017', pattern: 'frango' },
+  margherita:{ color: '#4CAF50', pattern: 'margherita' },
+  queijo:    { color: '#FFD700', pattern: 'queijos' },
+  portuguesa:{ color: '#FF8C00', pattern: 'portuguesa' },
+  bacon:     { color: '#8B4513', pattern: 'bacon' },
+  pepperoni: { color: '#CC2200', pattern: 'pepperoni' },
+  vegetariana:{ color: '#2E8B57', pattern: 'vegetariana' },
+};
+function flavorStyle(name: string) {
+  const key = Object.keys(FLAVOR_COLORS).find(k => name.toLowerCase().includes(k));
+  return key ? FLAVOR_COLORS[key] : { color: '#888', pattern: 'calabresa' };
+}
+
 export default function Pizzas() {
   const { addItem } = useCart();
+  const { company } = useCompany();
   const [step, setStep] = useState(1);
   const [selectedSize, setSelectedSize] = useState<PizzaSize | null>(null);
   const [selectedFlavors, setSelectedFlavors] = useState<Flavor[]>([]);
   const [desiredFlavorCount, setDesiredFlavorCount] = useState(1);
   const [selectedCrust, setSelectedCrust] = useState(PIZZA_CRUSTS[0]);
+
+  // Carrega pizza_global do Supabase — substitui os dados hardcoded
+  const [dynamicSizes, setDynamicSizes] = useState<PizzaSize[]>([]);
+  const [dynamicFlavors, setDynamicFlavors] = useState<Flavor[]>([]);
+  const [dynamicCrusts, setDynamicCrusts] = useState(PIZZA_CRUSTS);
+  
+
+  useEffect(() => {
+    if (!company?.id) return;
+    supabase
+      .from('food_menu_items')
+      .select('sizes, pizza_flavors_per_size, pizza_borda_options')
+      .eq('company_id', company.id)
+      .eq('item_type', 'pizza_global')
+      .eq('active', true)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) {
+          if (Array.isArray(data.sizes) && data.sizes.length > 0) {
+            setDynamicSizes(data.sizes.map((s: any) => ({
+              id: s.id || s.name,
+              name: s.name,
+              price: Number(s.price || s.preco || 0),
+              maxFlavors: Number(s.max_sabores || s.maxFlavors || 4),
+            })));
+          }
+          if (Array.isArray(data.pizza_flavors_per_size) && data.pizza_flavors_per_size.length > 0) {
+            setDynamicFlavors(data.pizza_flavors_per_size.map((f: any) => {
+              const style = flavorStyle(f.name);
+              const firstPrice = f.prices ? Object.values(f.prices)[0] as number : 0;
+              return {
+                id: f.id || f.name,
+                name: f.name,
+                description: f.subcat || '',
+                color: style.color,
+                pattern: style.pattern,
+                price: Number(firstPrice || 0),
+              };
+            }));
+          }
+          if (Array.isArray(data.pizza_borda_options) && data.pizza_borda_options.length > 0) {
+            setDynamicCrusts([
+              { id: 'sem', name: 'Sem borda', price: 0, emoji: '🍕' },
+              ...data.pizza_borda_options.map((c: any) => ({
+                id: c.id || c.name, name: c.name, price: Number(c.price || 0), emoji: '🔵',
+              })),
+            ]);
+          }
+        }
+        
+      });
+  }, [company?.id]);
+
+  const sizes   = dynamicSizes.length > 0   ? dynamicSizes   : PIZZA_SIZES;
+  const flavors = dynamicFlavors.length > 0 ? dynamicFlavors : FLAVORS;
+  const crusts  = dynamicCrusts;
 
   const handleSizeSelect = (size: PizzaSize) => {
     setSelectedSize(size);
@@ -255,7 +330,7 @@ export default function Pizzas() {
           </div>
           <div className="split-right pizza-builder-panel">
             <div className="size-list">
-              {PIZZA_SIZES.map((size) => (
+              {sizes.map((size) => (
                 <div key={size.id} className="size-row-card" onClick={() => handleSizeSelect(size)}>
                   <div className="size-main-info">
                     <h3>{size.name}</h3>
@@ -326,7 +401,7 @@ export default function Pizzas() {
 
         {/* Flavors grid */}
         <div className="flavors-selection-grid pizza-s2-flavors">
-          {FLAVORS.map((flavor) => {
+          {flavors.map((flavor) => {
             const isSelected = !!selectedFlavors.find((f) => f.id === flavor.id);
             const isDisabled = !isSelected && selectedFlavors.length >= desiredFlavorCount;
             return (
@@ -350,7 +425,7 @@ export default function Pizzas() {
         <div className="pizza-crust-section">
           <p className="pizza-crust-title">Escolha a borda</p>
           <div className="pizza-crust-grid">
-            {PIZZA_CRUSTS.map(crust => (
+            {crusts.map(crust => (
               <button
                 key={crust.id}
                 className={`pizza-crust-btn ${selectedCrust.id === crust.id ? 'selected' : ''}`}

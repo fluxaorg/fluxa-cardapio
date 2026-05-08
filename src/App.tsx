@@ -14,6 +14,7 @@ import { CompanyProvider } from './context/CompanyContext';
 import { CartProvider } from './context/CartContext';
 import { MesaProvider } from './context/MesaContext';
 import CartSidebar from './components/CartSidebar';
+import BottomNav from './components/BottomNav';
 
 function TenantApp() {
   return (
@@ -22,6 +23,7 @@ function TenantApp() {
         <CartProvider>
           <Navbar />
           <CartSidebar />
+          <BottomNav />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />

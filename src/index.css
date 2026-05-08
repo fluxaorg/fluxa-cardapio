@@ -203,7 +203,8 @@ input::placeholder {
 
 /* Mobile (<768px) */
 @media (max-width: 768px) {
-  body { overflow-y: auto; }
+  body { overflow-y: auto; padding-bottom: 64px; }
+  .navbar { display: none; } /* Navbar desktop escondida — usa BottomNav */
 
   .page-container { margin: 8px; }
 
