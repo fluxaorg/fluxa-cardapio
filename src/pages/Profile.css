@@ -526,10 +526,10 @@
 
 /* Profile mobile — bento compacto, sem sobreposição */
 @media (max-width: 768px) {
-  /* Bento: 2 colunas, linhas de 85px — total ~285px */
+  /* Bento: 2 colunas — linha 1/2 menor, linha 3 maior para Pedidos */
   .profile-bento-grid {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 85px 85px 85px;
+    grid-template-rows: 80px 80px 110px; /* linha 3 maior para Pedidos */
     gap: 8px;
     max-height: none;
     width: 100%;
@@ -538,21 +538,29 @@
   /* Layout dos cards */
   .card-enderecos              { grid-column: 1/2; grid-row: 1/3; padding: 14px; }
   .bento-card-group-top-right  { grid-column: 2/3; grid-row: 1/2; display: flex; flex-direction: column; gap: 6px; }
-  .card-recentes, .card-logout { flex: 1; padding: 10px; min-height: 0; }
-  .card-cupons                 { grid-column: 1/2; grid-row: 3/4; padding: 10px; }
-  .card-pedidos                { grid-column: 2/3; grid-row: 2/4; padding: 14px; }
+  .card-recentes, .card-logout { flex: 1; padding: 12px; min-height: 0; justify-content: center; }
+  .card-cupons                 { grid-column: 1/2; grid-row: 3/4; padding: 12px; }
+  .card-pedidos                { grid-column: 2/3; grid-row: 2/4; padding: 14px; } /* row 2→4 ocupa 2 linhas */
 
-  /* Textos menores para caber */
+  /* Endereços */
   .syl            { font-size: 26px; line-height: 0.85; }
   .enderecos-hint { font-size: 10px; right: 0; bottom: 0; }
-  .recentes-line1 { font-size: 12px; }
-  .recentes-line2 { font-size: 14px; }
-  .recentes-hint, .logout-hint, .cupons-hint { font-size: 10px; }
-  .logout-title   { font-size: 18px; }
-  .cupons-line1   { font-size: 13px; }
-  .cupons-line2   { font-size: 16px; }
-  .pedidos-line1  { font-size: 16px; }
-  .pedidos-line2  { font-size: 38px; line-height: 0.9; margin-top: 0; }
+
+  /* Recentes e Logout — maiores para não ficarem compactos */
+  .recentes-line1 { font-size: 14px; }
+  .recentes-line2 { font-size: 16px; }
+  .recentes-hint  { font-size: 10px; }
+  .logout-title   { font-size: 22px; }
+  .logout-hint    { font-size: 11px; }
+
+  /* Cupons */
+  .cupons-line1   { font-size: 14px; }
+  .cupons-line2   { font-size: 18px; }
+  .cupons-hint    { font-size: 10px; }
+
+  /* Meus Pedidos — mais para baixo (row 2/4) e maior */
+  .pedidos-line1  { font-size: 17px; }
+  .pedidos-line2  { font-size: 44px; line-height: 0.9; margin-top: 0; }
   .pedidos-hint   { font-size: 10px; margin-top: 4px; }
 
   /* Painel direito: sem height mínimo */

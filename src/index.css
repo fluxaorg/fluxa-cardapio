@@ -229,7 +229,7 @@ input::placeholder {
     height: calc(100vh - 6px - 64px - 6px) !important; /* viewport - margin top - BottomNav - margin bottom */
     min-height: calc(100vh - 76px) !important;
     max-height: calc(100vh - 76px) !important;
-    padding: 16px 14px;
+    padding: 28px 14px 16px; /* mais espaço no topo antes do conteúdo */
     border-radius: 16px;
     overflow-x: hidden;
     overflow-y: auto;
