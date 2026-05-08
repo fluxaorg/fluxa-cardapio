@@ -371,12 +371,13 @@
   .show-mobile { display: flex; }
   .pizza-builder-panel { padding-right: 0; }
 
-  /* Tamanhos de pizza: padding compacto */
-  .size-row-card { padding: 14px 16px; }
+  /* Tamanhos de pizza: centralizados e compactos */
+  .pizza-builder-panel { align-items: center; justify-content: center; width: 100%; }
+  .size-list         { gap: 8px; width: 100%; max-width: 340px; margin: 0 auto; }
+  .size-row-card     { padding: 14px 16px; }
   .size-main-info h3 { font-size: clamp(16px, 5vw, 22px); }
   .size-main-info p  { font-size: 13px; }
   .size-price        { font-size: clamp(16px, 5vw, 22px); }
-  .size-list         { gap: 8px; }
 
   /* Step 2 */
   .pizza-step2-layout { padding: 0; }
