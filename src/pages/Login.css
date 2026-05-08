@@ -131,3 +131,21 @@
   margin-bottom: 8px;
   width: 100%;
 }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .login-right-col {
+    height: auto;
+    width: 100%;
+    padding: 0;
+  }
+  .login-card {
+    max-height: none;
+    overflow-y: visible;
+    padding: 24px 20px;
+    border-radius: 16px;
+    width: 100%;
+  }
+  .login-title { font-size: 26px; }
+  .login-subtitle { font-size: 14px; }
+}

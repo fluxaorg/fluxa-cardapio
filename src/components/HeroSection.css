@@ -115,8 +115,20 @@
 .l-5 { font-size: 11px; opacity: 0.10; font-weight: 300; }
 
 @media (max-width: 768px) {
-  .hero-title-giant { font-size: 64px; }
-  .hero-title-medium { font-size: 28px; }
+  .hero-title-giant { font-size: clamp(42px, 13vw, 72px); }
+  .hero-title-medium { font-size: clamp(20px, 6vw, 28px); }
   .hero-eyes { right: -40px; bottom: 8px; }
   .stacked-lanches { display: none; }
+
+  /* Centra o conteúdo do hero no mobile */
+  .hero-section {
+    justify-content: center;
+    min-height: unset;
+  }
+  .hero-content {
+    text-align: center;
+    padding-bottom: 40px; /* espaço para os círculos */
+  }
+  .hero-subtitle { max-width: 100%; }
+  .hero-top-label { text-align: center; }
 }
