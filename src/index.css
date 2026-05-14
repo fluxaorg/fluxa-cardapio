@@ -40,8 +40,8 @@
   --shadow-sidebar: 0 4px 24px rgba(0,0,0,0.06);
   --shadow-thumb:   0 2px 8px rgba(0,0,0,0.12);
 
-  /* Mobile safe areas */
-  --bottom-nav-h: 72px;
+  /* Mobile safe areas — iOS home indicator support */
+  --bottom-nav-h: 60px; /* base height, JS env() adds safe-area */
   --top-margin: 8px;
 }
 
@@ -186,6 +186,7 @@ input::placeholder, textarea::placeholder {
   :root {
     --top-margin: 6px;
     --radius-section: 20px;
+    --bottom-nav-h: calc(60px + env(safe-area-inset-bottom, 0px));
   }
 
   body {
@@ -198,7 +199,7 @@ input::placeholder, textarea::placeholder {
   .page-container {
     margin: var(--top-margin);
     margin-bottom: 0;
-    /* No fixed height — each section handles its own height */
+    padding-bottom: var(--bottom-nav-h);
   }
 
   /* White block: full height minus bottom nav and margins */
