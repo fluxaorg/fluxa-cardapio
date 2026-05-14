@@ -1,227 +1,169 @@
-/* ══════════════════════════════════════════
-   LOGIN — Mobile-first centered card
-══════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   LOGIN — Uber / Apple Standard Clean Layout
+   
+   • Full-screen centered card on mobile
+   • Big bold typography (DM Sans)
+   • Large Uber-black CTAs
+   • Modern subtle inputs
+══════════════════════════════════════════════════════════════ */
 
-/* On mobile: full page, no split, card centered */
 .login-page {
-  /* override split layout to be just a single column card view */
-  padding: 0 !important;
-  gap: 0 !important;
-}
-
-/* Hide hero on mobile for login */
-@media (max-width: 767px) {
-  .login-page .split-left {
-    display: none !important;
-  }
-
-  .login-page .login-right-col {
-    width: 100% !important;
-    min-height: calc(100dvh - var(--bottom-nav-h) - var(--top-margin) * 2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 16px;
-  }
-
-  .login-card {
-    width: 100%;
-    max-width: 100%;
-    padding: 28px 20px;
-    border-radius: 20px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-    background: var(--color-white);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-  }
-}
-
-.login-right-col {
+  min-height: 100dvh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  background: var(--surface, #FFF);
+}
+
+.login-container {
+  flex: 1;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
 .login-card {
-  background-color: var(--color-white);
-  border-radius: 24px;
-  padding: 40px 32px;
   width: 100%;
   max-width: 400px;
-  overflow-y: auto;
-  box-shadow: 0 4px 30px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.login-icon-wrapper {
-  margin-bottom: 20px;
-}
-
-.login-icon-circle {
-  width: 56px;
-  height: 56px;
-  background-color: var(--color-black);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.login-icon-f {
-  color: var(--color-white);
-  font-size: 26px;
-  font-weight: 700;
-}
-
-.login-section {
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0;
 }
 
+/* ── Icon — clean branding ── */
+.login-branding {
+  width: 64px;
+  height: 64px;
+  background: var(--black, #2D2D2D);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.login-branding span {
+  color: #FFF;
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+}
+
+/* ── Typography ── */
 .login-title {
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 800;
-  color: var(--color-black);
-  text-align: center;
+  color: var(--text-primary, #1A1A1A);
   letter-spacing: -0.04em;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
+  text-align: center;
 }
 
 .login-subtitle {
-  font-size: 15px;
+  font-size: 16px;
+  color: var(--text-secondary, #757575);
   font-weight: 500;
-  color: var(--color-text-secondary);
+  margin-bottom: 32px;
   text-align: center;
-  margin-bottom: 20px;
 }
 
-.login-input {
+/* ── Form — Uber style inputs ── */
+.login-form {
   width: 100%;
-  height: 50px;
-  background-color: var(--color-bg);
-  border: 1.5px solid transparent;
-  border-radius: var(--radius-input);
-  padding: 0 18px;
-  font-size: 15px;
-  margin-bottom: 10px;
-  color: var(--color-black);
-  font-family: var(--font-family);
-  transition: border-color 200ms;
-  -webkit-appearance: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.login-input:focus {
-  border-color: var(--color-border);
-  background: var(--color-white);
-  box-shadow: 0 0 0 3px rgba(0,0,0,0.04);
+.login-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.login-divider {
-  width: 60%;
-  height: 1px;
-  background-color: var(--color-border);
-  margin: 20px 0;
-}
-
-/* Main CTA — "Booooora pedir!" */
-.login-btn-submit {
-  width: 100%;
-  height: 54px;
-  background-color: var(--color-red);
-  color: var(--color-white);
-  font-size: 17px;
-  font-weight: 800;
-  font-family: var(--font-family);
-  border-radius: 999px;
-  margin-top: 12px;
-  letter-spacing: -0.01em;
-  box-shadow: 0 4px 16px rgba(217, 30, 54, 0.3);
-  cursor: pointer;
-  transition: all 200ms ease;
-}
-
-.login-btn-submit:hover {
-  background-color: var(--color-red-vivid);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(217, 30, 54, 0.4);
-}
-
-.login-btn-submit:active {
-  transform: scale(0.97);
-}
-
-/* Secondary CTA — "Entrar" */
-.login-btn-section {
-  width: 100%;
-  height: 50px;
-  background-color: transparent;
-  color: var(--color-black);
-  font-size: 15px;
-  font-weight: 700;
-  font-family: var(--font-family);
-  border: 1.5px solid var(--color-border);
-  border-radius: 999px;
-  margin-top: 10px;
-  transition: all 0.2s;
-  cursor: pointer;
-}
-
-.login-btn-section:hover {
-  background-color: var(--color-bg);
-  border-color: #ccc;
-}
-
-.login-btn-section:disabled,
-.login-btn-submit:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.login-error {
+.login-label {
   font-size: 13px;
-  color: var(--color-red);
-  text-align: center;
-  margin: 6px 0 2px;
-  width: 100%;
-  font-weight: 600;
-}
-
-.login-switch {
-  margin-top: 16px;
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  text-align: center;
-  width: 100%;
-}
-
-.login-switch-btn {
-  background: none;
-  border: none;
-  color: var(--color-red);
-  font-size: 14px;
   font-weight: 700;
-  font-family: var(--font-family);
-  cursor: pointer;
-  text-decoration: underline;
-  padding: 0;
+  color: var(--text-primary, #1A1A1A);
+  margin-left: 4px;
 }
 
-/* Desktop: show hero + card side by side */
+/* ── CTAs — Uber Black ── */
+.login-submit-btn {
+  width: 100%;
+  height: 56px;
+  background: var(--black, #2D2D2D);
+  color: #FFF;
+  font-size: 17px;
+  font-weight: 700;
+  border-radius: var(--r-btn, 14px);
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 150ms ease;
+}
+
+.login-submit-btn:active { transform: scale(0.98); background: var(--black-deep, #1A1A1A); }
+
+.login-secondary-btn {
+  width: 100%;
+  height: 56px;
+  background: transparent;
+  color: var(--black, #2D2D2D);
+  font-size: 16px;
+  font-weight: 700;
+  border: 2px solid var(--border, #EBEBEB);
+  border-radius: var(--r-btn, 14px);
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 150ms ease;
+}
+
+.login-secondary-btn:active { transform: scale(0.98); background: var(--surface-2, #F5F5F5); }
+
+/* ── Errors ── */
+.login-error-msg {
+  font-size: 13px;
+  color: var(--red, #D91E36);
+  font-weight: 600;
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* ── Switch footer ── */
+.login-footer-switch {
+  margin-top: 32px;
+  font-size: 14px;
+  color: var(--text-secondary, #757575);
+  font-weight: 500;
+}
+
+.login-link {
+  color: var(--red, #D91E36);
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+/* Desktop: split layout fallback */
 @media (min-width: 768px) {
-  .login-page .split-left {
-    display: flex !important;
+  .login-page {
+    flex-direction: row;
   }
-  .login-page .login-right-col {
-    min-height: unset;
-    flex: 0 0 60%;
+  .login-hero-col {
+    flex: 1;
+    background: var(--black, #2D2D2D);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .login-container {
+    flex: 0 0 500px;
+    background: #FFF;
   }
 }

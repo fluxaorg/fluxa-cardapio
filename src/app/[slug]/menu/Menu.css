@@ -1,136 +1,155 @@
-/* ══════════════════════════════════════════
-   MENU — Mobile-First Grid
-══════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   MENU — iFood standard mobile layout
+   
+   • Categorias horizontais scrolláveis (pills com scroll)
+   • Produtos em lista horizontal (foto + info + + button)
+   • Fácil de escanear, sem scroll lateral
+   • Tablet+: grid 2-3 colunas
+══════════════════════════════════════════════════════════════ */
 
-.menu-section {
+/* Page wrapper */
+.menu-page {
   display: flex;
   flex-direction: column;
-  min-height: calc(100dvh - var(--bottom-nav-h) - var(--top-margin) * 2);
+  min-height: calc(100dvh - var(--tab-bar-total, 60px));
+  background: var(--surface, #FFF);
 }
 
-.menu-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-  flex-shrink: 0;
+/* ── Page header ── */
+.menu-page-header {
+  padding: 20px 20px 0;
+  background: var(--surface, #FFF);
 }
 
-.menu-title {
-  font-size: clamp(26px, 7vw, 40px);
+.menu-page-title {
+  font-size: 28px;
   font-weight: 800;
-  color: var(--color-black);
+  color: var(--text-primary, #1A1A1A);
   letter-spacing: -0.04em;
-  line-height: 1;
+  margin-bottom: 16px;
 }
 
-.menu-filter-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--color-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-/* Category pills */
+/* ── Category pills — horizontally scrollable ── */
 .menu-categories {
   display: flex;
   gap: 8px;
-  margin-bottom: 16px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  padding-bottom: 16px;
   scrollbar-width: none;
-  flex-shrink: 0;
   -webkit-overflow-scrolling: touch;
+  /* Extend to edges on mobile */
+  margin: 0 -20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .menu-categories::-webkit-scrollbar { display: none; }
 
 .category-pill {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-black);
-  background-color: var(--color-bg);
-  border: none;
-  border-radius: var(--radius-pill);
-  padding: 8px 18px;
-  white-space: nowrap;
-  transition: all 0.2s ease;
   flex-shrink: 0;
+  height: 36px;
+  padding: 0 16px;
+  background: var(--surface-2, #F5F5F5);
+  border: 1.5px solid transparent;
+  border-radius: var(--r-pill, 999px);
+  font-family: var(--font, 'DM Sans', sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary, #757575);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 150ms ease;
+  display: flex;
+  align-items: center;
 }
 
 .category-pill.active {
-  background-color: var(--color-black);
-  color: var(--color-white);
+  background: var(--black, #2D2D2D);
+  border-color: var(--black, #2D2D2D);
+  color: #FFF;
 }
 
-/* Product Grid — 1 col mobile, grows on larger screens */
-.menu-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.category-pill:active { transform: scale(0.95); }
+
+/* ── Category divider label in list ── */
+.menu-category-header {
+  padding: 20px 20px 10px;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary, #1A1A1A);
+  letter-spacing: -0.03em;
+  background: var(--surface, #FFF);
+}
+
+/* ── Product list — scrollable ── */
+.menu-product-list {
   flex: 1;
   overflow-y: auto;
-  scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
   padding-bottom: 8px;
 }
-.menu-grid::-webkit-scrollbar { display: none; }
+.menu-product-list::-webkit-scrollbar { display: none; }
 
-/* ── Product Card — Horizontal list item (mobile) ── */
+/* ── Product card — iFood horizontal layout ── */
 .product-card {
-  background-color: var(--color-white);
-  border-radius: 16px;
-  padding: 12px;
-  border: 1px solid var(--color-border);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
+  padding: 14px 20px;
+  background: var(--surface, #FFF);
+  border-bottom: 1px solid var(--border, #EBEBEB);
   cursor: pointer;
-  transition: transform 150ms ease, box-shadow 150ms ease;
-  position: relative;
   -webkit-tap-highlight-color: transparent;
+  transition: background 100ms ease;
+  position: relative;
 }
 
-.product-card:active {
-  transform: scale(0.98);
-}
+.product-card:active { background: var(--surface-2, #F5F5F5); }
+.product-card:last-child { border-bottom: none; }
 
+/* Image */
 .product-card-img {
-  width: 72px;
-  height: 72px;
-  border-radius: var(--radius-thumb);
+  width: 80px;
+  height: 80px;
+  border-radius: var(--r-thumb, 12px);
   object-fit: cover;
   flex-shrink: 0;
-  background: var(--color-bg);
+  background: var(--surface-2, #F5F5F5);
 }
 
+.product-card-img-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--r-thumb, 12px);
+  background: var(--surface-2, #F5F5F5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+/* Info block */
 .product-card-info {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  min-width: 0;
-  gap: 2px;
+  gap: 3px;
 }
 
 .product-card-name {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
-  color: var(--color-black);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding-right: 36px; /* space for + button */
+  color: var(--text-primary, #1A1A1A);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
 }
 
 .product-card-desc {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--color-text-secondary);
-  line-height: 1.4;
-  padding-right: 36px;
+  font-size: 13px;
+  color: var(--text-secondary, #757575);
+  line-height: 1.45;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -138,37 +157,47 @@
 }
 
 .product-card-price {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
-  color: var(--color-red);
+  color: var(--text-primary, #1A1A1A);
   margin-top: 4px;
 }
 
+/* Add button — iFood green-style but Fluxa black */
 .product-card-add {
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: var(--color-red);
-  color: var(--color-white);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--black, #2D2D2D);
+  color: white;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(217, 30, 54, 0.3);
+  cursor: pointer;
   transition: all 150ms ease;
 }
 
-.product-card-add:hover {
-  background-color: var(--color-red-vivid);
-  transform: translateY(-50%) scale(1.1);
+.product-card-add:hover  { background: var(--black-deep, #1A1A1A); }
+.product-card-add:active { transform: scale(0.88); }
+
+/* ── Empty state ── */
+.menu-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 12px;
+  color: var(--text-secondary, #757575);
+  text-align: center;
 }
 
-.product-card-add:active {
-  transform: translateY(-50%) scale(0.92);
+.menu-empty-icon { font-size: 48px; }
+.menu-empty-text {
+  font-size: 16px;
+  font-weight: 600;
 }
 
 /* ══════════════════════════════════════════
@@ -176,91 +205,57 @@
 ══════════════════════════════════════════ */
 
 @media (min-width: 600px) {
-  .menu-grid {
+  .menu-product-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    padding: 0 16px 16px;
     gap: 12px;
-    overflow-y: auto;
   }
 
   .product-card {
     flex-direction: column;
     align-items: stretch;
     padding: 0;
+    border-bottom: none;
+    border: 1px solid var(--border, #EBEBEB);
+    border-radius: var(--r-card, 16px);
     overflow: hidden;
-    border-radius: 16px;
   }
 
   .product-card-img {
     width: 100%;
-    height: 140px;
+    height: 160px;
+    border-radius: 0;
+  }
+
+  .product-card-img-placeholder {
+    width: 100%;
+    height: 160px;
     border-radius: 0;
   }
 
   .product-card-info {
-    padding: 10px 12px 12px;
-    padding-right: 12px;
+    padding: 12px 14px 14px;
   }
 
-  .product-card-name {
-    padding-right: 0;
-    font-size: 14px;
-    white-space: normal;
-  }
-
-  .product-card-desc {
-    padding-right: 0;
-    font-size: 12px;
-  }
-
-  .product-card-price {
-    font-size: 13px;
-  }
+  .product-card-name { font-size: 15px; }
+  .product-card-desc { -webkit-line-clamp: 2; }
 
   .product-card-add {
-    top: 120px;
-    right: 10px;
-    transform: none;
-  }
-
-  .product-card-add:hover {
-    transform: scale(1.1);
-  }
-  .product-card-add:active {
-    transform: scale(0.92);
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
   }
 }
 
-@media (min-width: 1024px) {
-  .menu-section {
-    min-height: unset;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  .menu-grid {
+@media (min-width: 900px) {
+  .menu-product-list {
     grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    flex: 1;
-    min-height: 0;
-    align-content: start;
-  }
-
-  .product-card-img {
-    height: 160px;
-  }
-
-  .product-card-add {
-    top: 138px;
-  }
-
-  .menu-title {
-    font-size: 40px;
   }
 }
 
-@media (min-width: 1280px) {
-  .menu-grid {
+@media (min-width: 1200px) {
+  .menu-product-list {
     grid-template-columns: repeat(4, 1fr);
   }
 }

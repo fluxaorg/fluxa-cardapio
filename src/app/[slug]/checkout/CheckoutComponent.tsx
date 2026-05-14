@@ -7,15 +7,14 @@ import { useAuth } from '@/context/AuthContext';
 import { useMesa } from '@/context/MesaContext';
 import { useBasePath } from '@/hooks/useBasePath';
 import { supabase } from '@/lib/supabase';
-import { Check, MapPin } from 'lucide-react';
-import HeroSection from '@/components/HeroSection';
+import { Check, ArrowLeft, X, MapPin, CreditCard, Wallet, Banknote, Landmark } from 'lucide-react';
 import './Checkout.css';
 
 const PAYMENT_METHODS = [
-  { id: 'pix',     label: 'Pix',              icon: '💸' },
-  { id: 'credito', label: 'Cartão de Crédito', icon: '💳' },
-  { id: 'debito',  label: 'Cartão de Débito',  icon: '💳' },
-  { id: 'dinheiro',label: 'Dinheiro',          icon: '💵' },
+  { id: 'pix',     label: 'Pix',              icon: <Landmark size={20} /> },
+  { id: 'credito', label: 'Cartão de Crédito', icon: <CreditCard size={20} /> },
+  { id: 'debito',  label: 'Cartão de Débito',  icon: <CreditCard size={20} /> },
+  { id: 'dinheiro',label: 'Dinheiro',          icon: <Banknote size={20} /> },
 ];
 
 interface SavedAddress {
@@ -144,153 +143,152 @@ export default function Checkout() {
 
   if (confirmed) {
     return (
-      <div className="page-container">
-        <main className="main-section bg-white-block split-layout">
-          <div className="split-left">
-            <HeroSection
-              titleMedium="aeeee,"
-              titleGiant="pedido confirmado!"
-              subtitle={isMesaMode ? `chegando na Mesa ${mesaNumber}! 🙏` : 'só esperar uns minutinhos ta?! 🙏'}
-            />
-          </div>
-          <div className="split-right" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ width: 100, height: 100, background: 'var(--color-red)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', boxShadow: '0 8px 32px rgba(217,30,54,0.35)' }}>
-                <Check size={52} color="white" strokeWidth={3} />
-              </div>
-              <p style={{ color: 'var(--color-text-secondary)', fontSize: 16 }}>
-                {isMesaMode ? 'Abrindo comanda...' : 'Redirecionando...'}
-              </p>
-            </div>
-          </div>
-        </main>
+      <div className="confirm-page">
+        <div className="confirm-icon-box">
+          <Check size={48} color="white" strokeWidth={4} />
+        </div>
+        <h1 className="confirm-title">Pedido feito!</h1>
+        <p className="confirm-subtitle">
+          {isMesaMode 
+            ? `Já estamos preparando tudo para a Mesa ${mesaNumber}. 🙏` 
+            : 'Recebemos seu pedido e já vamos começar a preparar! 🙏'}
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="page-container detail-layout">
-      {/* Esquerda: itens */}
-      <main className="main-section bg-white-block detail-left">
-        <div className="detail-header">
-          <h1 className="detail-header-title" style={{ color: 'var(--color-black)', opacity: 1 }}>
-            {isMesaMode ? `Mesa ${mesaNumber} — Resumo` : 'Resumo do pedido'}
-          </h1>
-        </div>
-        {items.length === 0 ? (
-          <div style={{ padding: '60px 0', textAlign: 'center', color: 'var(--color-text-secondary)' }}>
-            <p style={{ fontSize: 18 }}>Seu carrinho está vazio.</p>
-            <button style={{ marginTop: 16, background: 'var(--color-red)', color: 'white', padding: '12px 28px', borderRadius: 12, fontWeight: 700, fontSize: 15 }}
-              onClick={() => router.push(`${basePath}/menu`)}>Ver Menu</button>
-          </div>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 8 }}>
+    <div className="checkout-page">
+      {/* Header — Uber style back button */}
+      <header className="page-header">
+        <button className="header-btn" onClick={() => router.back()}>
+          <ArrowLeft size={22} />
+        </button>
+        <h1 className="page-header-title">Finalizar Pedido</h1>
+        <button className="header-btn" onClick={() => router.push(`${basePath}/menu`)}>
+          <X size={22} />
+        </button>
+      </header>
+
+      <div className="checkout-content">
+        {/* Resumo dos Itens */}
+        <section className="checkout-section">
+          <h2 className="checkout-section-title">Seu Pedido</h2>
+          <div className="checkout-items-list">
             {items.map(item => (
-              <div key={item.id} className="sidebar-item" style={{ padding: '14px', background: '#fafafa', borderRadius: 14, border: '1px solid var(--color-border)' }}>
-                {item.image_url
-                  ? <img src={item.image_url} alt={item.name} style={{ width: 64, height: 64, borderRadius: 10, objectFit: 'cover', flexShrink: 0 }} />
-                  : <div style={{ width: 64, height: 64, borderRadius: 10, background: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0 }}>🍴</div>
-                }
-                <div className="sidebar-item-info">
-                  <span className="sidebar-item-name">{item.name}</span>
-                  <span style={{ fontSize: 12, color: 'var(--color-text-secondary)', marginTop: 2 }}>Qtd: {item.qty}</span>
+              <div key={item.id} className="checkout-item-row">
+                {item.image_url ? (
+                  <img src={item.image_url} alt={item.name} className="checkout-item-img" />
+                ) : (
+                  <div className="checkout-item-img" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>🍴</div>
+                )}
+                <div className="checkout-item-info">
+                  <p className="checkout-item-name">{item.name}</p>
+                  <p className="checkout-item-qty">{item.qty}x R$ {item.price.toFixed(2)}</p>
                 </div>
-                <span className="sidebar-item-price">R$ {(item.price * item.qty).toFixed(2)}</span>
+                <span className="checkout-item-price">R$ {(item.price * item.qty).toFixed(2)}</span>
               </div>
             ))}
           </div>
-        )}
-      </main>
+        </section>
 
-      {/* Direita: pagamento / mesa */}
-      <aside className="main-section bg-white-block detail-sidebar checkout-sidebar">
-        <div className="sidebar-header">
-          <div>
-            <h2 className="sidebar-title">Meu pedido</h2>
-            <p className="checkout-subtitle">{isMesaMode ? `Mesa ${mesaNumber}` : 'Entrega e pagamento'}</p>
-          </div>
-          <span className="sidebar-count">{items.length} {items.length === 1 ? 'Item' : 'Itens'}</span>
-        </div>
-
-        {/* MODO MESA: confirmação simples */}
-        {isMesaMode ? (
-          <div className="mesa-confirm-info">
-            <div className="mesa-confirm-icon">🪑</div>
-            <p className="mesa-confirm-text">
-              Seu pedido chegará diretamente na <strong>Mesa {mesaNumber}</strong>.<br />
-              O pagamento é feito no caixa ao final.
-            </p>
-          </div>
-        ) : (
-          <>
-            {/* Endereços salvos */}
-            <div className="checkout-address-section">
-              <p className="checkout-address-title">
-                <MapPin size={14} style={{ display: 'inline', marginRight: 6, verticalAlign: 'middle' }} />
-                Endereço de entrega
+        {/* Endereço (Mesa ou Entrega) */}
+        <section className="checkout-section">
+          <h2 className="checkout-section-title">{isMesaMode ? 'Onde você está' : 'Onde entregar'}</h2>
+          
+          {isMesaMode ? (
+            <div className="mesa-info-card">
+              <span className="mesa-info-icon">🪑</span>
+              <p className="mesa-info-text">
+                Você está na <strong>Mesa {mesaNumber}</strong>.<br />
+                O pedido será entregue diretamente aqui.
               </p>
-              {savedAddresses.length > 0 && (
-                <div className="checkout-saved-addresses">
-                  {savedAddresses.map(addr => (
-                    <button key={addr.id}
-                      className={`checkout-addr-option ${selectedAddressId === addr.id ? 'selected' : ''}`}
-                      onClick={() => selectAddress(addr)}>
-                      <span className="addr-option-label">{addr.label}</span>
-                      <span className="addr-option-street">{addr.street}{addr.number ? `, ${addr.number}` : ''}{addr.city ? ` · ${addr.city}` : ''}</span>
-                    </button>
-                  ))}
-                  <button className={`checkout-addr-option ${selectedAddressId === 'new' ? 'selected' : ''}`}
-                    onClick={() => { setSelectedAddressId('new'); setStreet(''); setNumber(''); setComplement(''); setCity(''); }}>
-                    <span className="addr-option-label">+ Novo endereço</span>
-                  </button>
-                </div>
-              )}
-              {(selectedAddressId === 'new' || savedAddresses.length === 0) && (
-                <div className="checkout-addr-form">
-                  <div className="checkout-addr-row">
-                    <input className="checkout-addr-input checkout-addr-street" placeholder="Rua / Avenida *" value={street} onChange={e => setStreet(e.target.value)} />
-                    <input className="checkout-addr-input checkout-addr-number" placeholder="Nº" value={number} onChange={e => setNumber(e.target.value)} />
+            </div>
+          ) : (
+            <div className="checkout-options-list">
+              {savedAddresses.map(addr => (
+                <button 
+                  key={addr.id}
+                  className={`checkout-option-card ${selectedAddressId === addr.id ? 'selected' : ''}`}
+                  onClick={() => selectAddress(addr)}
+                >
+                  <div className="checkout-option-icon"><MapPin size={20} /></div>
+                  <div className="checkout-option-info">
+                    <p className="checkout-option-label">{addr.label}</p>
+                    <p className="checkout-option-sub">{addr.street}, {addr.number}</p>
                   </div>
-                  <input className="checkout-addr-input" placeholder="Complemento (opcional)" value={complement} onChange={e => setComplement(e.target.value)} style={{ marginTop: 8 }} />
-                  <input className="checkout-addr-input" placeholder="Cidade" value={city} onChange={e => setCity(e.target.value)} style={{ marginTop: 8 }} />
+                  {selectedAddressId === addr.id && <Check size={20} className="pm-check" />}
+                </button>
+              ))}
+              <button 
+                className={`checkout-option-card ${selectedAddressId === 'new' ? 'selected' : ''}`}
+                onClick={() => { setSelectedAddressId('new'); setStreet(''); setNumber(''); }}
+              >
+                <div className="checkout-option-icon">+</div>
+                <div className="checkout-option-info">
+                  <p className="checkout-option-label">Novo endereço</p>
+                  <p className="checkout-option-sub">Informar endereço manualmente</p>
+                </div>
+              </button>
+              
+              {selectedAddressId === 'new' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <input className="input-field" placeholder="Rua / Avenida *" value={street} onChange={e => setStreet(e.target.value)} style={{ flex: 1 }} />
+                    <input className="input-field" placeholder="Nº" value={number} onChange={e => setNumber(e.target.value)} style={{ width: 80 }} />
+                  </div>
                 </div>
               )}
             </div>
+          )}
+        </section>
 
-            <div className="sidebar-divider"></div>
-
-            {/* Métodos de pagamento */}
-            <div className="payment-methods-list">
+        {/* Pagamento (Oculto em modo mesa conforme pedido) */}
+        {!isMesaMode && (
+          <section className="checkout-section">
+            <h2 className="checkout-section-title">Como pagar</h2>
+            <div className="checkout-options-list">
               {PAYMENT_METHODS.map(pm => (
-                <button key={pm.id}
-                  className={`payment-method-btn ${selectedPayment === pm.id ? 'selected' : ''}`}
-                  onClick={() => setSelectedPayment(pm.id)}>
-                  <span className="pm-icon">{pm.icon}</span>
-                  <span className="pm-label">{pm.label}</span>
-                  {selectedPayment === pm.id && <Check size={16} className="pm-check" />}
+                <button 
+                  key={pm.id}
+                  className={`checkout-option-card ${selectedPayment === pm.id ? 'selected' : ''}`}
+                  onClick={() => setSelectedPayment(pm.id)}
+                >
+                  <div className="checkout-option-icon">{pm.icon}</div>
+                  <div className="checkout-option-info">
+                    <p className="checkout-option-label">{pm.label}</p>
+                    <p className="checkout-option-sub">{pm.id === 'pix' ? 'Pagamento instantâneo' : 'Pagar na entrega'}</p>
+                  </div>
+                  {selectedPayment === pm.id && <Check size={20} className="pm-check" />}
                 </button>
               ))}
             </div>
-          </>
+          </section>
         )}
 
-        <div className="sidebar-divider"></div>
+        {/* Resumo de Valores */}
+        <section className="checkout-section">
+          <div className="checkout-summary-box">
+            <div className="checkout-summary-row"><span>Itens</span><span>R$ {total.toFixed(2)}</span></div>
+            {!isMesaMode && <div className="checkout-summary-row"><span>Entrega</span><span>R$ {deliveryFee.toFixed(2)}</span></div>}
+            <div className="checkout-summary-total"><span>Total</span><span>R$ {finalTotal.toFixed(2)}</span></div>
+          </div>
+        </section>
 
-        <div className="sidebar-summary">
-          <div className="summary-row"><span>Subtotal</span><span>R$ {total.toFixed(2)}</span></div>
-          {!isMesaMode && <div className="summary-row"><span>Taxa de entrega</span><span>R$ {deliveryFee.toFixed(2)}</span></div>}
-          <div className="summary-row total-row"><span>Total</span><span>R$ {finalTotal.toFixed(2)}</span></div>
-        </div>
+        {error && <p style={{ color: 'var(--red)', fontSize: 13, textAlign: 'center', fontWeight: 600 }}>{error}</p>}
+      </div>
 
-        {error && <p style={{ color: 'var(--color-red)', fontSize: 13, textAlign: 'center', marginBottom: 8 }}>{error}</p>}
-
-        <button className="sidebar-btn-confirm"
+      {/* FIXED FOOTER CTA — Uber standard */}
+      <footer className="checkout-footer">
+        <button 
+          className="btn-primary" 
           onClick={handleConfirm}
           disabled={!canConfirm || saving}
-          style={{ opacity: (!canConfirm || saving) ? 0.45 : 1 }}>
-          {saving ? 'Confirmando...' : isMesaMode ? `✓ Chegará na Mesa ${mesaNumber}!` : 'Confirmar pedido'}
+          style={{ opacity: (!canConfirm || saving) ? 0.5 : 1 }}
+        >
+          {saving ? 'Processando...' : isMesaMode ? `Fazer pedido na Mesa ${mesaNumber}` : 'Confirmar Pedido'}
         </button>
-      </aside>
+      </footer>
     </div>
   );
 }

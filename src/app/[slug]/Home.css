@@ -1,104 +1,96 @@
-/* ══════════════════════════════════════════
-   HOME — Bento Grid (mobile-first)
-══════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   HOME — Bento Grid Layout
+   Standard: Uber Eats / iFood clean visual style
+══════════════════════════════════════════════════════════════ */
 
 .home-bento-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 130px 130px 110px;
-  gap: 10px;
+  grid-template-rows: repeat(3, auto);
+  gap: 12px;
   width: 100%;
-  margin-top: 16px;
+  margin-top: 24px;
 }
 
 .bento-item {
   position: relative;
-  background-color: #F0EFEF;
-  border-radius: 14px;
+  background-color: var(--surface-2, #F5F5F5);
+  border-radius: var(--r-card, 16px);
   overflow: hidden;
+  cursor: pointer;
+  display: block;
 }
 
 .bento-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.bento-item:hover img {
-  transform: scale(1.05);
+.bento-item:active img {
+  transform: scale(1.04);
 }
 
+/* ── Badge / Label on item ── */
 .bento-badge {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 5px 10px;
-  border-radius: 8px;
-  font-size: 9px;
+  bottom: 12px;
+  left: 12px;
+  background: #FFF;
+  padding: 6px 14px;
+  border-radius: var(--r-pill, 999px);
+  font-family: var(--font, 'DM Sans', sans-serif);
+  font-size: 10px;
   font-weight: 800;
-  color: #1A1A1A;
-  letter-spacing: 0.1em;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-  backdrop-filter: blur(4px);
+  color: var(--text-primary, #1A1A1A);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-sm);
 }
 
-/* Mobile layout */
-.bento-pizza  { grid-column: 1 / 2; grid-row: 1 / 3; } /* tall left */
-.bento-fries  { grid-column: 2 / 3; grid-row: 1 / 2; }
-.bento-burger { grid-column: 2 / 3; grid-row: 2 / 3; }
-.bento-coke   { grid-column: 1 / 2; grid-row: 3 / 4; }
-.bento-sticks { grid-column: 2 / 3; grid-row: 3 / 4; }
+/* ── Mobile Layout ── */
+@media (max-width: 767px) {
+  .home-bento-grid {
+    grid-template-rows: 140px 140px 100px;
+    gap: 10px;
+  }
+  
+  /* Pizza is tall (spans 2 rows) */
+  .bento-pizza  { grid-column: 1 / 2; grid-row: 1 / 3; } 
+  .bento-fries  { grid-column: 2 / 3; grid-row: 1 / 2; }
+  .bento-burger { grid-column: 2 / 3; grid-row: 2 / 3; }
+  .bento-coke   { grid-column: 1 / 2; grid-row: 3 / 4; }
+  .bento-sticks { grid-column: 2 / 3; grid-row: 3 / 4; }
 
-/* Tablet+ */
+  /* Ensure hero is visible above bento on mobile */
+  .home-page-container .split-left .hero-section {
+    display: flex !important;
+    margin-bottom: 8px;
+  }
+}
+
+/* ── Tablet+ Grid ── */
 @media (min-width: 600px) {
   .home-bento-grid {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 200px 200px;
-    gap: 14px;
-    margin-top: 0;
+    grid-template-rows: 220px 220px;
+    gap: 16px;
   }
 
-  .bento-pizza  { grid-column: 1 / 2; grid-row: 1 / 3; } /* tall */
+  .bento-pizza  { grid-column: 1 / 2; grid-row: 1 / 3; }
   .bento-fries  { grid-column: 2 / 3; grid-row: 1 / 2; }
   .bento-burger { grid-column: 3 / 4; grid-row: 1 / 2; }
   .bento-coke   { grid-column: 2 / 3; grid-row: 2 / 3; }
   .bento-sticks { grid-column: 3 / 4; grid-row: 2 / 3; }
-
-  .bento-item { border-radius: 16px; }
-  .bento-badge { font-size: 10px; padding: 6px 12px; bottom: 12px; left: 12px; }
 }
 
-/* Desktop */
+/* ── Desktop Hero + Bento ── */
 @media (min-width: 1024px) {
   .home-bento-grid {
-    grid-template-columns: 260px 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    height: 100%;
-    max-height: 460px;
+    height: auto;
     margin-top: 0;
   }
-
-  .bento-item { height: 100%; }
-}
-
-/* ══════════════════════════════════════════
-   HOME PAGE — Split layout override for mobile
-   Hero is the primary CTA, bento is secondary
-══════════════════════════════════════════ */
-@media (max-width: 767px) {
-  /* On mobile, show hero THEN bento below — both visible */
-  .home-page-container .split-left .hero-section {
-    display: flex !important;
-  }
-
-  .home-bento-grid {
-    grid-template-rows: 110px 110px 90px;
-    gap: 8px;
-    margin-top: 12px;
-  }
-
-  .bento-badge { font-size: 8px; padding: 4px 8px; bottom: 8px; left: 8px; border-radius: 6px; }
-  .bento-item  { border-radius: 12px; }
 }

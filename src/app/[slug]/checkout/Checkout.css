@@ -1,324 +1,281 @@
-/* ── Tela de confirmação com Light Rays (@magicui/light-rays) ── */
-.confirmed-screen {
-  position: relative;
+/* ══════════════════════════════════════════════════════════════
+   CHECKOUT — Uber / iFood Standard Staged Layout
+   
+   PADRÃO:
+   1. Cabeçalho com X ou ← (Uber)
+   2. Conteúdo em etapas ou lista limpa vertical
+   3. Itens de resumo em blocos cinzas claros
+   4. CTA FIXO no rodapé (Uber black #2D2D2D)
+══════════════════════════════════════════════════════════════ */
+
+.checkout-page {
+  min-height: 100dvh;
+  background: var(--surface, #FFF);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+}
+
+/* ── Checkout Sections ── */
+.checkout-content {
+  flex: 1;
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.checkout-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkout-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary, #1A1A1A);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 8px;
+}
+
+/* ── Item Summary — iFood list style ── */
+.checkout-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--surface-2, #F5F5F5);
+  border-radius: var(--r-md, 12px);
   overflow: hidden;
-  background: #0a0a0a;
-  border-radius: var(--radius-section);
-  height: calc(100dvh - var(--bottom-nav-h) - var(--top-margin) * 2);
+}
+
+.checkout-item-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--surface, #FFF);
+}
+
+.checkout-item-img {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-sm, 8px);
+  object-fit: cover;
+  background: var(--surface-2, #F5F5F5);
+}
+
+.checkout-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.checkout-item-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary, #1A1A1A);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.checkout-item-qty {
+  font-size: 12px;
+  color: var(--text-secondary, #757575);
+}
+
+.checkout-item-price {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-primary, #1A1A1A);
+}
+
+/* ── Address & Payment Options — Uber style big buttons ── */
+.checkout-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checkout-option-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: var(--surface-2, #F5F5F5);
+  border: 2px solid transparent;
+  border-radius: var(--r-md, 12px);
+  cursor: pointer;
+  text-align: left;
+  transition: all 150ms ease;
+}
+
+.checkout-option-card.selected {
+  background: #FFF;
+  border-color: var(--black, #2D2D2D);
+}
+
+.checkout-option-icon {
+  width: 40px;
+  height: 40px;
+  background: #E8E8E8;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
 }
 
-/* Spinner de raios — conic-gradient rotacionando (= Light Rays do Magic UI) */
-.light-rays-spinner {
-  position: absolute;
-  inset: -60%;
-  background: repeating-conic-gradient(
-    from 0deg at 50% 50%,
-    transparent         0deg,
-    rgba(217,30,54,0.14) 2.5deg,
-    transparent         5deg,
-    transparent         8.5deg,
-    rgba(255,110,40,0.08) 11deg,
-    transparent         13.5deg,
-    transparent         17deg,
-    rgba(217,30,54,0.10) 19.5deg,
-    transparent         22deg
-  );
-  animation: lightRaysRotate 22s linear infinite;
+.checkout-option-card.selected .checkout-option-icon {
+  background: var(--black, #2D2D2D);
+  color: #FFF;
 }
 
-@keyframes lightRaysRotate {
-  to { transform: rotate(360deg); }
+.checkout-option-info {
+  flex: 1;
+  min-width: 0;
 }
 
-/* Brilho central radial */
-.light-rays-glow {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(217, 30, 54, 0.35) 0%,
-    rgba(217, 30, 54, 0.08) 45%,
-    transparent 70%
-  );
-  pointer-events: none;
+.checkout-option-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary, #1A1A1A);
 }
 
-.confirmed-content {
-  position: relative;
-  z-index: 10;
+.checkout-option-sub {
+  font-size: 13px;
+  color: var(--text-secondary, #757575);
+}
+
+/* ── Totals summary ── */
+.checkout-summary-box {
+  background: var(--surface-2, #F5F5F5);
+  border-radius: var(--r-md, 12px);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkout-summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--text-secondary, #757575);
+  font-weight: 500;
+}
+
+.checkout-summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary, #1A1A1A);
+  padding-top: 10px;
+  border-top: 1px solid var(--border, #EBEBEB);
+  margin-top: 4px;
+}
+
+/* ── Fixed Bottom CTA ── */
+.checkout-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 20px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  background: var(--surface, #FFF);
+  border-top: 1px solid var(--border-light, rgba(0,0,0,0.06));
+  z-index: 500;
+}
+
+/* ── Mesa Mode Specific ── */
+.mesa-info-card {
+  background: #FFF9F0;
+  border: 1.5px solid #FFE4BC;
+  border-radius: var(--r-md, 12px);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.mesa-info-icon { font-size: 32px; }
+.mesa-info-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #7A5B2D;
+  font-weight: 500;
+}
+.mesa-info-text strong { color: #1A1A1A; font-weight: 700; }
+
+/* ── Confirmation Screen ── */
+.confirm-page {
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: var(--black, #2D2D2D);
   text-align: center;
-  padding: 40px;
 }
 
-.confirmed-check-circle {
+.confirm-icon-box {
   width: 96px;
   height: 96px;
-  background: var(--color-red);
+  background: var(--red, #D91E36);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 32px;
-  box-shadow: 0 0 60px rgba(217, 30, 54, 0.7), 0 0 120px rgba(217, 30, 54, 0.3);
-  animation: checkPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  box-shadow: 0 12px 32px rgba(217,30,54,0.35);
+  animation: checkPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 @keyframes checkPop {
-  0%   { transform: scale(0.3); opacity: 0; }
-  70%  { transform: scale(1.15); }
-  100% { transform: scale(1);   opacity: 1; }
+  0% { transform: scale(0.4); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-.confirmed-title {
-  font-size: 56px;
-  font-weight: 900;
-  color: #ffffff;
-  line-height: 1.0;
-  letter-spacing: -0.03em;
-  margin-bottom: 18px;
-  animation: fadeSlideUp 0.5s ease 0.25s both;
+.confirm-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #FFF;
+  letter-spacing: -0.04em;
+  margin-bottom: 12px;
 }
 
-.confirmed-subtitle {
-  font-size: 22px;
+.confirm-subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.7);
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.65);
-  animation: fadeSlideUp 0.5s ease 0.45s both;
+  max-width: 280px;
 }
 
-@keyframes fadeSlideUp {
-  0%   { transform: translateY(20px); opacity: 0; }
-  100% { transform: translateY(0);    opacity: 1; }
-}
-
-/* Mesa mode confirmation info */
-.mesa-confirm-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 24px 16px;
-  background: rgba(217, 30, 54, 0.05);
-  border: 1.5px solid rgba(217, 30, 54, 0.15);
-  border-radius: 16px;
-  margin: 16px 0;
-  gap: 12px;
-}
-
-.mesa-confirm-icon { font-size: 40px; }
-
-.mesa-confirm-text {
-  font-size: 15px;
-  color: var(--color-text-secondary);
-  line-height: 1.6;
-}
-
-.mesa-confirm-text strong { color: var(--color-black); }
-
-/* Endereço de entrega */
-.checkout-address-section {
-  margin-top: 16px;
-  margin-bottom: 4px;
-}
-
-.checkout-address-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--color-black);
-  margin-bottom: 10px;
-}
-
-.checkout-addr-row {
-  display: flex;
-  gap: 8px;
-}
-
-.checkout-addr-input {
-  width: 100%;
-  height: 44px;
-  background: #f5f5f5;
-  border: 1.5px solid transparent;
-  border-radius: 10px;
-  padding: 0 14px;
-  font-size: 14px;
-  font-family: var(--font-family);
-  color: var(--color-black);
-  transition: border-color 0.15s;
-}
-
-.checkout-addr-input:focus {
-  outline: none;
-  border-color: var(--color-red);
-  background: #fff;
-}
-
-.checkout-addr-street { flex: 1; }
-.checkout-addr-number { width: 80px; flex-shrink: 0; }
-
-/* Endereços salvos */
-.checkout-saved-addresses {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.checkout-addr-option {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  width: 100%;
-  padding: 10px 14px;
-  background: #f7f7f7;
-  border: 2px solid transparent;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.15s;
-  text-align: left;
-}
-
-.checkout-addr-option:hover { background: #f0f0f0; }
-
-.checkout-addr-option.selected {
-  background: #fff5f5;
-  border-color: var(--color-red);
-}
-
-.addr-option-label {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--color-black);
-}
-
-.addr-option-street {
-  font-size: 12px;
-  color: var(--color-text-secondary);
-}
-
-.checkout-addr-form {
-  margin-top: 4px;
-}
-
-.checkout-subtitle {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--color-text-secondary);
-  margin-top: 4px;
-}
-
-.payment-card {
-  background-color: var(--color-white);
-  border-radius: 16px;
-  padding: 32px;
-  border: 1px solid var(--color-border);
-  width: 100%;
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin-top: 16px;
-  margin-bottom: 24px;
-}
-
-.payment-card-text {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--color-black);
-}
-
-/* Payment methods list */
-.payment-methods-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 16px;
-  margin-bottom: 8px;
-}
-
-.payment-method-btn {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  padding: 14px 16px;
-  background: #f7f7f7;
-  border: 2px solid transparent;
-  border-radius: 14px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--color-black);
-  cursor: pointer;
-  transition: all 0.15s ease;
-  text-align: left;
-}
-
-.payment-method-btn:hover {
-  background: #f0f0f0;
-}
-
-.payment-method-btn.selected {
-  background: #fff5f5;
-  border-color: var(--color-red);
-  color: var(--color-red);
-}
-
-.pm-icon {
-  font-size: 20px;
-}
-
-.pm-label {
-  flex: 1;
-}
-
-.pm-check {
-  color: var(--color-red);
-  flex-shrink: 0;
-}
-
-/* ── Mobile ── */
-@media (max-width: 767px) {
-  /* Tela de confirmação compacta */
-  .confirmed-screen {
-    height: calc(100dvh - var(--bottom-nav-h) - var(--top-margin) * 2);
-    border-radius: var(--radius-section);
+/* Desktop override */
+@media (min-width: 1024px) {
+  .checkout-page {
+    flex-direction: row;
+    gap: 32px;
+    padding: 32px;
+    background: var(--bg, #F5F5F5);
   }
-  .confirmed-content { padding: 32px 20px; }
-  .confirmed-check-circle { width: 72px; height: 72px; margin-bottom: 20px; }
-  .confirmed-title { font-size: clamp(28px, 9vw, 44px); }
-  .confirmed-subtitle { font-size: 16px; }
-
-  /* Checkout stacks as single column — no split, scroll within page */
-  .checkout-sidebar {
-    /* Mobile sidebar becomes bottom section, not sticky */
-    position: static !important;
+  
+  .checkout-content {
+    flex: 0 0 60%;
+    padding: 0;
   }
-
-  /* Endereço */
-  .checkout-address-section { margin-top: 12px; }
-  .checkout-address-title { font-size: 13px; }
-  .checkout-addr-input { height: 44px; font-size: 14px; border-radius: 10px; }
-  .checkout-saved-addresses { gap: 6px; }
-  .checkout-addr-option { padding: 10px 12px; border-radius: 10px; }
-  .addr-option-label { font-size: 14px; }
-  .addr-option-street { font-size: 12px; }
-
-  /* Pagamento */
-  .payment-methods-list { gap: 8px; margin-top: 12px; }
-  .payment-method-btn { padding: 14px; font-size: 14px; border-radius: 12px; min-height: 52px; }
-  .pm-icon { font-size: 20px; }
-
-  /* Mesa confirm */
-  .mesa-confirm-info { padding: 20px 16px; gap: 10px; }
-  .mesa-confirm-icon { font-size: 32px; }
-  .mesa-confirm-text { font-size: 14px; }
+  
+  .checkout-footer {
+    position: static;
+    flex: 0 0 calc(40% - 32px);
+    background: transparent;
+    padding: 0;
+    border: none;
+  }
 }
