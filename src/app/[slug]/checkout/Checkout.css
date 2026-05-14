@@ -4,7 +4,7 @@
   overflow: hidden;
   background: #0a0a0a;
   border-radius: var(--radius-section);
-  height: calc(100vh - 107px);
+  height: calc(100dvh - var(--bottom-nav-h) - var(--top-margin) * 2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -286,29 +286,39 @@
 }
 
 /* ── Mobile ── */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   /* Tela de confirmação compacta */
-  .confirmed-screen { height: auto; min-height: calc(100vh - 80px); padding: 0; }
+  .confirmed-screen {
+    height: calc(100dvh - var(--bottom-nav-h) - var(--top-margin) * 2);
+    border-radius: var(--radius-section);
+  }
   .confirmed-content { padding: 32px 20px; }
   .confirmed-check-circle { width: 72px; height: 72px; margin-bottom: 20px; }
   .confirmed-title { font-size: clamp(28px, 9vw, 44px); }
   .confirmed-subtitle { font-size: 16px; }
 
+  /* Checkout stacks as single column — no split, scroll within page */
+  .checkout-sidebar {
+    /* Mobile sidebar becomes bottom section, not sticky */
+    position: static !important;
+  }
+
   /* Endereço */
   .checkout-address-section { margin-top: 12px; }
   .checkout-address-title { font-size: 13px; }
-  .checkout-addr-input { height: 40px; font-size: 13px; border-radius: 8px; }
+  .checkout-addr-input { height: 44px; font-size: 14px; border-radius: 10px; }
   .checkout-saved-addresses { gap: 6px; }
-  .checkout-addr-option { padding: 8px 12px; border-radius: 10px; }
-  .addr-option-label { font-size: 13px; }
-  .addr-option-street { font-size: 11px; }
+  .checkout-addr-option { padding: 10px 12px; border-radius: 10px; }
+  .addr-option-label { font-size: 14px; }
+  .addr-option-street { font-size: 12px; }
 
   /* Pagamento */
-  .payment-methods-list { gap: 7px; margin-top: 10px; }
-  .payment-method-btn { padding: 11px 14px; font-size: 13px; border-radius: 10px; }
-  .pm-icon { font-size: 18px; }
+  .payment-methods-list { gap: 8px; margin-top: 12px; }
+  .payment-method-btn { padding: 14px; font-size: 14px; border-radius: 12px; min-height: 52px; }
+  .pm-icon { font-size: 20px; }
 
   /* Mesa confirm */
-  .mesa-confirm-info { padding: 16px 12px; }
+  .mesa-confirm-info { padding: 20px 16px; gap: 10px; }
+  .mesa-confirm-icon { font-size: 32px; }
   .mesa-confirm-text { font-size: 14px; }
 }

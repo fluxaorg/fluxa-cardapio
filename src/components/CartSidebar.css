@@ -1,138 +1,255 @@
+/* ══════════════════════════════════════════
+   CART SIDEBAR — Mobile Fullscreen Sheet
+══════════════════════════════════════════ */
+
 .cart-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
-  z-index: 1000;
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 2000;
   display: flex;
+  align-items: flex-end; /* sheet slides from bottom on mobile */
   justify-content: flex-end;
 }
 
 .cart-sidebar {
+  background: var(--color-surface);
+  height: 90dvh;
   width: 100%;
-  max-width: 400px;
-  background: white;
-  height: 100%;
+  border-radius: 24px 24px 0 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  box-shadow: -10px 0 30px rgba(0,0,0,0.1);
-  animation: slideIn 0.3s ease-out;
+  overflow: hidden;
+  animation: slideUpSheet 280ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-@keyframes slideIn {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+@keyframes slideUpSheet {
+  from { transform: translateY(100%); opacity: 0.6; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* Drag handle */
+.cart-sidebar::before {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 4px;
+  background: #E0E0E0;
+  border-radius: 2px;
+  margin: 12px auto 0;
+  flex-shrink: 0;
 }
 
 .cart-header {
-  padding: 24px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #eee;
+  justify-content: space-between;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
 }
 
 .cart-title {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 800;
   color: var(--color-black);
+  letter-spacing: -0.03em;
 }
 
+.close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-black);
+  transition: background 150ms;
+}
+
+.close-btn:hover {
+  background: var(--color-border);
+}
+
+/* Items list */
 .cart-items {
   flex: 1;
   overflow-y: auto;
-  padding: 24px;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
+.cart-items::-webkit-scrollbar { display: none; }
 
 .empty-cart {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  gap: 16px;
-  color: #999;
+  gap: 12px;
+  padding: 60px 20px;
+  color: var(--color-text-secondary);
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .cart-item {
   display: flex;
-  gap: 16px;
-  margin-bottom: 24px;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-bg);
+  border-radius: 16px;
+  padding: 12px;
 }
 
 .cart-item-img {
-  width: 70px;
-  height: 70px;
-  border-radius: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 .cart-item-details {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
 .cart-item-name {
+  font-size: 14px;
   font-weight: 700;
-  font-size: 16px;
+  color: var(--color-black);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cart-item-price {
-  color: var(--color-red);
+  font-size: 14px;
   font-weight: 700;
+  color: var(--color-red);
 }
 
 .cart-item-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-top: 8px;
+  gap: 8px;
+  margin-top: 4px;
 }
 
 .cart-item-actions button {
-  background: #f4f4f6;
-  border: none;
-  width: 24px;
-  height: 24px;
-  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-border);
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  color: var(--color-black);
+  font-weight: 700;
+  transition: background 150ms;
 }
 
-.remove-item {
-  margin-left: auto;
-  color: #ff4d4d;
+.cart-item-actions button:hover {
+  background: #d0d0d0;
 }
 
+.cart-item-actions button.remove-item {
+  background: #FFF0F0;
+  color: var(--color-red);
+  margin-left: 4px;
+}
+
+.cart-item-actions span {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-black);
+  width: 24px;
+  text-align: center;
+}
+
+/* Footer */
 .cart-footer {
-  padding: 24px;
-  border-top: 1px solid #eee;
-  background: #fafafa;
+  padding: 16px 20px;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  flex-shrink: 0;
+  /* safe area for iOS home indicator */
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
 }
 
 .cart-total {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-black);
+}
+
+.cart-total span:last-child {
   font-size: 20px;
   font-weight: 800;
-  margin-bottom: 16px;
+  color: var(--color-red);
+  letter-spacing: -0.02em;
 }
 
 .confirm-btn {
   width: 100%;
+  height: 56px;
   background: var(--color-red);
   color: white;
-  border: none;
-  border-radius: var(--radius-btn);
-  padding: 16px;
-  font-size: 18px;
-  font-weight: 700;
-  cursor: pointer;
+  font-size: 17px;
+  font-weight: 800;
+  border-radius: 16px;
+  letter-spacing: -0.01em;
+  box-shadow: 0 6px 20px rgba(217, 30, 54, 0.35);
+  transition: all 0.2s ease;
+}
+
+.confirm-btn:hover {
+  background: var(--color-red-vivid);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px rgba(217, 30, 54, 0.45);
+}
+
+.confirm-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(217, 30, 54, 0.3);
+}
+
+/* Desktop override — sidebar panel */
+@media (min-width: 768px) {
+  .cart-overlay {
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+
+  .cart-sidebar {
+    height: 100%;
+    width: 380px;
+    border-radius: 0;
+    animation: slideInRight 280ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .cart-sidebar::before {
+    display: none;
+  }
+
+  @keyframes slideInRight {
+    from { transform: translateX(100%); }
+    to   { transform: translateX(0); }
+  }
 }

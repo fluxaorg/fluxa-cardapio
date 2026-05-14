@@ -26,18 +26,26 @@ export default function BottomNav() {
     <nav className="bottom-nav">
       {navItems.map((item) => {
         const isActive = pathname === item.path ||
-          (item.path.endsWith('/menu') && pathname.endsWith('/menu'));
+          (item.path.endsWith('/menu') && pathname.endsWith('/menu')) ||
+          (item.path.endsWith('/perfil') && pathname.endsWith('/perfil')) ||
+          (item.path.endsWith('/pizzas') && pathname.endsWith('/pizzas'));
         return (
           <Link key={item.name} href={item.path} className={`bottom-nav-item ${isActive ? 'active' : ''}`}>
-            <item.icon size={22} />
+            <item.icon size={20} strokeWidth={isActive ? 2.5 : 1.8} />
             <span>{item.name}</span>
           </Link>
         );
       })}
-      <button className="bottom-nav-item bottom-nav-cart" onClick={() => setIsOpen(true)}>
+      <button
+        className={`bottom-nav-item bottom-nav-cart ${items.length > 0 ? 'has-items' : ''}`}
+        onClick={() => setIsOpen(true)}
+        aria-label={`Carrinho com ${items.length} itens`}
+      >
         <div style={{ position: 'relative' }}>
-          <ShoppingBag size={22} />
-          {items.length > 0 && <span className="bottom-cart-badge">{items.length}</span>}
+          <ShoppingBag size={20} strokeWidth={items.length > 0 ? 2.5 : 1.8} />
+          {items.length > 0 && (
+            <span className="bottom-cart-badge">{items.length > 9 ? '9+' : items.length}</span>
+          )}
         </div>
         <span>Carrinho</span>
       </button>

@@ -1,11 +1,9 @@
 .profile-bento-grid {
   display: grid;
-  grid-template-columns: 240px 1fr;
-  grid-template-rows: 140px 140px 140px;
-  gap: 16px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 10px;
   width: 100%;
-  height: 100%;
-  max-height: 460px;
 }
 
 .bento-card {
@@ -371,104 +369,109 @@
 }
 
 .order-card-bottom { display: flex; justify-content: space-between; align-items: center; }
-.order-date { font-size: 17px; color: var(--color-text-secondary); }
-.order-total { font-size: 21px; font-weight: 800; color: var(--color-red); }
+.order-date { font-size: 13px; color: var(--color-text-secondary); }
+.order-total { font-size: 16px; font-weight: 800; color: var(--color-red); }
 
 /* ── Addresses ── */
-.addresses-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 22px; }
+.addresses-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
 
 .address-card {
   display: flex;
   align-items: center;
-  gap: 17px;
+  gap: 12px;
   background: var(--color-white);
   border: 1px solid var(--color-border);
-  border-radius: 20px;
-  padding: 20px 22px;
+  border-radius: 16px;
+  padding: 14px 16px;
 }
-.address-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
-.address-label { font-size: 20px; font-weight: 700; color: var(--color-black); }
-.address-street { font-size: 18px; color: var(--color-text-secondary); }
-.address-city { font-size: 17px; color: var(--color-text-secondary); }
-.address-delete { color: var(--color-text-secondary); padding: 6px; }
-.address-delete:hover { color: var(--color-red); }
+.address-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.address-label { font-size: 15px; font-weight: 700; color: var(--color-black); }
+.address-street { font-size: 13px; color: var(--color-text-secondary); }
+.address-city { font-size: 13px; color: var(--color-text-secondary); }
+.address-delete { color: var(--color-text-secondary); padding: 8px; border-radius: 8px; }
+.address-delete:hover { color: var(--color-red); background: #FFF0F0; }
 
 .btn-add-address {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 10px;
   border: 2px dashed var(--color-border);
-  border-radius: 20px;
-  padding: 20px 22px;
+  border-radius: 16px;
+  padding: 16px;
   width: 100%;
   color: var(--color-text-secondary);
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 600;
+  font-family: var(--font-family);
   justify-content: center;
   transition: all 0.15s;
+  cursor: pointer;
 }
 .btn-add-address:hover { border-color: var(--color-red); color: var(--color-red); }
 
-.address-form { background: #fafafa; border: 1px solid var(--color-border); border-radius: 22px; padding: 28px; }
-.form-title { font-size: 22px; font-weight: 700; margin-bottom: 20px; color: var(--color-black); }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+.address-form { background: #fafafa; border: 1px solid var(--color-border); border-radius: 16px; padding: 20px; margin-top: 12px; }
+.form-title { font-size: 16px; font-weight: 700; margin-bottom: 14px; color: var(--color-black); }
+.form-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
 .form-input {
   background: white;
-  border: 1px solid var(--color-border);
-  border-radius: 14px;
-  padding: 14px 20px;
-  font-size: 18px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 15px;
   font-family: var(--font-family);
   color: var(--color-black);
-  grid-column: span 1;
+  width: 100%;
 }
-.form-input:first-child, .form-input:nth-child(2) { grid-column: span 2; }
-.form-actions { display: flex; gap: 14px; }
+.form-input:focus { outline: none; border-color: var(--color-red); }
+.form-actions { display: flex; gap: 10px; }
 .btn-save-addr {
   flex: 1;
   background: var(--color-red);
   color: white;
-  border-radius: 14px;
-  padding: 15px;
+  border-radius: 12px;
+  padding: 14px;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 15px;
   font-family: var(--font-family);
+  cursor: pointer;
 }
 .btn-cancel-addr {
-  padding: 15px 28px;
-  border-radius: 14px;
+  padding: 14px 20px;
+  border-radius: 12px;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 15px;
   color: var(--color-text-secondary);
   font-family: var(--font-family);
+  cursor: pointer;
+  border: 1px solid var(--color-border);
 }
 
 /* ── Cupons ── */
-.cupons-list { display: flex; flex-direction: column; gap: 17px; }
+.cupons-list { display: flex; flex-direction: column; gap: 10px; }
 
 .cupon-card {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 14px;
   background: var(--color-white);
   border: 1px solid var(--color-border);
-  border-radius: 22px;
-  padding: 22px;
+  border-radius: 16px;
+  padding: 14px;
 }
 .cupon-discount {
   background: var(--color-red);
   color: white;
-  font-size: 28px;
+  font-size: 18px;
   font-weight: 900;
-  padding: 14px 20px;
-  border-radius: 17px;
+  padding: 10px 14px;
+  border-radius: 12px;
   flex-shrink: 0;
   letter-spacing: -0.02em;
 }
-.cupon-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-.cupon-title { font-size: 22px; font-weight: 800; color: var(--color-black); }
-.cupon-desc { font-size: 18px; color: var(--color-text-secondary); }
-.cupon-validity { font-size: 15px; color: var(--color-text-secondary); }
+.cupon-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.cupon-title { font-size: 15px; font-weight: 800; color: var(--color-black); }
+.cupon-desc { font-size: 13px; color: var(--color-text-secondary); }
+.cupon-validity { font-size: 12px; color: var(--color-text-secondary); }
 
 /* Campo de nome */
 .profile-name-field {
@@ -524,64 +527,68 @@
 .profile-name-save:disabled { opacity: 0.5; }
 .profile-name-save:hover:not(:disabled) { opacity: 0.8; }
 
-/* Profile mobile — bento compacto, sem sobreposição */
-@media (max-width: 768px) {
-  /* Bento: 3 linhas */
+/* ══════════════════════════════════════════
+   MOBILE — Profile bento and tabs
+══════════════════════════════════════════ */
+@media (max-width: 767px) {
+  /* Full bento grid — 2 col, 3 rows, auto height */
   .profile-bento-grid {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 80px 80px 80px;
-    gap: 8px;
+    grid-template-rows: 100px 100px 80px;
+    gap: 10px;
     height: auto !important;
     max-height: none !important;
-    width: 100%;
   }
 
-  /* Todos os cards com overflow hidden — nenhum vaza */
-  .bento-card, .bento-card-group-top-right { overflow: hidden; }
+  .bento-card { overflow: hidden; }
 
-  /* Endereços: ocupa as 3 linhas — sobrepõe cupons */
-  .card-enderecos { grid-column: 1/2; grid-row: 1/4; padding: 14px; z-index: 2; position: relative; }
+  /* Endereços — spans 2 rows */
+  .card-enderecos { grid-column: 1/2; grid-row: 1/3; padding: 16px; }
 
-  /* Recentes + Logout: grupo ocupa linhas 1+2 = 168px → cada card ~80px */
-  .bento-card-group-top-right  { grid-column: 2/3; grid-row: 1/3; display: flex; flex-direction: column; gap: 8px; }
-  .card-recentes, .card-logout { flex: 1; padding: 14px 12px; min-height: 44px; justify-content: center; }
+  /* Recentes + Logout group — spans 2 rows stacked */
+  .bento-card-group-top-right { grid-column: 2/3; grid-row: 1/3; flex-direction: column; gap: 10px; }
+  .card-recentes, .card-logout { flex: 1; padding: 12px; justify-content: center; }
 
-  /* Cupons: linha 3 esquerda */
+  /* Cupons — row 3, col 1 */
   .card-cupons  { grid-column: 1/2; grid-row: 3/4; padding: 12px; }
 
-  /* Meus Pedidos: linha 3 direita — mais abaixo */
-  .card-pedidos { grid-column: 2/3; grid-row: 3/4; padding: 14px; }
+  /* Pedidos — row 3, col 2 */
+  .card-pedidos { grid-column: 2/3; grid-row: 3/4; padding: 12px; justify-content: center; }
 
-  /* Endereços */
-  .syl            { font-size: 26px; line-height: 0.85; }
+  /* Typography scale down */
+  .syl            { font-size: 28px; line-height: 0.85; }
   .enderecos-hint { font-size: 10px; right: 0; bottom: 0; }
-
-  /* Recentes e Logout — maiores para não ficarem compactos */
-  .recentes-line1 { font-size: 14px; }
-  .recentes-line2 { font-size: 16px; }
-  .recentes-hint  { font-size: 10px; }
-  .logout-title   { font-size: 22px; }
-  .logout-hint    { font-size: 11px; }
-
-  /* Cupons */
-  .cupons-line1   { font-size: 14px; }
-  .cupons-line2   { font-size: 18px; }
+  .recentes-line1 { font-size: 13px; }
+  .recentes-line2 { font-size: 15px; }
+  .recentes-hint  { font-size: 10px; margin-top: 2px; }
+  .logout-title   { font-size: 20px; }
+  .logout-hint    { font-size: 10px; }
+  .cupons-line1   { font-size: 13px; }
+  .cupons-line2   { font-size: 15px; }
   .cupons-hint    { font-size: 10px; }
-
-  /* Meus Pedidos — mais para baixo (row 2/4) e maior */
-  .pedidos-line1  { font-size: 17px; }
-  .pedidos-line2  { font-size: 44px; line-height: 0.9; margin-top: 0; }
+  .pedidos-line1  { font-size: 13px; }
+  .pedidos-line2  { font-size: 32px; line-height: 0.9; }
   .pedidos-hint   { font-size: 10px; margin-top: 4px; }
 
-  /* Painel direito: sem height mínimo */
-  .profile-right-panel { min-height: unset; align-self: auto; }
-
-  /* Tabs internas */
+  .profile-right-panel { min-height: unset; }
   .tab-content-scroll { overflow-y: auto; }
 
-  /* Campo de nome */
-  .profile-name-input { height: 44px; font-size: 15px; }
-  .profile-name-save  { height: 44px; font-size: 15px; padding: 0 18px; }
+  /* Order cards — smaller */
+  .order-card { padding: 14px; border-radius: 14px; gap: 8px; }
+  .order-number { font-size: 16px; }
+  .order-status { font-size: 13px; }
+  .order-item-tag { font-size: 12px; padding: 3px 10px; }
+  .order-date { font-size: 12px; }
+  .order-total { font-size: 15px; }
+
+  /* Name field */
+  .profile-name-input { height: 46px; font-size: 14px; border-radius: 12px; }
+  .profile-name-save  { height: 46px; font-size: 14px; padding: 0 16px; border-radius: 12px; }
   .profile-name-label { font-size: 14px; }
   .profile-name-field { margin-bottom: 16px; padding-bottom: 14px; }
+
+  /* Cupon cards */
+  .cupon-discount { font-size: 16px; padding: 8px 12px; border-radius: 10px; }
+  .cupon-title { font-size: 14px; }
+  .cupon-desc { font-size: 12px; }
 }
