@@ -1,16 +1,18 @@
+"use client";
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Home, BookOpen, Pizza, Megaphone, User, Search, ShoppingBag, X, ClipboardList } from 'lucide-react';
-import { useCompany } from '../context/CompanyContext';
-import { useCart } from '../context/CartContext';
-import { useMesa } from '../context/MesaContext';
-import { useBasePath } from '../hooks/useBasePath';
+import { useCompany } from '@/context/CompanyContext';
+import { useCart } from '@/context/CartContext';
+import { useMesa } from '@/context/MesaContext';
+import { useBasePath } from '@/hooks/useBasePath';
 import './Navbar.css';
 
 export default function Navbar() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { company } = useCompany();
   const { items, setIsOpen } = useCart();
   const { isMesaMode, mesaNumber } = useMesa();
@@ -39,13 +41,13 @@ export default function Navbar() {
   const handleSearchChange = (val: string) => {
     setSearchQuery(val);
     const target = `${basePath}/menu${val.trim() ? `?q=${encodeURIComponent(val.trim())}` : ''}`;
-    navigate(target, { replace: true });
+    router.replace(target);
   };
 
   const handleSearchToggle = () => {
     if (isSearchOpen && searchQuery) {
       setSearchQuery('');
-      navigate(`${basePath}/menu`, { replace: true });
+      router.replace(`${basePath}/menu`);
     }
     setIsSearchOpen(!isSearchOpen);
   };
@@ -54,7 +56,7 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         {/* Logo */}
-        <Link to={`${basePath}/`} className="navbar-logo-block">
+        <Link href={`${basePath}/`} className="navbar-logo-block">
           <div className="navbar-logo-inner">
             {company?.logo_url ? (
               <img src={company.logo_url} alt="Logo" style={{ width: '24px', height: '24px', objectFit: 'cover', borderRadius: '4px' }} />
@@ -76,10 +78,10 @@ export default function Navbar() {
         {/* Nav Links */}
         <div className="navbar-links">
           {navItems.map((item) => {
-            const isActive = location.pathname === item.path ||
-              (item.path.endsWith('/menu') && location.pathname.endsWith('/menu'));
+            const isActive = pathname === item.path ||
+              (item.path.endsWith('/menu') && pathname.endsWith('/menu'));
             return (
-              <Link key={item.name} to={item.path} className={`navbar-link ${isActive ? 'active' : ''}`}>
+              <Link key={item.name} href={item.path} className={`navbar-link ${isActive ? 'active' : ''}`}>
                 <item.icon size={16} />
                 <span>{item.name}</span>
               </Link>

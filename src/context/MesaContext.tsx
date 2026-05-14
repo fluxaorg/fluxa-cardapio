@@ -1,5 +1,6 @@
+"use client";
 import React, { createContext, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'next/navigation';
 
 interface MesaContextType {
   mesaNumber: string | null;
@@ -9,7 +10,9 @@ interface MesaContextType {
 const MesaContext = createContext<MesaContextType>({ mesaNumber: null, isMesaMode: false });
 
 export function MesaProvider({ children }: { children: React.ReactNode }) {
-  const { mesaNumber } = useParams<{ mesaNumber?: string }>();
+  const params = useParams();
+  const mesaNumber = params?.mesaNumber as string | undefined;
+  
   return (
     <MesaContext.Provider value={{
       mesaNumber: mesaNumber || null,

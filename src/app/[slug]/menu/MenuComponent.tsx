@@ -1,8 +1,9 @@
+"use client";
 import { useState, useEffect } from 'react';
 import { Filter, Plus } from 'lucide-react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useCompany } from '../context/CompanyContext';
-import { supabase } from '../lib/supabase';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useCompany } from '@/context/CompanyContext';
+import { supabase } from '@/lib/supabase';
 import './Menu.css';
 
 type Category = {
@@ -20,8 +21,8 @@ type Product = {
 };
 
 export default function Menu() {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { company } = useCompany();
   const slug = company?.slug || '';
   const basePath = slug ? `/${slug}` : '';
@@ -63,7 +64,7 @@ export default function Menu() {
     if (searchQuery && categories.length > 0) {
       setActiveCategoryId(null);
     }
-  }, [searchQuery]);
+  }, [searchQuery, categories]);
 
   const filteredProducts = products.filter((p) => {
     const matchesSearch = searchQuery
@@ -98,7 +99,7 @@ export default function Menu() {
                 key={cat.id}
                 onClick={() => {
                   if (cat.name.toLowerCase() === 'pizzas') {
-                    navigate(`${basePath}/pizzas`);
+                    router.push(`${basePath}/pizzas`);
                   } else {
                     setActiveCategoryId(cat.id);
                   }
@@ -116,7 +117,7 @@ export default function Menu() {
             <div
               key={p.id}
               className="product-card"
-              onClick={() => navigate(`${basePath}/produto/${p.id}`)}
+              onClick={() => router.push(`${basePath}/produto/${p.id}`)}
             >
               <img
                 src={p.image_url || ''} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
@@ -134,7 +135,7 @@ export default function Menu() {
                 className="product-card-add"
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate(`${basePath}/produto/${p.id}`);
+                  router.push(`${basePath}/produto/${p.id}`);
                 }}
               >
                 <Plus size={18} strokeWidth={3} />

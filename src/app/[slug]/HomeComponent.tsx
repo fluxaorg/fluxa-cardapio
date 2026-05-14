@@ -1,5 +1,5 @@
-
-import HeroSection from '../components/HeroSection';
+"use client";
+import HeroSection from '@/components/HeroSection';
 import './Home.css';
 
 export default function Home() {

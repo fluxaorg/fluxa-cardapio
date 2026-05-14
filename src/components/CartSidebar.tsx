@@ -1,19 +1,20 @@
+"use client";
 import { X, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
-import { useBasePath } from '../hooks/useBasePath';
+import { useRouter } from 'next/navigation';
+import { useCart } from '@/context/CartContext';
+import { useBasePath } from '@/hooks/useBasePath';
 import './CartSidebar.css';
 
 export default function CartSidebar() {
   const { items, isOpen, setIsOpen, updateQty, removeItem, total } = useCart();
-  const navigate = useNavigate();
+  const router = useRouter();
   const basePath = useBasePath(); // inclui /mesa/:num quando em mesa mode
 
   if (!isOpen) return null;
 
   const handleConfirm = () => {
     setIsOpen(false);
-    navigate(`${basePath}/checkout`);
+    router.push(`${basePath}/checkout`);
   };
 
   return (

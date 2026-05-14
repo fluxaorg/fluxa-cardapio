@@ -1,14 +1,15 @@
+"use client";
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { useCompany } from '../context/CompanyContext';
-import HeroSection from '../components/HeroSection';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
+import { useCompany } from '@/context/CompanyContext';
+import HeroSection from '@/components/HeroSection';
 import './Login.css';
 
 export default function Login() {
   const { signInWithEmail, signUpWithEmail } = useAuth();
   const { company } = useCompany();
-  const navigate = useNavigate();
+  const router = useRouter();
   const basePath = company?.slug ? `/${company.slug}` : '';
 
   const [mode, setMode] = useState<'login' | 'signup'>('login');
@@ -25,7 +26,7 @@ export default function Login() {
     setLoading(true); setError('');
     try {
       await signInWithEmail(loginEmail, loginPassword);
-      navigate(`${basePath}/perfil`);
+      router.push(`${basePath}/perfil`);
     } catch (err: any) {
       setError(err.message || 'Email ou senha incorretos.');
     } finally { setLoading(false); }
@@ -36,7 +37,7 @@ export default function Login() {
     setLoading(true); setError('');
     try {
       await signUpWithEmail(signupEmail, signupPassword);
-      navigate(`${basePath}/perfil`);
+      router.push(`${basePath}/perfil`);
     } catch (err: any) {
       setError(err.message || 'Erro ao cadastrar.');
     } finally { setLoading(false); }
@@ -49,7 +50,7 @@ export default function Login() {
 
   return (
     <div className="page-container">
-      <main className="main-section bg-white-block split-layout">
+      <main className="main-section bg-white-block split-layout login-page">
         <div className="split-left">
           <HeroSection
             titleMedium="faaala"

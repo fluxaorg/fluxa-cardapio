@@ -1,8 +1,9 @@
+"use client";
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import HeroSection from '../components/HeroSection';
-import { useCompany } from '../context/CompanyContext';
-import { supabase } from '../lib/supabase';
+import { useRouter } from 'next/navigation';
+import HeroSection from '@/components/HeroSection';
+import { useCompany } from '@/context/CompanyContext';
+import { supabase } from '@/lib/supabase';
 import './Promocoes.css';
 
 interface Promotion {
@@ -28,7 +29,7 @@ const DAY_NAMES = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 
 
 export default function Promocoes() {
   const { company } = useCompany();
-  const navigate = useNavigate();
+  const router = useRouter();
   const basePath = company?.slug ? `/${company.slug}` : '';
 
   const [promotions, setPromotions] = useState<Promotion[]>([]);
@@ -126,7 +127,7 @@ export default function Promocoes() {
                           <div
                             key={item.id}
                             className="promo-item-card"
-                            onClick={() => navigate(href)}
+                            onClick={() => router.push(href)}
                           >
                             {item.image_url ? (
                               <img src={item.image_url} alt={item.name} className="promo-item-img" />

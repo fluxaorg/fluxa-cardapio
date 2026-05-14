@@ -1,13 +1,14 @@
+"use client";
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
-import { useCompany } from '../context/CompanyContext';
-import { useAuth } from '../context/AuthContext';
-import { useMesa } from '../context/MesaContext';
-import { useBasePath } from '../hooks/useBasePath';
-import { supabase } from '../lib/supabase';
+import { useRouter } from 'next/navigation';
+import { useCart } from '@/context/CartContext';
+import { useCompany } from '@/context/CompanyContext';
+import { useAuth } from '@/context/AuthContext';
+import { useMesa } from '@/context/MesaContext';
+import { useBasePath } from '@/hooks/useBasePath';
+import { supabase } from '@/lib/supabase';
 import { Check, MapPin } from 'lucide-react';
-import HeroSection from '../components/HeroSection';
+import HeroSection from '@/components/HeroSection';
 import './ProductDetail.css';
 import './Checkout.css';
 
@@ -32,7 +33,7 @@ export default function Checkout() {
   const { company } = useCompany();
   const { user } = useAuth();
   const { isMesaMode, mesaNumber } = useMesa();
-  const navigate = useNavigate();
+  const router = useRouter();
   const basePath = useBasePath();
 
   const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
@@ -99,8 +100,6 @@ export default function Checkout() {
         .insert({
           company_id: company.id,
           order_number: orderNum,
-          // Mesa: pedido anônimo — não usa dados do login do cliente
-          // Delivery: usa display_name se disponível, senão parte do email
           cliente_nome: isMesaMode
             ? 'Convidado'
             : (user?.user_metadata?.display_name || user?.email?.split('@')[0] || 'Convidado'),
@@ -111,7 +110,7 @@ export default function Checkout() {
           order_source: 'cardapio-v9',
           tipo_pedido: isMesaMode ? 'mesa' : 'delivery',
           mesa_numero: isMesaMode ? parseInt(mesaNumber!) : null,
-          user_id: isMesaMode ? null : (user?.id || null), // mesa nunca vincula ao user
+          user_id: isMesaMode ? null : (user?.id || null),
           address: resolvedAddress,
         })
         .select().single();
@@ -126,7 +125,6 @@ export default function Checkout() {
         }));
         await supabase.from('food_order_items').insert(itemInserts);
 
-        // Marca mesa como ocupada
         if (isMesaMode && mesaNumber) {
           await supabase.from('food_tables')
             .update({ status: 'ocupada' })
@@ -137,8 +135,7 @@ export default function Checkout() {
 
       setConfirmed(true);
       clearCart();
-      // Mesa: vai para comanda | Delivery: vai para menu
-      setTimeout(() => navigate(isMesaMode ? `${basePath}/comanda` : `${basePath}/menu`), 3000);
+      setTimeout(() => router.push(isMesaMode ? `${basePath}/comanda` : `${basePath}/menu`), 3000);
     } catch {
       setError('Erro ao confirmar pedido. Tente novamente.');
     } finally {
@@ -185,7 +182,7 @@ export default function Checkout() {
           <div style={{ padding: '60px 0', textAlign: 'center', color: 'var(--color-text-secondary)' }}>
             <p style={{ fontSize: 18 }}>Seu carrinho está vazio.</p>
             <button style={{ marginTop: 16, background: 'var(--color-red)', color: 'white', padding: '12px 28px', borderRadius: 12, fontWeight: 700, fontSize: 15 }}
-              onClick={() => navigate(`${basePath}/menu`)}>Ver Menu</button>
+              onClick={() => router.push(`${basePath}/menu`)}>Ver Menu</button>
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 8 }}>

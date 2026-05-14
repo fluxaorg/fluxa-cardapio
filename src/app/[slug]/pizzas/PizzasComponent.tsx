@@ -1,9 +1,10 @@
+"use client";
 import { useState, useEffect } from 'react';
-import HeroSection from '../components/HeroSection';
+import HeroSection from '@/components/HeroSection';
 import { ArrowLeft, ChevronRight, Check } from 'lucide-react';
-import { useCart } from '../context/CartContext';
-import { useCompany } from '../context/CompanyContext';
-import { supabase } from '../lib/supabase';
+import { useCart } from '@/context/CartContext';
+import { useCompany } from '@/context/CompanyContext';
+import { supabase } from '@/lib/supabase';
 import './Pizzas.css';
 
 interface PizzaSize {
@@ -53,7 +54,6 @@ const PIZZA_CRUSTS = [
   { id: 'doce_leite', name: 'Borda Doce de Leite',    price: 10,   emoji: '🍬' },
 ];
 
-// Mapeamento de cor/padrão por nome do sabor
 const FLAVOR_COLORS: Record<string, { color: string; pattern: string }> = {
   calabresa: { color: '#B22222', pattern: 'calabresa' },
   frango:    { color: '#D4A017', pattern: 'frango' },
@@ -64,6 +64,7 @@ const FLAVOR_COLORS: Record<string, { color: string; pattern: string }> = {
   pepperoni: { color: '#CC2200', pattern: 'pepperoni' },
   vegetariana:{ color: '#2E8B57', pattern: 'vegetariana' },
 };
+
 function flavorStyle(name: string) {
   const key = Object.keys(FLAVOR_COLORS).find(k => name.toLowerCase().includes(k));
   return key ? FLAVOR_COLORS[key] : { color: '#888', pattern: 'calabresa' };
@@ -78,11 +79,9 @@ export default function Pizzas() {
   const [desiredFlavorCount, setDesiredFlavorCount] = useState(1);
   const [selectedCrust, setSelectedCrust] = useState(PIZZA_CRUSTS[0]);
 
-  // Carrega pizza_global do Supabase — substitui os dados hardcoded
   const [dynamicSizes, setDynamicSizes] = useState<PizzaSize[]>([]);
   const [dynamicFlavors, setDynamicFlavors] = useState<Flavor[]>([]);
   const [dynamicCrusts, setDynamicCrusts] = useState(PIZZA_CRUSTS);
-  
 
   useEffect(() => {
     if (!company?.id) return;
@@ -126,7 +125,6 @@ export default function Pizzas() {
             ]);
           }
         }
-        
       });
   }, [company?.id]);
 
@@ -151,7 +149,6 @@ export default function Pizzas() {
     if (!selectedSize) return;
     const next = Math.max(1, Math.min(selectedSize.maxFlavors, desiredFlavorCount + delta));
     setDesiredFlavorCount(next);
-    // Remove flavors beyond new count
     if (selectedFlavors.length > next) {
       setSelectedFlavors(selectedFlavors.slice(0, next));
     }
@@ -267,7 +264,7 @@ export default function Pizzas() {
         <circle cx={cx} cy={cy} r={R} fill="#E8A870"/>
         <circle cx={cx} cy={cy} r={R} fill="#D94E2F" opacity="0.18"/>
 
-        {/* Slices — sempre n fatias, preenchidas ou vazias */}
+        {/* Slices */}
         {Array.from({ length: n }).map((_, i) => {
           const angleStep = 360 / n;
           const startAngle = i * angleStep;
@@ -322,7 +319,6 @@ export default function Pizzas() {
     );
   };
 
-  /* ── STEP 1: Size selection ── */
   if (step === 1) {
     return (
       <div className="page-container">
@@ -355,7 +351,6 @@ export default function Pizzas() {
     );
   }
 
-  /* ── STEP 3: Crust selection ── */
   if (step === 3) {
     return (
       <div className="page-container">
@@ -371,14 +366,12 @@ export default function Pizzas() {
             </div>
           </div>
 
-          {/* Gráfico mini no step 3 */}
           <div className="pizza-s2-chart-area" style={{ marginBottom: 12 }}>
             <div className="pizza-visualizer-container">
               {renderPizzaChart()}
             </div>
           </div>
 
-          {/* Bordas em grid */}
           <div className="pizza-crust-grid-step3">
             {crusts.map(crust => (
               <button
@@ -403,12 +396,9 @@ export default function Pizzas() {
     );
   }
 
-  /* ── STEP 2: Flavor selection — chart on top ── */
   return (
     <div className="page-container">
       <main className="main-section bg-white-block pizza-step2-layout">
-
-        {/* Header */}
         <div className="pizza-s2-header">
           <button className="back-link" onClick={() => { setStep(1); setSelectedFlavors([]); }}>
             <ArrowLeft size={18} />
@@ -420,7 +410,6 @@ export default function Pizzas() {
           </div>
         </div>
 
-        {/* Contador de sabores */}
         {selectedSize && selectedSize.maxFlavors > 1 && (
           <div className="pizza-flavor-counter">
             <button
@@ -440,7 +429,6 @@ export default function Pizzas() {
           </div>
         )}
 
-        {/* Chart — always visible, centered */}
         <div className="pizza-s2-chart-area">
           <div className="pizza-visualizer-container">
             {renderPizzaChart()}
@@ -453,7 +441,6 @@ export default function Pizzas() {
           </p>
         </div>
 
-        {/* Flavors grid */}
         <div className="flavors-selection-grid pizza-s2-flavors">
           {flavors.map((flavor) => {
             const isSelected = !!selectedFlavors.find((f) => f.id === flavor.id);
@@ -475,7 +462,6 @@ export default function Pizzas() {
           })}
         </div>
 
-        {/* Botão para ir à etapa 3 (borda) */}
         <div className="pizza-s2-footer">
           <button
             className={`btn-add-cart ${selectedFlavors.length === 0 ? 'inactive' : ''}`}

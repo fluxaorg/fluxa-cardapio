@@ -1,9 +1,10 @@
+"use client";
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import HeroSection from '../components/HeroSection';
-import { useAuth } from '../context/AuthContext';
-import { useCompany } from '../context/CompanyContext';
-import { supabase } from '../lib/supabase';
+import { useRouter } from 'next/navigation';
+import HeroSection from '@/components/HeroSection';
+import { useAuth } from '@/context/AuthContext';
+import { useCompany } from '@/context/CompanyContext';
+import { supabase } from '@/lib/supabase';
 import { ArrowLeft, Plus, Trash2 } from 'lucide-react';
 import './Profile.css';
 
@@ -41,7 +42,7 @@ const STATUS_LABELS: Record<string, string> = {
 export default function Profile() {
   const { user, signOut, loading } = useAuth();
   const { company } = useCompany();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<ProfileTab>('home');
   const basePath = company?.slug ? `/${company.slug}` : '';
 
@@ -174,7 +175,7 @@ export default function Profile() {
                 <h2 className="login-title">Cadastrar</h2>
                 <p className="login-subtitle">nesse caso... Prazer!</p>
               </div>
-              <button className="btn-bora-pedir" onClick={() => navigate(`${basePath}/login`)}>
+              <button className="btn-bora-pedir" onClick={() => router.push(`${basePath}/login`)}>
                 Booooooora pedir!
               </button>
             </div>

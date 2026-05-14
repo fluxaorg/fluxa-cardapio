@@ -1,9 +1,10 @@
+"use client";
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { Filter, Plus, Minus } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import { useCompany } from '../context/CompanyContext';
-import { useCart } from '../context/CartContext';
+import { supabase } from '@/lib/supabase';
+import { useCompany } from '@/context/CompanyContext';
+import { useCart } from '@/context/CartContext';
 import './ProductDetail.css';
 
 const INGREDIENT_EMOJI: Record<string, string> = {
@@ -24,9 +25,10 @@ function parseIngredients(desc: string | null | undefined) {
 }
 
 export default function ProductDetail() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const params = useParams();
+  const id = params?.id as string;
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { company } = useCompany();
   const { addItem, items, total, setIsOpen } = useCart();
 
@@ -141,7 +143,7 @@ export default function ProductDetail() {
               <button
                 key={c.id}
                 className={`category-pill`}
-                onClick={() => navigate(`${basePath}/`)}
+                onClick={() => router.push(`${basePath}/`)}
               >
                 {c.name}
               </button>
@@ -222,7 +224,7 @@ export default function ProductDetail() {
                 <div
                   key={s.id}
                   className="related-card"
-                  onClick={() => navigate(`${basePath}/produto/${s.id}`)}
+                  onClick={() => router.push(`${basePath}/produto/${s.id}`)}
                   style={{ cursor: 'pointer' }}
                 >
                   <img
@@ -237,7 +239,7 @@ export default function ProductDetail() {
                     className="related-add"
                     onClick={(e) => {
                       e.stopPropagation();
-                      navigate(`${basePath}/produto/${s.id}`);
+                      router.push(`${basePath}/produto/${s.id}`);
                     }}
                   >
                     <Plus size={12} />

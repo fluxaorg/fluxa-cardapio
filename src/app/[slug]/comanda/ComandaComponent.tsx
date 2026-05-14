@@ -1,9 +1,10 @@
+"use client";
 import { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useCompany } from '../context/CompanyContext';
-import { useMesa } from '../context/MesaContext';
-import { useBasePath } from '../hooks/useBasePath';
-import { supabase } from '../lib/supabase';
+import { useRouter } from 'next/navigation';
+import { useCompany } from '@/context/CompanyContext';
+import { useMesa } from '@/context/MesaContext';
+import { useBasePath } from '@/hooks/useBasePath';
+import { supabase } from '@/lib/supabase';
 import './Comanda.css';
 
 const STATUS_STAGES: Record<string, number> = {
@@ -29,7 +30,7 @@ interface Order {
 export default function Comanda() {
   const { company } = useCompany();
   const { isMesaMode, mesaNumber } = useMesa();
-  const navigate = useNavigate();
+  const router = useRouter();
   const basePath = useBasePath();
 
   const [orders, setOrders] = useState<Order[]>([]);
@@ -68,10 +69,10 @@ export default function Comanda() {
   }, [company?.id, mesaNumber]);
 
   useEffect(() => {
-    if (!isMesaMode) { navigate(`${basePath}/menu`); return; }
+    if (!isMesaMode) { router.push(`${basePath}/menu`); return; }
     fetchOrders();
     fetchMesaStatus();
-  }, [isMesaMode, fetchOrders, fetchMesaStatus]);
+  }, [isMesaMode, fetchOrders, fetchMesaStatus, router, basePath]);
 
   // Realtime: atualiza pedidos e status da mesa
   useEffect(() => {
@@ -111,7 +112,7 @@ export default function Comanda() {
           <div style={{ fontSize: 64, marginBottom: 24 }}>✅</div>
           <h2 className="comanda-liberada-title">Mesa encerrada!</h2>
           <p className="comanda-liberada-sub">Obrigado pela visita. Volte sempre!</p>
-          <button className="comanda-btn-novo" onClick={() => navigate(`${basePath}/menu`)}>
+          <button className="comanda-btn-novo" onClick={() => router.push(`${basePath}/menu`)}>
             Fazer novo pedido
           </button>
         </div>
@@ -139,7 +140,7 @@ export default function Comanda() {
           <div className="comanda-empty">
             <span style={{ fontSize: 48 }}>🍽️</span>
             <p>Nenhum pedido ainda.</p>
-            <button className="comanda-btn-pedir" onClick={() => navigate(`${basePath}/menu`)}>
+            <button className="comanda-btn-pedir" onClick={() => router.push(`${basePath}/menu`)}>
               Fazer pedido
             </button>
           </div>

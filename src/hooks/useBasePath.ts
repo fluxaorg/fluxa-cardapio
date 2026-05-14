@@ -1,5 +1,6 @@
-import { useCompany } from '../context/CompanyContext';
-import { useMesa } from '../context/MesaContext';
+"use client";
+import { useCompany } from '@/context/CompanyContext';
+import { useMesa } from '@/context/MesaContext';
 
 export function useBasePath(): string {
   const { company } = useCompany();

@@ -1,12 +1,14 @@
-import { Link, useLocation } from 'react-router-dom';
+"use client";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Home, BookOpen, Pizza, ShoppingBag, User } from 'lucide-react';
-import { useCart } from '../context/CartContext';
-import { useMesa } from '../context/MesaContext';
-import { useBasePath } from '../hooks/useBasePath';
+import { useCart } from '@/context/CartContext';
+import { useMesa } from '@/context/MesaContext';
+import { useBasePath } from '@/hooks/useBasePath';
 import './BottomNav.css';
 
 export default function BottomNav() {
-  const location = useLocation();
+  const pathname = usePathname();
   const { items, setIsOpen } = useCart();
   const { isMesaMode } = useMesa();
   const basePath = useBasePath();
@@ -23,10 +25,10 @@ export default function BottomNav() {
   return (
     <nav className="bottom-nav">
       {navItems.map((item) => {
-        const isActive = location.pathname === item.path ||
-          (item.path.endsWith('/menu') && location.pathname.endsWith('/menu'));
+        const isActive = pathname === item.path ||
+          (item.path.endsWith('/menu') && pathname.endsWith('/menu'));
         return (
-          <Link key={item.name} to={item.path} className={`bottom-nav-item ${isActive ? 'active' : ''}`}>
+          <Link key={item.name} href={item.path} className={`bottom-nav-item ${isActive ? 'active' : ''}`}>
             <item.icon size={22} />
             <span>{item.name}</span>
           </Link>

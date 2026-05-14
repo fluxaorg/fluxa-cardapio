@@ -1,6 +1,7 @@
+"use client";
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
-import { useParams } from 'react-router-dom';
+import { supabase } from '@/lib/supabase';
+import { useParams } from 'next/navigation';
 
 type Company = {
   id: string;
@@ -8,7 +9,6 @@ type Company = {
   slug: string;
   logo_url?: string;
   banner_url?: string;
-  // add other fields if needed
 };
 
 type CompanyContextType = {
@@ -26,7 +26,9 @@ const CompanyContext = createContext<CompanyContextType>({
 export const useCompany = () => useContext(CompanyContext);
 
 export const CompanyProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { slug } = useParams<{ slug: string }>();
+  const params = useParams();
+  const slug = params?.slug as string | undefined;
+  
   const [company, setCompany] = useState<Company | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

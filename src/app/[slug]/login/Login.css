@@ -152,23 +152,34 @@
   padding: 0;
 }
 
-/* Centraliza o card no mobile — sobrepõe o flex:none do index.css */
+/* Card de login centralizado ABSOLUTAMENTE no mobile — solução definitiva */
 @media (max-width: 768px) {
-  .login-right-col {
-    flex: 1 !important;      /* preenche o espaço restante */
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    padding: 0 16px;
+  .login-page {
+    position: relative !important;
   }
-  .login-card {
-    width: 100%;
-    max-width: 340px;        /* ligeiramente mais estreito */
+
+  /* Card flutua centralizado no centro do bg-white-block */
+  .login-page .login-card {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: calc(100% - 32px) !important;
+    max-width: 340px !important;
+    margin: 0 !important;
     align-items: center;
-    padding: 24px 22px;      /* um pouco maior */
+    padding: 24px 22px;
     border-radius: 20px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    z-index: 5;
+  }
+
+  /* split-right (login-right-col) não precisa fazer nada — card está absolute */
+  .login-page .login-right-col {
+    flex: none !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
   .login-icon-circle { width: 52px; height: 52px; }
   .login-icon-f      { font-size: 24px; }
