@@ -9,7 +9,6 @@ import { useBasePath } from '@/hooks/useBasePath';
 import { supabase } from '@/lib/supabase';
 import { Check, MapPin } from 'lucide-react';
 import HeroSection from '@/components/HeroSection';
-import './ProductDetail.css';
 import './Checkout.css';
 
 const PAYMENT_METHODS = [
