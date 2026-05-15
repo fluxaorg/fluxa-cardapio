@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { Filter, Plus, Minus, ArrowLeft } from 'lucide-react';
+import { Filter, Plus, Minus } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useCompany } from '@/context/CompanyContext';
 import { useCart } from '@/context/CartContext';
@@ -123,23 +123,10 @@ export default function ProductDetail() {
 
   return (
     <div className="page-container detail-layout">
-      {/* Mobile-only sticky header com nome do produto centralizado */}
-      <header className="mobile-page-header">
-        <button className="mobile-back-btn" onClick={() => router.back()} aria-label="Voltar">
-          <ArrowLeft size={20} />
-        </button>
-        <h1 className="mobile-page-title">
-          {product.name}
-          {product.category && (
-            <span className="mobile-page-subtitle">{product.category}</span>
-          )}
-        </h1>
-      </header>
-
       {/* Left Area */}
       <main className="main-section bg-white-block detail-left">
         <div className="detail-header">
-          <h1 className="detail-header-title">{product.name}</h1>
+          <h1 className="detail-header-title">Detalhes do produto...</h1>
           <button className="menu-filter-btn">
             <Filter size={24} color="#D91E36" strokeWidth={2.5} />
           </button>
@@ -223,10 +210,7 @@ export default function ProductDetail() {
                 )}
                 R$ {(effectivePrice * qty).toFixed(2)}
               </div>
-              <button className="btn-add" onClick={handleAdd}>
-                <span className="btn-add-label">Adicionar</span>
-                <span className="btn-add-price">R$ {(effectivePrice * qty).toFixed(2)}</span>
-              </button>
+              <button className="btn-add" onClick={handleAdd}>Adicionar</button>
             </div>
           </div>
         </div>

@@ -1,23 +1,11 @@
 import './DecorativeCircles.css';
 
-interface DecorativeCirclesProps {
-  /** Quando passado, exibe "Bem-vindo ao {welcomeName}" sobre os círculos. */
-  welcomeName?: string | null;
-}
-
-export default function DecorativeCircles({ welcomeName }: DecorativeCirclesProps) {
+export default function DecorativeCircles() {
   return (
     <div className="decorative-circles-container">
       <div className="circle circle-1"></div>
       <div className="circle circle-2"></div>
       <div className="circle circle-3"></div>
-
-      {welcomeName && (
-        <div className="circles-welcome">
-          <span className="circles-welcome-eyebrow">Bem-vindo ao</span>
-          <span className="circles-welcome-name">{welcomeName}</span>
-        </div>
-      )}
 
       <div className="arc-text-container">
         <svg viewBox="0 0 400 400" width="400" height="400" className="arc-svg">

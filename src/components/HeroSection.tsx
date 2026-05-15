@@ -9,8 +9,6 @@ interface HeroSectionProps {
   showUnderline?: boolean;
   showEyes?: boolean;
   showLanches?: boolean;
-  /** Nome do restaurante a exibir sobre os círculos decorativos. */
-  welcomeName?: string | null;
 }
 
 export default function HeroSection({
@@ -21,7 +19,6 @@ export default function HeroSection({
   showUnderline,
   showEyes,
   showLanches,
-  welcomeName,
 }: HeroSectionProps) {
   return (
     <div className="hero-section">
@@ -70,7 +67,7 @@ export default function HeroSection({
         )}
       </div>
 
-      <DecorativeCircles welcomeName={welcomeName} />
+      <DecorativeCircles />
     </div>
   );
 }

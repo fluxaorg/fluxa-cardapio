@@ -1,7 +1,7 @@
 "use client";
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import HeroSection from '@/components/HeroSection';
-import { ArrowLeft, ChevronRight, Check, Search } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Check } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useCompany } from '@/context/CompanyContext';
 import { supabase } from '@/lib/supabase';
@@ -78,7 +78,6 @@ export default function Pizzas() {
   const [selectedFlavors, setSelectedFlavors] = useState<Flavor[]>([]);
   const [desiredFlavorCount, setDesiredFlavorCount] = useState(1);
   const [selectedCrust, setSelectedCrust] = useState(PIZZA_CRUSTS[0]);
-  const [flavorSearch, setFlavorSearch] = useState('');
 
   const [dynamicSizes, setDynamicSizes] = useState<PizzaSize[]>([]);
   const [dynamicFlavors, setDynamicFlavors] = useState<Flavor[]>([]);
@@ -132,15 +131,6 @@ export default function Pizzas() {
   const sizes   = dynamicSizes.length > 0   ? dynamicSizes   : PIZZA_SIZES;
   const flavors = dynamicFlavors.length > 0 ? dynamicFlavors : FLAVORS;
   const crusts  = dynamicCrusts;
-
-  const filteredFlavors = useMemo(() => {
-    const q = flavorSearch.trim().toLowerCase();
-    if (!q) return flavors;
-    return flavors.filter((f) =>
-      f.name.toLowerCase().includes(q) ||
-      (f.description || '').toLowerCase().includes(q)
-    );
-  }, [flavors, flavorSearch]);
 
   const handleSizeSelect = (size: PizzaSize) => {
     setSelectedSize(size);
@@ -364,16 +354,6 @@ export default function Pizzas() {
   if (step === 3) {
     return (
       <div className="page-container">
-        <header className="mobile-page-header">
-          <button className="mobile-back-btn" onClick={() => setStep(2)} aria-label="Voltar">
-            <ArrowLeft size={20} />
-          </button>
-          <h1 className="mobile-page-title">
-            Escolha a borda
-            <span className="mobile-page-subtitle">{selectedSize?.name}</span>
-          </h1>
-        </header>
-
         <main className="main-section bg-white-block pizza-step2-layout">
           <div className="pizza-s2-header">
             <button className="back-link" onClick={() => setStep(2)}>
@@ -418,18 +398,6 @@ export default function Pizzas() {
 
   return (
     <div className="page-container">
-      <header className="mobile-page-header">
-        <button className="mobile-back-btn" onClick={() => { setStep(1); setSelectedFlavors([]); }} aria-label="Mudar tamanho">
-          <ArrowLeft size={20} />
-        </button>
-        <h1 className="mobile-page-title">
-          {selectedSize?.name || 'Escolha sabores'}
-          <span className="mobile-page-subtitle">
-            até {selectedSize?.maxFlavors} sabor{selectedSize?.maxFlavors === 1 ? '' : 'es'}
-          </span>
-        </h1>
-      </header>
-
       <main className="main-section bg-white-block pizza-step2-layout">
         <div className="pizza-s2-header">
           <button className="back-link" onClick={() => { setStep(1); setSelectedFlavors([]); }}>
@@ -473,29 +441,8 @@ export default function Pizzas() {
           </p>
         </div>
 
-        {/* Search bar dos sabores */}
-        <div className="flavor-search-wrap">
-          <Search size={18} className="flavor-search-icon" />
-          <input
-            className="flavor-search-input"
-            type="text"
-            placeholder="Buscar sabor (ex: calabresa)"
-            value={flavorSearch}
-            onChange={(e) => setFlavorSearch(e.target.value)}
-          />
-          {flavorSearch && (
-            <button
-              className="flavor-search-clear"
-              onClick={() => setFlavorSearch('')}
-              aria-label="Limpar busca"
-            >
-              ✕
-            </button>
-          )}
-        </div>
-
         <div className="flavors-selection-grid pizza-s2-flavors">
-          {filteredFlavors.map((flavor) => {
+          {flavors.map((flavor) => {
             const isSelected = !!selectedFlavors.find((f) => f.id === flavor.id);
             const isDisabled = !isSelected && selectedFlavors.length >= desiredFlavorCount;
             return (
@@ -513,9 +460,6 @@ export default function Pizzas() {
               </div>
             );
           })}
-          {filteredFlavors.length === 0 && (
-            <p className="flavor-empty">Nenhum sabor encontrado para “{flavorSearch}”.</p>
-          )}
         </div>
 
         <div className="pizza-s2-footer">
