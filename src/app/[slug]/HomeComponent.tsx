@@ -77,6 +77,7 @@ export default function Home() {
             titleGiant="pedido!"
             subtitle="Escolha seu pedido, e receba em minutos!"
             showUnderline={true}
+            welcomeName={company?.name || null}
           />
         </div>
 

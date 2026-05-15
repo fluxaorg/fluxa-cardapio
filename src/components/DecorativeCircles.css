@@ -57,8 +57,45 @@
   text-transform: uppercase;
 }
 
+/* Mensagem "Bem-vindo ao [restaurante]" sobre os círculos */
+.circles-welcome {
+  position: absolute;
+  bottom: 24px;
+  left: 12px;
+  z-index: 11;
+  color: #FFF;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  pointer-events: none;
+  max-width: 220px;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.30);
+}
+
+.circles-welcome-eyebrow {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.78;
+  line-height: 1;
+}
+
+.circles-welcome-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.45);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Mobile: círculos bem menores */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .decorative-circles-container {
     width: 280px;
     height: 280px;
@@ -68,4 +105,12 @@
   .circle-2 { width: 220px; height: 220px; bottom: -40px; left: 10px; }
   .circle-3 { width: 210px; height: 210px; bottom: -65px; left: 65px; }
   .arc-text-container { display: none; }
+
+  .circles-welcome {
+    bottom: 78px;
+    left: 70px;
+    max-width: 200px;
+  }
+  .circles-welcome-eyebrow { font-size: 10.5px; }
+  .circles-welcome-name    { font-size: 16px; }
 }

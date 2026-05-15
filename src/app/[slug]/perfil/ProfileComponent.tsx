@@ -157,32 +157,10 @@ export default function Profile() {
   if (loading) return <div className="page-loading">Carregando...</div>;
 
   if (!user) {
-    return (
-      <div className="page-container">
-        <main className="main-section bg-white-block split-layout">
-          <div className="split-left">
-            <HeroSection titleMedium="faaala" titleGiant="fulano!" subtitle="faz teu login aí, bora pedir!" />
-          </div>
-          <div className="split-right login-panel">
-            <div className="login-card">
-              <div className="f-logo-circle"><span className="f-letter">f</span></div>
-              <div className="login-form-section">
-                <h2 className="login-title">Entrar</h2>
-                <p className="login-subtitle">é bom te ver de volta!</p>
-              </div>
-              <div className="login-divider"></div>
-              <div className="login-form-section">
-                <h2 className="login-title">Cadastrar</h2>
-                <p className="login-subtitle">nesse caso... Prazer!</p>
-              </div>
-              <button className="btn-bora-pedir" onClick={() => router.push(`${basePath}/login`)}>
-                Booooooora pedir!
-              </button>
-            </div>
-          </div>
-        </main>
-      </div>
-    );
+    if (typeof window !== 'undefined') {
+      router.replace(`${basePath}/login`);
+    }
+    return <div className="page-loading">Redirecionando…</div>;
   }
 
   const getHeroTitles = () => {
