@@ -81,6 +81,13 @@ export default function Promocoes() {
 
   return (
     <div className="page-container">
+      <header className="mobile-page-header">
+        <h1 className="mobile-page-title">
+          Promoções
+          <span className="mobile-page-subtitle">aproveite enquanto durar</span>
+        </h1>
+      </header>
+
       <main className="main-section bg-white-block split-layout">
         <div className="split-left">
           <HeroSection

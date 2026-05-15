@@ -500,6 +500,13 @@
   border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.06));
 }
 
+/* No mobile escondemos esse header — usamos o .mobile-page-header */
+@media (max-width: 767px) {
+  .detail-header { display: none; }
+  /* As pílulas de categoria duplicadas dentro do detalhe não fazem sentido no mobile */
+  .detail-left .menu-categories { display: none !important; }
+}
+
 .detail-header-title {
   font-size: 17px;
   font-weight: 800;

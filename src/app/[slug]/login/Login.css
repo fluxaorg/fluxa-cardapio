@@ -1,169 +1,230 @@
 /* ══════════════════════════════════════════════════════════════
-   LOGIN — Uber / Apple Standard Clean Layout
-   
-   • Full-screen centered card on mobile
-   • Big bold typography (DM Sans)
-   • Large Uber-black CTAs
-   • Modern subtle inputs
+   LOGIN — Uber × Apple HIG
+   • Mobile: card centralizado, ícone, título grande, inputs limpos
+   • CTA preto Uber, "Cadastre-se" como link discreto (não azul)
 ══════════════════════════════════════════════════════════════ */
 
 .login-page {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: var(--surface, #FFF);
+  background: var(--bg, #F5F5F5);
 }
 
-.login-container {
+/* Painel direito: container do card */
+.login-right-col {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 24px 20px calc(24px + env(safe-area-inset-bottom, 0px));
 }
 
+/* Card do login */
 .login-card {
   width: 100%;
   max-width: 400px;
+  background: var(--surface, #FFF);
+  border-radius: var(--r-xl, 20px);
+  padding: 32px 24px 28px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: var(--shadow-lg, 0 8px 24px rgba(0,0,0,0.10));
+}
+
+/* Ícone Flüxa "F" */
+.login-icon-wrapper {
+  margin-bottom: 22px;
+}
+
+.login-icon-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--black, #2D2D2D);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+
+.login-icon-f {
+  color: #FFF;
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+/* Section (entrar / cadastrar) */
+.login-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   gap: 0;
 }
 
-/* ── Icon — clean branding ── */
-.login-branding {
-  width: 64px;
-  height: 64px;
-  background: var(--black, #2D2D2D);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 24px;
-}
-
-.login-branding span {
-  color: #FFF;
-  font-size: 32px;
-  font-weight: 900;
-  letter-spacing: -0.05em;
-}
-
-/* ── Typography ── */
 .login-title {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 800;
   color: var(--text-primary, #1A1A1A);
-  letter-spacing: -0.04em;
-  margin-bottom: 8px;
+  letter-spacing: -0.03em;
   text-align: center;
+  margin-bottom: 6px;
 }
 
 .login-subtitle {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--text-secondary, #757575);
   font-weight: 500;
-  margin-bottom: 32px;
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+/* Inputs */
+.login-input {
+  width: 100%;
+  height: 52px;
+  background: var(--surface-2, #F5F5F5);
+  border: 1.5px solid transparent;
+  border-radius: var(--r-input, 12px);
+  padding: 0 16px;
+  font-family: var(--font, 'DM Sans', sans-serif);
+  font-size: 16px;       /* anti-zoom iOS */
+  color: var(--text-primary, #1A1A1A);
+  margin-bottom: 10px;
+  transition: border-color 180ms, background 180ms;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+}
+
+.login-input::placeholder { color: var(--text-ghost, #AEAEB2); }
+
+.login-input:focus {
+  background: var(--surface, #FFF);
+  border-color: var(--black, #2D2D2D);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+}
+
+/* Erro */
+.login-error {
+  margin: 4px 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--red, #D91E36);
   text-align: center;
 }
 
-/* ── Form — Uber style inputs ── */
-.login-form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.login-input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.login-label {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-primary, #1A1A1A);
-  margin-left: 4px;
-}
-
-/* ── CTAs — Uber Black ── */
-.login-submit-btn {
+/* CTA preto Uber */
+.login-btn-section,
+.login-btn-submit {
   width: 100%;
   height: 56px;
   background: var(--black, #2D2D2D);
   color: #FFF;
-  font-size: 17px;
-  font-weight: 700;
+  border: none;
   border-radius: var(--r-btn, 14px);
-  margin-top: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 150ms ease;
-}
-
-.login-submit-btn:active { transform: scale(0.98); background: var(--black-deep, #1A1A1A); }
-
-.login-secondary-btn {
-  width: 100%;
-  height: 56px;
-  background: transparent;
-  color: var(--black, #2D2D2D);
+  font-family: var(--font, 'DM Sans', sans-serif);
   font-size: 16px;
   font-weight: 700;
-  border: 2px solid var(--border, #EBEBEB);
-  border-radius: var(--r-btn, 14px);
-  margin-top: 12px;
+  letter-spacing: -0.01em;
+  margin-top: 6px;
+  cursor: pointer;
+  transition: background 150ms ease, transform 80ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.login-btn-section:hover,
+.login-btn-submit:hover { background: var(--black-deep, #1A1A1A); }
+.login-btn-section:active,
+.login-btn-submit:active { transform: scale(0.98); }
+.login-btn-section:disabled,
+.login-btn-submit:disabled {
+  background: #C8C8C8;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Switch login/cadastro — texto preto, não azul */
+.login-switch {
+  margin-top: 22px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary, #757575);
+  text-align: center;
+}
+
+.login-switch-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 4px;
+  font-family: var(--font, 'DM Sans', sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary, #1A1A1A);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.login-switch-btn:hover  { color: var(--red, #D91E36); }
+.login-switch-btn:active { transform: scale(0.98); }
+
+/* ── Tablet+ : layout split (hero esquerda + card direita) ── */
+@media (min-width: 768px) {
+  .login-right-col {
+    flex: 0 0 480px;
+    background: var(--surface, #FFF);
+    padding: 40px;
+  }
+  .login-card {
+    box-shadow: none;
+    padding: 0;
+    background: transparent;
+  }
+}
+
+/* ── Profile fallback (quando user não logado, ProfileComponent renderiza
+      um mini-card de boas-vindas com classes login-form-section etc.) ── */
+.f-logo-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--black, #2D2D2D);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 150ms ease;
+  margin: 0 auto 16px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
+.f-letter { color: #FFF; font-size: 26px; font-weight: 900; letter-spacing: -0.05em; }
 
-.login-secondary-btn:active { transform: scale(0.98); background: var(--surface-2, #F5F5F5); }
-
-/* ── Errors ── */
-.login-error-msg {
-  font-size: 13px;
-  color: var(--red, #D91E36);
-  font-weight: 600;
+.login-form-section {
   text-align: center;
-  margin-top: 12px;
+  margin: 8px 0;
 }
 
-/* ── Switch footer ── */
-.login-footer-switch {
-  margin-top: 32px;
-  font-size: 14px;
-  color: var(--text-secondary, #757575);
-  font-weight: 500;
+.login-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border, #EBEBEB);
+  margin: 16px 0;
 }
 
-.login-link {
-  color: var(--red, #D91E36);
+.btn-bora-pedir {
+  width: 100%;
+  height: 54px;
+  background: var(--black, #2D2D2D);
+  color: #FFF;
+  border-radius: var(--r-btn, 14px);
+  font-size: 16px;
   font-weight: 700;
-  text-decoration: underline;
+  margin-top: 16px;
   cursor: pointer;
-  margin-left: 4px;
+  transition: background 150ms ease, transform 80ms ease;
 }
-
-/* Desktop: split layout fallback */
-@media (min-width: 768px) {
-  .login-page {
-    flex-direction: row;
-  }
-  .login-hero-col {
-    flex: 1;
-    background: var(--black, #2D2D2D);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .login-container {
-    flex: 0 0 500px;
-    background: #FFF;
-  }
-}
+.btn-bora-pedir:hover  { background: var(--black-deep, #1A1A1A); }
+.btn-bora-pedir:active { transform: scale(0.98); }

@@ -580,3 +580,72 @@ input:-webkit-autofill:focus {
     padding-top: calc(16px + env(safe-area-inset-top));
   }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   MOBILE PAGE TITLE — header visível em cada aba no mobile
+   (no desktop o título vem do HeroSection, escondemos esse aqui)
+══════════════════════════════════════════════════════════════ */
+
+.mobile-page-header {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobile-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 56px 14px;
+    padding-top: calc(16px + env(safe-area-inset-top, 0px));
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.06));
+    min-height: 56px;
+    text-align: center;
+  }
+
+  .mobile-page-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-primary, #1A1A1A);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mobile-page-subtitle {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary, #757575);
+    margin-top: 2px;
+    letter-spacing: 0;
+  }
+
+  /* Botão back opcional posicionado à esquerda */
+  .mobile-page-header .mobile-back-btn {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--surface-2, #F5F5F5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary, #1A1A1A);
+    transition: background 150ms ease;
+  }
+  .mobile-page-header .mobile-back-btn:active { transform: translateY(-50%) scale(0.92); }
+
+  .mobile-page-header { position: sticky; }
+}
