@@ -76,6 +76,20 @@
   /* Nav */
   --tab-bar-h: 60px;
   --tab-bar-total: calc(var(--tab-bar-h) + env(safe-area-inset-bottom, 0px));
+
+  /* ── Aliases legados — usados por Navbar, HeroSection, Pizzas, Promocoes ── */
+  --color-white:           var(--white);
+  --color-red:             var(--red);
+  --color-red-vivid:       var(--red-vivid);
+  --color-black:           var(--black);
+  --color-surface:         var(--surface);
+  --color-bg:              var(--bg);
+  --color-border:          var(--border);
+  --color-text-primary:    var(--text-primary);
+  --color-text-secondary:  var(--text-secondary);
+  --font-family:           var(--font);
+  --radius-pill:           var(--r-pill);
+  --radius-card:           var(--r-card);
 }
 
 /* ══════════════════════════════════════════

@@ -740,9 +740,329 @@
   .related-add:active { transform: scale(0.86); }
 }
 
-/* Desktop: btn-add-label e btn-add-price aparecem inline normalmente
-   (o desktop nao tem CSS proprio pra .btn-add no estado original) */
+/* Desktop: btn-add-label e btn-add-price aparecem inline normalmente */
 .btn-add-label,
 .btn-add-price {
   display: inline;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DESKTOP — estiliza as classes reais do TSX (detail-header, detail-img,
+   detail-info, detail-title, detail-desc, size-selector, size-pill,
+   qty-action-row, qty-controls, qty-btn, qty-val, price-pill, btn-add,
+   remove-section, remove-grid, remove-card, related-section,
+   related-carousel, related-card, related-info, related-name,
+   related-price, related-add, sidebar-item-card, sidebar-item-info,
+   sidebar-count, sidebar-item-placeholder, empty-cart-card)
+══════════════════════════════════════════════════════════════ */
+
+@media (min-width: 768px) {
+  .detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .detail-header-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text-primary, #1A1A1A);
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+  .detail-header .menu-filter-btn {
+    background: transparent;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--red, #D91E36);
+  }
+
+  /* Categorias pills na detail-page (acima do produto) */
+  .detail-left .menu-categories {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 0;
+  }
+
+  /* Wrapper image + info side-by-side */
+  .product-area {
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) 1.4fr;
+    gap: 32px;
+    align-items: start;
+    margin-top: 24px;
+  }
+
+  .detail-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-height: 420px;
+    object-fit: contain;
+    background: transparent;
+    display: block;
+  }
+
+  .detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .detail-title {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text-primary, #1A1A1A);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin: 0;
+  }
+  .detail-desc {
+    font-size: 15px;
+    color: var(--text-secondary, #757575);
+    line-height: 1.5;
+    margin: 0;
+    max-width: 520px;
+  }
+
+  /* Size selector — pills horizontais Apple style */
+  .size-selector {
+    display: flex;
+    gap: 10px;
+    margin: 8px 0 4px;
+  }
+  .size-pill {
+    padding: 10px 24px;
+    background: transparent;
+    border: 1.5px solid var(--border, #EBEBEB);
+    border-radius: 999px;
+    font-family: var(--font, 'DM Sans', sans-serif);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary, #1A1A1A);
+    cursor: pointer;
+    transition: all 150ms ease;
+  }
+  .size-pill:hover { border-color: var(--text-primary, #1A1A1A); }
+  .size-pill.active {
+    background: var(--black, #2D2D2D);
+    border-color: var(--black, #2D2D2D);
+    color: #FFF;
+  }
+
+  /* Remove ingredients */
+  .remove-section { margin: 12px 0 4px; }
+  .remove-label {
+    display: block;
+    font-size: 14px;
+    color: var(--text-primary, #1A1A1A);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .remove-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+  .remove-card {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: var(--surface, #FFF);
+    border: 1.5px solid var(--border, #EBEBEB);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 150ms ease;
+  }
+  .remove-card:hover { border-color: var(--text-primary, #1A1A1A); }
+  .remove-card.removed {
+    background: #FFF0F0;
+    border-color: var(--red, #D91E36);
+  }
+  .remove-emoji { font-size: 26px; }
+  .remove-card.removed .remove-emoji { opacity: 0.45; }
+
+  /* Qty + Price + Adicionar — row final */
+  .qty-action-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 12px;
+  }
+  .qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .qty-btn {
+    width: 36px;
+    height: 36px;
+    background: var(--text-primary, #1A1A1A);
+    color: #FFF;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 150ms ease;
+  }
+  .qty-btn:hover { opacity: 0.85; }
+  .qty-val {
+    min-width: 28px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text-primary, #1A1A1A);
+  }
+  .price-pill {
+    padding: 9px 18px;
+    border: 1.5px solid var(--border, #EBEBEB);
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text-primary, #1A1A1A);
+  }
+  .btn-add {
+    padding: 12px 26px;
+    background: var(--text-primary, #1A1A1A);
+    color: #FFF;
+    border: none;
+    border-radius: 999px;
+    font-family: var(--font, 'DM Sans', sans-serif);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 150ms ease;
+  }
+  .btn-add:hover { opacity: 0.88; }
+
+  /* Sugestoes (Procurando algo diferente?) */
+  .related-section { margin-top: 32px; }
+  .related-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary, #1A1A1A);
+    margin-bottom: 12px;
+  }
+  .related-carousel {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .related-carousel::-webkit-scrollbar { display: none; }
+  .related-card {
+    flex: 0 0 240px;
+    background: var(--surface, #FFF);
+    border: 1px solid var(--border, #EBEBEB);
+    border-radius: 14px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 150ms ease;
+  }
+  .related-card:hover { border-color: rgba(0,0,0,0.18); }
+  .related-card img {
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .related-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .related-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary, #1A1A1A);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .related-price {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary, #757575);
+  }
+  .related-add {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--red, #D91E36);
+    color: #FFF;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  /* Sidebar Meu Pedido — items */
+  .sidebar-count {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary, #757575);
+  }
+  .sidebar-item-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--surface-2, #F5F5F5);
+    border-radius: 14px;
+  }
+  .sidebar-item-card img {
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .sidebar-item-placeholder {
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+    background: var(--border, #EBEBEB);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .sidebar-item-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .sidebar-item-desc {
+    font-size: 12px;
+    color: var(--text-secondary, #757575);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .empty-cart-card {
+    background: var(--surface-2, #F5F5F5);
+    border-radius: 14px;
+    padding: 28px 16px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary, #757575);
+  }
 }

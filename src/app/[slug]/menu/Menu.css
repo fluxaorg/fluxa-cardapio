@@ -261,6 +261,129 @@
 }
 
 /* ══════════════════════════════════════════════════════════════
+   DESKTOP — estiliza .menu-header, .menu-title, .menu-filter-btn,
+   .menu-grid (TSX classes que nao tinham CSS no original)
+══════════════════════════════════════════════════════════════ */
+
+@media (min-width: 768px) {
+  .menu-section { padding: 0; }
+
+  .menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .menu-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text-primary, #1A1A1A);
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+  .menu-filter-btn {
+    background: transparent;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--red, #D91E36);
+  }
+
+  .menu-section .menu-categories {
+    margin-bottom: 24px;
+  }
+
+  /* Grid de produtos — 4 cols Apple/Uber Eats style */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    padding: 0;
+    background: transparent;
+  }
+
+  .menu-grid .product-card {
+    background: var(--surface, #FFF);
+    border: 1px solid var(--border, #EBEBEB);
+    border-radius: 14px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border, #EBEBEB);
+    position: relative;
+    cursor: pointer;
+    transition: border-color 150ms ease, transform 80ms ease;
+  }
+  .menu-grid .product-card:hover { border-color: rgba(0,0,0,0.18); }
+  .menu-grid .product-card:active { transform: scale(0.99); }
+
+  .menu-grid .product-card-img,
+  .menu-grid .product-card-img-placeholder {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    object-fit: cover;
+  }
+  .menu-grid .product-card-info {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .menu-grid .product-card-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary, #1A1A1A);
+    line-height: 1.25;
+  }
+  .menu-grid .product-card-desc {
+    font-size: 11px;
+    color: var(--text-secondary, #757575);
+    line-height: 1.35;
+  }
+  .menu-grid .product-card-price {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary, #757575);
+    margin-top: 4px;
+    text-align: right;
+  }
+  .menu-grid .product-card-add {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--red, #D91E36);
+    color: #FFF;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 150ms ease;
+  }
+  .menu-grid .product-card-add:hover { opacity: 0.88; }
+}
+
+@media (min-width: 1200px) {
+  .menu-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1199px) and (min-width: 768px) {
+  .menu-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
    MOBILE iFood STYLE (≤767px) — estiliza as classes reais do
    MenuComponent.tsx (.menu-header, .menu-title, .menu-filter-btn,
    .menu-grid) que nao tinham CSS no original
