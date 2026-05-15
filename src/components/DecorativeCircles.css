@@ -1,11 +1,12 @@
 .decorative-circles-container {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 500px;
   height: 500px;
   pointer-events: none;
   z-index: 5;
+  overflow: hidden;
 }
 
 .circle {

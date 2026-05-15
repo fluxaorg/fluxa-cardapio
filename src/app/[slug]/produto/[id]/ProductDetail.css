@@ -461,6 +461,70 @@
     top: 20px;
     left: 20px;
   }
+
+  /* Imagem do produto NO DESKTOP — constrange altura */
+  .detail-img {
+    width: 100%;
+    max-height: 360px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 16px;
+    display: block;
+  }
+
+  /* Garante que esconde a barra mobile e exibe sidebar */
+  .qty-action-row {
+    position: static;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+  .qty-controls {
+    display: flex;
+    background: var(--surface-2, #F5F5F5);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .qty-btn {
+    width: 40px; height: 44px;
+    background: transparent;
+    border: none;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-primary, #1A1A1A);
+    cursor: pointer;
+  }
+  .qty-val {
+    min-width: 32px;
+    text-align: center;
+    font-weight: 800;
+  }
+  .price-pill {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-primary, #1A1A1A);
+    margin-left: 4px;
+  }
+  .btn-add {
+    margin-left: auto;
+    padding: 12px 24px;
+    height: 46px;
+    background: var(--black, #2D2D2D);
+    color: #FFF;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 150ms;
+  }
+  .btn-add:hover { background: var(--black-deep, #1A1A1A); }
 }
 
 /* ══════════════════════════════════════════════════════════════
