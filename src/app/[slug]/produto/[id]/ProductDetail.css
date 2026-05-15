@@ -663,14 +663,6 @@
 
   /* Preco antigo (.price-pill) escondido no mobile — repetido no botao */
   .qty-action-row .price-pill { display: none; }
-}
-
-/* Desktop: btn-add-label e btn-add-price aparecem inline normalmente
-   junto com o resto, ja que o desktop nao tem CSS proprio para .btn-add
-   (estado original 346c894) */
-.btn-add-label, .btn-add-price {
-  display: inline;
-}
 
   /* Sugestoes */
   .related-section { padding: 18px 20px 8px; }
@@ -746,4 +738,11 @@
     box-shadow: 0 2px 6px rgba(217,30,54,0.30);
   }
   .related-add:active { transform: scale(0.86); }
+}
+
+/* Desktop: btn-add-label e btn-add-price aparecem inline normalmente
+   (o desktop nao tem CSS proprio pra .btn-add no estado original) */
+.btn-add-label,
+.btn-add-price {
+  display: inline;
 }
