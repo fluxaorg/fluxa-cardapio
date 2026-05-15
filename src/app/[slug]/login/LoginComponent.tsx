@@ -50,15 +50,6 @@ export default function Login() {
 
   return (
     <div className="page-container">
-      <header className="mobile-page-header">
-        <h1 className="mobile-page-title">
-          {mode === 'login' ? 'Entrar' : 'Cadastrar'}
-          <span className="mobile-page-subtitle">
-            {mode === 'login' ? 'é bom te ver de volta!' : 'nesse caso… prazer!'}
-          </span>
-        </h1>
-      </header>
-
       <main className="main-section bg-white-block split-layout login-page">
         <div className="split-left">
           <HeroSection

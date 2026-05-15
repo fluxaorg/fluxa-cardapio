@@ -179,7 +179,7 @@ img {
 /* Ocultar elementos de desktop no mobile */
 @media (max-width: 767px) {
   .navbar { display: none !important; }
-  .split-left .hero-section { display: none !important; }
+  /* HeroSection visível no mobile também — é o padrão de título */
 }
 
 /* ══════════════════════════════════════════

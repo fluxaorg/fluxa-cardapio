@@ -332,13 +332,6 @@ export default function Pizzas() {
   if (step === 1) {
     return (
       <div className="page-container">
-        <header className="mobile-page-header">
-          <h1 className="mobile-page-title">
-            Monte sua pizza
-            <span className="mobile-page-subtitle">escolha o tamanho perfeito</span>
-          </h1>
-        </header>
-
         <main className="main-section bg-white-block split-layout">
           <div className="split-left">
             <HeroSection

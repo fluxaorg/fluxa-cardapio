@@ -159,12 +159,6 @@ export default function Profile() {
   if (!user) {
     return (
       <div className="page-container">
-        <header className="mobile-page-header">
-          <h1 className="mobile-page-title">
-            Bem-vindo
-            <span className="mobile-page-subtitle">faz teu login aí, bora pedir!</span>
-          </h1>
-        </header>
         <main className="main-section bg-white-block split-layout">
           <div className="split-left">
             <HeroSection titleMedium="faaala" titleGiant="fulano!" subtitle="faz teu login aí, bora pedir!" />
@@ -209,18 +203,6 @@ export default function Profile() {
 
   return (
     <div className="page-container">
-      <header className="mobile-page-header">
-        {activeTab !== 'home' && (
-          <button className="mobile-back-btn" onClick={() => setActiveTab('home')} aria-label="Voltar">
-            <ArrowLeft size={20} />
-          </button>
-        )}
-        <h1 className="mobile-page-title">
-          {t.large.replace(/!$/, '')}
-          <span className="mobile-page-subtitle">{t.sub}</span>
-        </h1>
-      </header>
-
       <main className="main-section bg-white-block split-layout">
         <div className="split-left">
           <HeroSection
