@@ -64,48 +64,13 @@
     white-space: nowrap;
   }
 
-  /* Active — pílula sutil + cor primária (Uber × Apple) */
+  /* Active — Fluxa Red */
   .bottom-nav-item.active {
-    color: var(--text-primary, #1A1A1A);
-  }
-  .bottom-nav-item.active::before {
-    content: "";
-    position: absolute;
-    top: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 56px;
-    height: 32px;
-    border-radius: 16px;
-    background: var(--surface-2, #F5F5F5);
-    z-index: 0;
-    transition: background 200ms ease;
-  }
-
-  .bottom-nav-item.active svg,
-  .bottom-nav-item.active span {
-    position: relative;
-    z-index: 1;
+    color: var(--red, #D91E36);
   }
 
   .bottom-nav-item.active svg {
-    transform: scale(1.06) translateY(-1px);
-    color: var(--text-primary, #1A1A1A);
-  }
-
-  .bottom-nav-item.active span {
-    font-weight: 700;
-  }
-
-  /* Carrinho ativo destaca em vermelho Fluxa */
-  .bottom-nav-item.bottom-nav-cart.active {
-    color: var(--red, #D91E36);
-  }
-  .bottom-nav-item.bottom-nav-cart.active svg {
-    color: var(--red, #D91E36);
-  }
-  .bottom-nav-item.bottom-nav-cart.active::before {
-    background: rgba(217,30,54,0.10);
+    transform: scale(1.1) translateY(-1px);
   }
 
   /* Press feedback */

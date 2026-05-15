@@ -280,13 +280,166 @@
   }
 }
 
-/* Mobile-only: footer ACIMA do bottom-nav (60px) */
+/* ══════════════════════════════════════════════════════════════
+   MOBILE iFood STYLE (≤767px) — endereco em destaque + CTA vermelho
+══════════════════════════════════════════════════════════════ */
+
 @media (max-width: 767px) {
   .checkout-page {
-    padding-bottom: calc(var(--tab-bar-h, 60px) + 90px + env(safe-area-inset-bottom, 0px));
+    background: #FFF;
+    padding-bottom: calc(90px + var(--tab-bar-h, 60px) + env(safe-area-inset-bottom, 0px));
   }
+
+  /* Header sticky com blur */
+  .checkout-page .page-header {
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    padding: 14px 16px;
+    padding-top: calc(14px + env(safe-area-inset-top, 0px));
+  }
+  .checkout-page .page-header-title {
+    font-size: 17px;
+    font-weight: 800;
+  }
+  .checkout-page .header-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #F5F5F5;
+  }
+
+  /* Conteudo */
+  .checkout-content {
+    padding: 16px 16px 24px;
+    gap: 22px;
+    background: #FFF;
+  }
+
+  /* Section titles — eyebrow uppercase pequeno */
+  .checkout-section-title {
+    font-size: 12px;
+    font-weight: 800;
+    color: #1A1A1A;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 4px 0 4px;
+  }
+
+  /* Lista de itens em card branco com sombra */
+  .checkout-items-list {
+    background: #FFF;
+    border: 1px solid #EBEBEB;
+    border-radius: 14px;
+    overflow: hidden;
+    padding: 0;
+  }
+  .checkout-item-row {
+    padding: 14px 16px;
+    gap: 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    background: #FFF;
+  }
+  .checkout-item-row:last-child { border-bottom: none; }
+  .checkout-item-img {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+  }
+  .checkout-item-name { font-size: 14.5px; }
+  .checkout-item-qty  { font-size: 12.5px; }
+  .checkout-item-price { font-size: 14.5px; }
+
+  /* Cards de opcao (endereco/pagamento) — Padrao iFood Endereco de Entrega */
+  .checkout-option-card {
+    background: #FFF;
+    border: 1.5px solid #EBEBEB;
+    border-radius: 14px;
+    padding: 14px 16px;
+    min-height: 68px;
+    transition: border-color 150ms ease, transform 80ms ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .checkout-option-card:active { transform: scale(0.99); }
+  .checkout-option-card.selected {
+    background: #FFF;
+    border-color: var(--red, #D91E36);
+    box-shadow: 0 0 0 1px var(--red, #D91E36) inset;
+  }
+  .checkout-option-icon {
+    width: 40px; height: 40px;
+    background: #F5F5F5;
+    color: #757575;
+    border-radius: 50%;
+  }
+  .checkout-option-card.selected .checkout-option-icon {
+    background: var(--red, #D91E36);
+    color: #FFF;
+  }
+  .checkout-option-label { font-size: 15px; font-weight: 700; }
+  .checkout-option-sub { font-size: 12.5px; margin-top: 2px; }
+
+  /* Check do selected — vermelho iFood */
+  .pm-check {
+    color: var(--red, #D91E36);
+    flex-shrink: 0;
+  }
+
+  /* Inputs */
+  .checkout-content .input-field {
+    height: 50px;
+    background: #F5F5F5;
+    border: 1.5px solid transparent;
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 0 14px;
+  }
+  .checkout-content .input-field:focus {
+    background: #FFF;
+    border-color: var(--red, #D91E36);
+    box-shadow: 0 0 0 3px rgba(217,30,54,0.10);
+  }
+
+  /* Resumo de valores — sem caixa cinza, mais limpo */
+  .checkout-summary-box {
+    background: transparent;
+    border: 1px solid #EBEBEB;
+    border-radius: 14px;
+    padding: 16px;
+  }
+  .checkout-summary-row { font-size: 14px; }
+  .checkout-summary-total {
+    font-size: 20px;
+    font-weight: 900;
+  }
+
+  /* Mesa info card */
+  .mesa-info-card {
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+
+  /* Footer fixo com CTA vermelho iFood */
   .checkout-footer {
     bottom: var(--tab-bar-h, 60px);
+    background: #FFF;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-top: 1px solid #EBEBEB;
     padding: 14px 16px 12px;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.06);
   }
+
+  /* CTA Confirmar Pedido — vermelho */
+  .checkout-footer .btn-primary {
+    background: var(--red, #D91E36);
+    color: #FFF;
+    height: 52px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    box-shadow: none;
+  }
+  .checkout-footer .btn-primary:hover { background: #B71C2E; }
+  .checkout-footer .btn-primary:active { transform: scale(0.98); }
 }

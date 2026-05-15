@@ -407,30 +407,17 @@
   .crust-price      { font-size: 9px; }
   .pizza-crust-grid-step3 { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
 
-  /* Footer ACIMA do bottom-nav */
-  .pizza-s2-footer {
-    position: fixed;
-    bottom: var(--tab-bar-h, 60px);
-    left: 0; right: 0;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(0,0,0,0.06);
-    padding: 12px 16px;
-    margin: 0;
-    z-index: 90;
-  }
-  .btn-add-cart {
-    background: var(--color-black);
-    color: #FFF;
-    padding: 16px;
-    font-size: 16px;
-    font-weight: 700;
-    border-radius: 14px;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.20);
-  }
+  /* Footer */
+  .pizza-s2-footer    { padding: 10px 0 4px; }
+  .btn-add-cart       { padding: 14px; font-size: 15px; border-radius: 14px; }
+}
 
-  /* Search bar dos sabores */
+/* ══════════════════════════════════════════════════════════════
+   MOBILE iFood STYLE (≤767px) — sobrepoe alguns refinos
+══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  /* Search bar de sabores */
   .flavor-search-wrap {
     position: relative;
     margin-bottom: 12px;
@@ -449,9 +436,9 @@
     height: 46px;
     background: #F5F5F5;
     border: 1.5px solid transparent;
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 0 40px 0 42px;
-    font-family: var(--font-family, 'DM Sans', sans-serif);
+    font-family: var(--font, 'DM Sans', sans-serif);
     font-size: 16px;
     color: #1A1A1A;
     outline: none;
@@ -459,15 +446,15 @@
   }
   .flavor-search-input:focus {
     background: #FFF;
-    border-color: #1A1A1A;
-    box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+    border-color: var(--red, #D91E36);
+    box-shadow: 0 0 0 3px rgba(217,30,54,0.10);
   }
   .flavor-search-clear {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    width: 26px; height: 26px;
+    width: 24px; height: 24px;
     border-radius: 50%;
     background: rgba(0,0,0,0.10);
     color: #FFF;
@@ -485,5 +472,39 @@
     color: #757575;
     font-size: 13.5px;
     padding: 32px 16px;
+  }
+
+  /* CTA de adicionar ao carrinho — vermelho iFood */
+  .btn-add-cart {
+    background: var(--red, #D91E36);
+    color: #FFF;
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    height: 52px;
+    box-shadow: none;
+  }
+  .btn-add-cart:active { background: #B71C2E; transform: scale(0.98); }
+  .btn-add-cart.inactive {
+    background: #E8A0A8;
+    color: #FFF;
+  }
+
+  /* Footer sticky acima da bottom-nav */
+  .pizza-s2-footer {
+    position: fixed;
+    bottom: var(--tab-bar-h, 60px);
+    left: 0;
+    right: 0;
+    background: #FFF;
+    border-top: 1px solid #EBEBEB;
+    padding: 12px 16px;
+    margin: 0;
+    z-index: 90;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.06);
+  }
+  .pizza-step2-layout {
+    padding-bottom: calc(60px + var(--tab-bar-h, 60px) + env(safe-area-inset-bottom, 0px));
   }
 }

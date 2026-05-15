@@ -1,263 +1,339 @@
 /* ══════════════════════════════════════════════════════════════
-   LOGIN — Apple × Uber
-
-   Mobile: HeroSection (faaala fulano!) no topo + card premium abaixo
-   Desktop: split-layout (hero esquerda + card direita)
+   LOGIN — Uber / Apple Standard Clean Layout
+   
+   • Full-screen centered card on mobile
+   • Big bold typography (DM Sans)
+   • Large Uber-black CTAs
+   • Modern subtle inputs
 ══════════════════════════════════════════════════════════════ */
 
 .login-page {
   min-height: 100dvh;
-  background: var(--bg, #F5F5F5);
-}
-
-/* No mobile o split-layout vira coluna (já é default) */
-.login-page .split-left {
+  display: flex;
+  flex-direction: column;
   background: var(--surface, #FFF);
 }
 
-/* Painel direito: container do card */
-.login-right-col {
+.login-container {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px 20px calc(24px + env(safe-area-inset-bottom, 0px));
-  background: var(--bg, #F5F5F5);
+  padding: 20px;
 }
 
-/* Card do login — premium, levemente flutuante */
 .login-card {
   width: 100%;
-  max-width: 420px;
-  background: var(--surface, #FFF);
-  border-radius: var(--r-xl, 20px);
-  padding: 32px 24px 28px;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow:
-    0 1px 2px rgba(0,0,0,0.04),
-    0 12px 32px rgba(0,0,0,0.08);
-  border: 1px solid var(--border-light, rgba(0,0,0,0.05));
-}
-
-/* Ícone Flüxa "F" — círculo preto suspenso */
-.login-icon-wrapper { margin-bottom: 22px; }
-
-.login-icon-circle {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: var(--black, #2D2D2D);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow:
-    0 8px 22px rgba(0,0,0,0.18),
-    inset 0 1px 0 rgba(255,255,255,0.10);
-}
-
-.login-icon-f {
-  color: #FFF;
-  font-size: 30px;
-  font-weight: 900;
-  letter-spacing: -0.05em;
-  line-height: 1;
-}
-
-/* Section (entrar / cadastrar) */
-.login-section {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
   gap: 0;
 }
 
+/* ── Icon — clean branding ── */
+.login-branding {
+  width: 64px;
+  height: 64px;
+  background: var(--black, #2D2D2D);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.login-branding span {
+  color: #FFF;
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+}
+
+/* ── Typography ── */
 .login-title {
-  font-size: 26px;
+  font-size: 32px;
   font-weight: 800;
   color: var(--text-primary, #1A1A1A);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
+  margin-bottom: 8px;
   text-align: center;
-  margin-bottom: 4px;
 }
 
 .login-subtitle {
-  font-size: 14.5px;
+  font-size: 16px;
   color: var(--text-secondary, #757575);
   font-weight: 500;
+  margin-bottom: 32px;
   text-align: center;
-  margin-bottom: 22px;
 }
 
-/* Inputs Apple */
-.login-input {
+/* ── Form — Uber style inputs ── */
+.login-form {
   width: 100%;
-  height: 52px;
-  background: var(--surface-2, #F5F5F5);
-  border: 1.5px solid transparent;
-  border-radius: var(--r-input, 12px);
-  padding: 0 16px;
-  font-family: var(--font, 'DM Sans', sans-serif);
-  font-size: 16px;       /* anti-zoom iOS */
-  color: var(--text-primary, #1A1A1A);
-  margin-bottom: 10px;
-  transition: border-color 180ms, background 180ms, box-shadow 180ms;
-  -webkit-appearance: none;
-  appearance: none;
-  outline: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.login-input::placeholder { color: var(--text-ghost, #AEAEB2); }
-
-.login-input:focus {
-  background: var(--surface, #FFF);
-  border-color: var(--text-primary, #1A1A1A);
-  box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+.login-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-/* Erro */
-.login-error {
-  margin: 4px 0 8px;
+.login-label {
   font-size: 13px;
-  font-weight: 600;
-  color: var(--red, #D91E36);
-  text-align: center;
+  font-weight: 700;
+  color: var(--text-primary, #1A1A1A);
+  margin-left: 4px;
 }
 
-/* CTA preto Uber */
-.login-btn-section,
-.login-btn-submit {
+/* ── CTAs — Uber Black ── */
+.login-submit-btn {
   width: 100%;
   height: 56px;
   background: var(--black, #2D2D2D);
   color: #FFF;
-  border: none;
+  font-size: 17px;
+  font-weight: 700;
   border-radius: var(--r-btn, 14px);
-  font-family: var(--font, 'DM Sans', sans-serif);
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 150ms ease;
+}
+
+.login-submit-btn:active { transform: scale(0.98); background: var(--black-deep, #1A1A1A); }
+
+.login-secondary-btn {
+  width: 100%;
+  height: 56px;
+  background: transparent;
+  color: var(--black, #2D2D2D);
   font-size: 16px;
   font-weight: 700;
-  letter-spacing: -0.01em;
-  margin-top: 6px;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.20);
-  transition: background 150ms ease, transform 80ms ease, box-shadow 200ms ease;
-  -webkit-tap-highlight-color: transparent;
-}
-.login-btn-section:hover,
-.login-btn-submit:hover {
-  background: var(--black-deep, #1A1A1A);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.26);
-}
-.login-btn-section:active,
-.login-btn-submit:active { transform: scale(0.98); }
-.login-btn-section:disabled,
-.login-btn-submit:disabled {
-  background: #C8C8C8;
-  box-shadow: none;
-  cursor: not-allowed;
-  transform: none;
+  border: 2px solid var(--border, #EBEBEB);
+  border-radius: var(--r-btn, 14px);
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 150ms ease;
 }
 
-/* Switch login/cadastro — texto preto, não azul */
-.login-switch {
-  margin-top: 22px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-secondary, #757575);
+.login-secondary-btn:active { transform: scale(0.98); background: var(--surface-2, #F5F5F5); }
+
+/* ── Errors ── */
+.login-error-msg {
+  font-size: 13px;
+  color: var(--red, #D91E36);
+  font-weight: 600;
   text-align: center;
+  margin-top: 12px;
 }
 
-.login-switch-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  margin-left: 4px;
-  font-family: var(--font, 'DM Sans', sans-serif);
+/* ── Switch footer ── */
+.login-footer-switch {
+  margin-top: 32px;
   font-size: 14px;
+  color: var(--text-secondary, #757575);
+  font-weight: 500;
+}
+
+.login-link {
+  color: var(--red, #D91E36);
   font-weight: 700;
-  color: var(--text-primary, #1A1A1A);
   text-decoration: underline;
-  text-underline-offset: 3px;
   cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-.login-switch-btn:hover  { color: var(--red, #D91E36); }
-.login-switch-btn:active { transform: scale(0.98); }
-
-/* ── Mobile (≤767px) — Hero no topo, card abaixo ── */
-@media (max-width: 767px) {
-  .login-page .split-layout {
-    display: flex !important;
-    flex-direction: column;
-    gap: 0;
-  }
-  .login-right-col {
-    padding: 20px 16px calc(40px + env(safe-area-inset-bottom, 0px));
-  }
-  .login-card {
-    padding: 28px 22px 24px;
-    border-radius: var(--r-xl, 20px);
-  }
+  margin-left: 4px;
 }
 
-/* ── Tablet+ : layout split (hero esquerda + card direita) ── */
+/* Desktop: split layout fallback */
 @media (min-width: 768px) {
-  .login-right-col {
-    flex: 0 0 480px;
-    background: var(--surface, #FFF);
-    padding: 40px;
+  .login-page {
+    flex-direction: row;
   }
-  .login-card {
-    box-shadow: none;
-    padding: 0;
-    background: transparent;
-    border: none;
+  .login-hero-col {
+    flex: 1;
+    background: var(--black, #2D2D2D);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .login-container {
+    flex: 0 0 500px;
+    background: #FFF;
   }
 }
 
 /* ══════════════════════════════════════════════════════════════
-   PROFILE FALLBACK (Profile sem login renderiza login-card)
+   MOBILE iFood STYLE (≤767px) — classes reais do LoginComponent.tsx
+   (.login-card, .login-icon-wrapper, .login-icon-circle, .login-icon-f,
+    .login-section, .login-input, .login-btn-section, .login-btn-submit,
+    .login-switch, .login-switch-btn, .login-error)
 ══════════════════════════════════════════════════════════════ */
 
-.f-logo-circle {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--black, #2D2D2D);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 16px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-}
-.f-letter { color: #FFF; font-size: 26px; font-weight: 900; letter-spacing: -0.05em; }
+@media (max-width: 767px) {
+  .login-page {
+    background: #F5F5F5;
+  }
+  .login-page .split-layout {
+    flex-direction: column;
+  }
+  .login-page .split-left {
+    background: #FFF;
+  }
 
-.login-form-section {
-  text-align: center;
-  margin: 8px 0;
-}
+  .login-right-col {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 20px calc(40px + env(safe-area-inset-bottom, 0px));
+    background: #F5F5F5;
+  }
 
-.login-divider {
-  width: 100%;
-  height: 1px;
-  background: var(--border, #EBEBEB);
-  margin: 16px 0;
-}
+  /* Card centralizado premium */
+  .login-card {
+    width: 100%;
+    max-width: 420px;
+    background: #FFF;
+    border-radius: 20px;
+    padding: 32px 24px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow:
+      0 1px 2px rgba(0,0,0,0.04),
+      0 12px 32px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.05);
+  }
 
-.btn-bora-pedir {
-  width: 100%;
-  height: 54px;
-  background: var(--black, #2D2D2D);
-  color: #FFF;
-  border-radius: var(--r-btn, 14px);
-  font-size: 16px;
-  font-weight: 700;
-  margin-top: 16px;
-  cursor: pointer;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.18);
-  transition: background 150ms ease, transform 80ms ease;
+  /* Icone Fluxa "F" */
+  .login-icon-wrapper { margin-bottom: 22px; }
+  .login-icon-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #1A1A1A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+  }
+  .login-icon-f {
+    color: #FFF;
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  /* Section */
+  .login-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .login-section .login-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: #1A1A1A;
+    letter-spacing: -0.03em;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  .login-section .login-subtitle {
+    font-size: 14.5px;
+    color: #757575;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 22px;
+  }
+
+  /* Inputs */
+  .login-input {
+    width: 100%;
+    height: 52px;
+    background: #F5F5F5;
+    border: 1.5px solid transparent;
+    border-radius: 12px;
+    padding: 0 16px;
+    font-family: var(--font, 'DM Sans', sans-serif);
+    font-size: 16px;
+    color: #1A1A1A;
+    margin-bottom: 10px;
+    transition: border-color 180ms, background 180ms, box-shadow 180ms;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+  }
+  .login-input::placeholder { color: #AEAEB2; }
+  .login-input:focus {
+    background: #FFF;
+    border-color: var(--red, #D91E36);
+    box-shadow: 0 0 0 3px rgba(217,30,54,0.10);
+  }
+
+  /* Erro */
+  .login-error {
+    margin: 4px 0 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--red, #D91E36);
+    text-align: center;
+  }
+
+  /* CTA vermelho iFood */
+  .login-btn-section,
+  .login-btn-submit {
+    width: 100%;
+    height: 52px;
+    background: var(--red, #D91E36);
+    color: #FFF;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font, 'DM Sans', sans-serif);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: background 150ms ease, transform 80ms ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .login-btn-section:active,
+  .login-btn-submit:active { background: #B71C2E; transform: scale(0.98); }
+  .login-btn-section:disabled,
+  .login-btn-submit:disabled {
+    background: #E8A0A8;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Switch login/cadastro — texto preto, nao azul */
+  .login-switch {
+    margin-top: 22px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #757575;
+    text-align: center;
+  }
+  .login-switch-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 4px;
+    font-family: var(--font, 'DM Sans', sans-serif);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--red, #D91E36);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .login-switch-btn:active { transform: scale(0.98); }
 }
-.btn-bora-pedir:hover  { background: var(--black-deep, #1A1A1A); }
-.btn-bora-pedir:active { transform: scale(0.98); }

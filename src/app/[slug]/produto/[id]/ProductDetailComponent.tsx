@@ -223,7 +223,10 @@ export default function ProductDetail() {
                 )}
                 R$ {(effectivePrice * qty).toFixed(2)}
               </div>
-              <button className="btn-add" onClick={handleAdd}>Adicionar</button>
+              <button className="btn-add" onClick={handleAdd}>
+                <span className="btn-add-label">Adicionar</span>
+                <span className="btn-add-price">R$ {(effectivePrice * qty).toFixed(2)}</span>
+              </button>
             </div>
           </div>
         </div>
