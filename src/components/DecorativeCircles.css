@@ -57,7 +57,7 @@
   text-transform: uppercase;
 }
 
-/* Mensagem "Bem-vindo ao [restaurante]" sobre os círculos */
+/* Welcome label (nome do restaurante) sobre os circulos */
 .circles-welcome {
   position: absolute;
   bottom: 24px;
@@ -71,7 +71,6 @@
   max-width: 220px;
   text-shadow: 0 2px 6px rgba(0,0,0,0.30);
 }
-
 .circles-welcome-eyebrow {
   font-family: 'DM Sans', sans-serif;
   font-size: 11px;
@@ -81,7 +80,6 @@
   opacity: 0.78;
   line-height: 1;
 }
-
 .circles-welcome-name {
   font-family: 'DM Sans', sans-serif;
   font-size: 18px;
@@ -95,7 +93,7 @@
 }
 
 /* Mobile: círculos bem menores */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .decorative-circles-container {
     width: 280px;
     height: 280px;

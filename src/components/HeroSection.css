@@ -114,69 +114,28 @@
 .l-4 { font-size: 14px; opacity: 0.18; font-weight: 400; }
 .l-5 { font-size: 11px; opacity: 0.10; font-weight: 300; }
 
-@media (max-width: 767px) {
-  /* Mobile = título da aba estilo Apple/Uber: compacto mas marcante,
-     centralizado, sem decorações que poluem a tela pequena. */
+@media (max-width: 768px) {
+  .hero-title-giant  { font-size: clamp(38px, 12vw, 64px); line-height: 0.9; }
+  .hero-title-medium { font-size: clamp(16px, 5.5vw, 24px); }
+  .hero-subtitle     { font-size: 13px; margin-top: 10px; max-width: 100%; }
+  .hero-top-label    { font-size: 13px; text-align: center; }
+  .hero-eyes         { right: -32px; bottom: 6px; }
+  .eye-circle-large  { width: 36px; height: 36px; }
+  .eye-circle-small  { width: 24px; height: 24px; }
+  .stacked-lanches   { display: none; }
+  .hero-underline    { height: 14px; }
+
   .hero-section {
     min-height: unset;
     justify-content: flex-start;
-    padding: 22px 20px 18px;
-    padding-top: calc(22px + env(safe-area-inset-top, 0px));
-    background: var(--surface, #FFF);
-    border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.06));
   }
   .hero-content {
     text-align: center;
-    padding-bottom: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding-bottom: 24px;
+    overflow: hidden; /* evita hero-eyes overflow */
   }
-
-  .hero-top-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-secondary, #757575);
-    letter-spacing: 0.02em;
-    margin-bottom: 6px;
-  }
-
-  .hero-title-medium {
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--text-primary, #1A1A1A);
-    line-height: 1;
-  }
-
   .hero-giant-wrapper {
     overflow: visible;
-    margin-top: -2px;
-    display: inline-block;
+    margin-top: -6px;
   }
-
-  .hero-title-giant {
-    font-size: clamp(36px, 11vw, 52px);
-    font-weight: 900;
-    color: var(--text-primary, #1A1A1A);
-    line-height: 0.95;
-    letter-spacing: -0.035em;
-  }
-
-  .hero-underline { height: 12px; bottom: -8px; }
-
-  .hero-subtitle {
-    font-size: 13.5px;
-    font-weight: 500;
-    color: var(--text-secondary, #757575);
-    margin-top: 10px;
-    max-width: 320px;
-    line-height: 1.45;
-  }
-
-  /* Eyes / decoração reduzidos */
-  .hero-eyes        { position: relative; right: auto; bottom: auto; margin-top: 6px; }
-  .eye-circle-large { width: 32px; height: 32px; }
-  .eye-circle-small { width: 22px; height: 22px; }
-  .stacked-lanches  { display: none; }
 }
