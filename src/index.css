@@ -535,3 +535,48 @@ img {
   min-height: 0;
 }
 .scroll-area::-webkit-scrollbar { display: none; }
+
+/* ══════════════════════════════════════════════════════════════
+   MOBILE POLISH — anti-zoom iOS, safe-area, reduced motion
+══════════════════════════════════════════════════════════════ */
+
+/* iOS Safari: input com font < 16px causa zoom involuntário ao focar */
+@media (max-width: 767px) {
+  input, textarea, select {
+    font-size: 16px;
+  }
+}
+
+/* Respeita preferência de redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Touch feedback global suave */
+@media (hover: none) and (pointer: coarse) {
+  button:active,
+  a:active,
+  [role="button"]:active {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Inputs autopreenchidos do Chrome — manter cor de texto */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text-primary, #1A1A1A);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Headers sticky genéricos respeitam safe-area */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .page-header {
+    padding-top: calc(16px + env(safe-area-inset-top));
+  }
+}

@@ -462,3 +462,391 @@
     left: 20px;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   ALIASES — match TSX class names actually rendered
+   (detail-header, detail-img, detail-info, detail-title,
+    detail-desc, size-selector, size-pill, qty-action-row,
+    qty-controls, qty-btn, qty-val, price-pill, btn-add,
+    related-carousel, related-info, related-name, related-price,
+    related-add, sidebar-item-card, sidebar-count,
+    sidebar-item-placeholder, sidebar-item-desc, empty-cart-card)
+   Mobile-first redesign Uber × Apple
+══════════════════════════════════════════════════════════════ */
+
+.detail-layout {
+  background: var(--bg, #F5F5F5);
+}
+
+.detail-left {
+  background: var(--surface, #FFF);
+  padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Header sticky no detalhe — Apple HIG */
+.detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px 14px;
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--border-light, rgba(0,0,0,0.06));
+}
+
+.detail-header-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-primary, #1A1A1A);
+  letter-spacing: -0.02em;
+  flex: 1;
+  min-width: 0;
+}
+
+.detail-header .menu-filter-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface-2, #F5F5F5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.detail-header .menu-filter-btn:active { transform: scale(0.92); }
+
+/* Product area (img + info) */
+.product-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.detail-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: linear-gradient(145deg, #F0F0F0, #E0E0E0);
+  display: block;
+}
+
+.detail-info {
+  padding: 22px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.detail-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-primary, #1A1A1A);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.detail-desc {
+  font-size: 14.5px;
+  color: var(--text-secondary, #757575);
+  line-height: 1.55;
+  margin-bottom: 22px;
+}
+
+/* Size selector — segmented control Apple style */
+.size-selector {
+  display: flex;
+  gap: 8px;
+  background: var(--surface-2, #F5F5F5);
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 22px;
+}
+
+.size-pill {
+  flex: 1;
+  height: 42px;
+  background: transparent;
+  color: var(--text-secondary, #757575);
+  border-radius: 9px;
+  font-family: var(--font, 'DM Sans', sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  transition: all 180ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.size-pill.active {
+  background: var(--surface, #FFF);
+  color: var(--text-primary, #1A1A1A);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.size-pill:active { transform: scale(0.96); }
+
+/* Remove section — chips para ingredientes */
+.remove-section {
+  margin-bottom: 22px;
+}
+
+.remove-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary, #1A1A1A);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.remove-grid {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.remove-card {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--surface-2, #F5F5F5);
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 150ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.remove-card:active { transform: scale(0.92); }
+
+.remove-card.removed {
+  background: #FFF0F0;
+  border-color: var(--red, #D91E36);
+}
+
+.remove-emoji { font-size: 24px; }
+.remove-card.removed .remove-emoji { opacity: 0.4; filter: grayscale(0.6); }
+
+/* Quantity + action row — sticky at bottom */
+.qty-action-row {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-top: 1px solid var(--border-light, rgba(0,0,0,0.06));
+  z-index: 100;
+}
+
+.qty-controls {
+  display: flex;
+  align-items: center;
+  background: var(--surface-2, #F5F5F5);
+  border-radius: 14px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.qty-btn {
+  width: 44px;
+  height: 52px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary, #1A1A1A);
+  font-weight: 700;
+  transition: background 120ms ease;
+}
+.qty-btn:hover  { background: var(--border, #EBEBEB); }
+.qty-btn:active { background: #D0D0D0; transform: none; }
+
+.qty-val {
+  min-width: 28px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-primary, #1A1A1A);
+}
+
+.price-pill {
+  display: none; /* preço incluído no botão Adicionar */
+}
+
+.btn-add {
+  flex: 1;
+  height: 54px;
+  background: var(--black, #2D2D2D);
+  color: #FFF;
+  border-radius: 14px;
+  font-family: var(--font, 'DM Sans', sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.20);
+  transition: background 150ms ease, transform 80ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-add:hover  { background: var(--black-deep, #1A1A1A); }
+.btn-add:active { transform: scale(0.98); }
+.btn-add:disabled { background: #C8C8C8; box-shadow: none; }
+
+/* Related section (sugestões) */
+.related-carousel {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 4px 20px 8px;
+  margin: 0 -20px;
+}
+.related-carousel::-webkit-scrollbar { display: none; }
+
+.related-card {
+  width: 144px;
+  flex-shrink: 0;
+  background: var(--surface, #FFF);
+  border: 1px solid var(--border, #EBEBEB);
+  border-radius: var(--r-card, 16px);
+  overflow: hidden;
+  position: relative;
+  transition: transform 80ms ease, box-shadow 200ms ease;
+}
+.related-card:active { transform: scale(0.97); }
+
+.related-card img {
+  width: 100%;
+  height: 96px;
+  object-fit: cover;
+  display: block;
+  background: var(--surface-2, #F5F5F5);
+}
+
+.related-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px 36px;
+}
+
+.related-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary, #1A1A1A);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.related-price {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-primary, #1A1A1A);
+}
+
+.related-add {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--black, #2D2D2D);
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  transition: transform 80ms ease;
+}
+.related-add:active { transform: scale(0.86); }
+
+/* Mobile: esconder sidebar, ela vira o CartSidebar drawer */
+@media (max-width: 1023px) {
+  .detail-sidebar { display: none; }
+}
+
+/* Sidebar items (desktop only) — refinement */
+.sidebar-item-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface-2, #F5F5F5);
+  border-radius: var(--r-md, 12px);
+}
+
+.sidebar-item-card img {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.sidebar-item-placeholder {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  background: var(--border, #EBEBEB);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.sidebar-item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar-item-desc {
+  font-size: 12px;
+  color: var(--text-secondary, #757575);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary, #757575);
+  background: var(--surface-2, #F5F5F5);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.empty-cart-card {
+  background: var(--surface-2, #F5F5F5);
+  border-radius: var(--r-md, 12px);
+  padding: 28px 16px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary, #757575);
+}
