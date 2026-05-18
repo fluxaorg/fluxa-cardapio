@@ -1,11 +1,93 @@
 /* ══════════════════════════════════════════════════════════════
    COMANDA — Uber / iFood Standard Mobile Layout
-   
-   • Full-screen vertical list
-   • Clean status badges
-   • Large black "Pedir conta" button
-   • DM Sans typography
-══════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════
+   MESA ENCERRADA — Apple minimalista
+══════════════════════════════════════════ */
+
+.comanda-liberada-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  padding: 40px 24px;
+  padding-bottom: calc(40px + var(--tab-bar-h, 60px) + env(safe-area-inset-bottom, 0px));
+  min-height: calc(100svh - var(--tab-bar-total, 60px));
+  background: var(--bg);
+  font-family: var(--font);
+  max-width: 420px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.comanda-liberada-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.comanda-liberada-eyebrow {
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+}
+
+.comanda-liberada-title {
+  font-family: var(--font);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.comanda-liberada-sub {
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0 0 12px;
+  max-width: 320px;
+}
+
+.comanda-btn-novo {
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  background: var(--text-primary);
+  color: #FFF;
+  border: none;
+  border-radius: 999px;
+  padding: 0 28px;
+  min-height: 52px;
+  cursor: pointer;
+  transition: background 150ms ease, transform 80ms ease;
+  -webkit-tap-highlight-color: transparent;
+  margin-top: 8px;
+}
+.comanda-btn-novo:hover  { background: var(--black-deep); }
+.comanda-btn-novo:active { transform: scale(0.98); }
+
+/* ══════════════════════════════════════════
+   COMANDA ATIVA (estilos pre-existentes)
+══════════════════════════════════════════ */
 
 .comanda-page {
   min-height: 100dvh;

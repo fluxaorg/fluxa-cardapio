@@ -109,11 +109,22 @@ export default function Comanda() {
     return (
       <div className="page-container">
         <div className="comanda-liberada-screen">
-          <div style={{ fontSize: 64, marginBottom: 24 }}>✅</div>
-          <h2 className="comanda-liberada-title">Mesa encerrada!</h2>
-          <p className="comanda-liberada-sub">Obrigado pela visita. Volte sempre!</p>
-          <button className="comanda-btn-novo" onClick={() => router.push(`${basePath}/menu`)}>
-            Fazer novo pedido
+          <div className="comanda-liberada-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <span className="comanda-liberada-eyebrow">Atendimento finalizado</span>
+          <h1 className="comanda-liberada-title">Mesa encerrada</h1>
+          <p className="comanda-liberada-sub">
+            Obrigado pela visita. Esperamos te ver de novo em breve.
+          </p>
+          <button
+            type="button"
+            className="comanda-btn-novo"
+            onClick={() => router.push(`${basePath}/menu`)}
+          >
+            Voltar ao cardápio
           </button>
         </div>
       </div>
