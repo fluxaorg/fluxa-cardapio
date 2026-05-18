@@ -274,8 +274,8 @@
   }
 
   .cart-sidebar {
-    height: 100dvh;
-    max-height: 100dvh;
+    height: 100svh;
+    max-height: 100svh;
     width: 380px;
     border-radius: 0;
     animation: sidebarSlideIn 280ms cubic-bezier(0.32, 0.72, 0, 1);
@@ -477,15 +477,15 @@
     letter-spacing: -0.02em;
   }
 
-  /* CTA Confirmar Pedido — vermelho iFood */
+  /* CTA Confirmar Pedido — vinho Fluxa, pill 30px */
   .confirm-btn {
     width: 100%;
-    min-height: 52px;
+    min-height: 56px;
     padding: 14px 24px;
-    background: var(--red, #D91E36);
+    background: var(--red, #C41C3B);
     color: #FFF;
     border: none;
-    border-radius: 8px;
+    border-radius: 30px;
     font-family: var(--font, 'DM Sans', sans-serif);
     font-size: 16px;
     font-weight: 700;
@@ -495,13 +495,14 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: none;
+    box-shadow: 0 8px 24px rgba(196, 28, 59, 0.35);
     transition: background 150ms ease, transform 80ms ease;
     -webkit-tap-highlight-color: transparent;
   }
-  .confirm-btn:active { background: #B71C2E; transform: scale(0.98); }
+  .confirm-btn:active { background: var(--red-vivid, #A8152F); transform: scale(0.98); }
   .confirm-btn:disabled {
-    background: #E8A0A8;
+    background: #D9C7CA;
+    box-shadow: none;
     cursor: not-allowed;
     transform: none;
   }

@@ -1,154 +1,193 @@
 /* ══════════════════════════════════════════════════════════════
-   MENU — iFood standard mobile layout
-   
-   • Categorias horizontais scrolláveis (pills com scroll)
-   • Produtos em lista horizontal (foto + info + + button)
-   • Fácil de escanear, sem scroll lateral
-   • Tablet+: grid 2-3 colunas
-══════════════════════════════════════════════════════════════ */
+   MENU — FLUXA FOOD'S
+   Reference: prints app delivery (Cheese Hot Hamburger / Italian Pizza)
+   Mobile-first, max-width 420px (centralizado em telas grandes).
+   Cores: vinho #C41C3B, creme #FAF9F6, bege #FFE6D2.
+   Fonte: DM Sans.
+═══════════════════════════════════════════════════════════════ */
 
-/* Page wrapper */
 .menu-page {
   display: flex;
   flex-direction: column;
-  min-height: calc(100dvh - var(--tab-bar-total, 60px));
-  background: var(--surface, #FFF);
+  min-height: calc(100svh - var(--tab-bar-total, 60px));
+  background: var(--bg);
 }
 
-/* ── Page header ── */
-.menu-page-header {
-  padding: 20px 20px 0;
-  background: var(--surface, #FFF);
+/* ── Container raiz mobile ── */
+.menu-section {
+  background: var(--bg);
+  min-height: calc(100svh - var(--tab-bar-total, 60px));
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
-.menu-page-title {
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--text-primary, #1A1A1A);
-  letter-spacing: -0.04em;
-  margin-bottom: 16px;
+/* ── Header sticky com título + filtro ── */
+.menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 16px 12px;
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
+  padding-left: calc(16px + env(safe-area-inset-left, 0px));
+  padding-right: calc(16px + env(safe-area-inset-right, 0px));
+  background: rgba(250, 249, 246, 0.96);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
-/* ── Category pills — horizontally scrollable ── */
+.menu-title {
+  font-family: var(--font);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.menu-filter-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 150ms ease, transform 80ms ease, border-color 150ms;
+  -webkit-tap-highlight-color: transparent;
+}
+.menu-filter-btn:hover  { border-color: var(--red); }
+.menu-filter-btn:active { transform: scale(0.92); }
+
+/* ══════════════════════════════════════════
+   CATEGORY PILLS — scroll horizontal
+══════════════════════════════════════════ */
+
 .menu-categories {
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding-bottom: 16px;
+  overflow-y: hidden;
+  padding: 14px 16px 16px;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  /* Extend to edges on mobile */
-  margin: 0 -20px;
-  padding-left: 20px;
-  padding-right: 20px;
+  background: var(--bg);
+  flex-wrap: nowrap;
 }
 .menu-categories::-webkit-scrollbar { display: none; }
+.menu-categories > *:last-child { margin-right: 4px; }
 
 .category-pill {
   flex-shrink: 0;
-  height: 36px;
-  padding: 0 16px;
-  background: var(--surface-2, #F5F5F5);
-  border: 1.5px solid transparent;
-  border-radius: var(--r-pill, 999px);
-  font-family: var(--font, 'DM Sans', sans-serif);
+  min-height: 38px;
+  padding: 0 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: var(--font);
   font-size: 14px;
   font-weight: 600;
-  color: var(--text-secondary, #757575);
+  color: var(--text-primary);
   white-space: nowrap;
   cursor: pointer;
   transition: all 150ms ease;
   display: flex;
   align-items: center;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .category-pill.active {
-  background: var(--black, #2D2D2D);
-  border-color: var(--black, #2D2D2D);
+  background: var(--red);
+  border-color: var(--red);
   color: #FFF;
+  box-shadow: 0 6px 16px rgba(196,28,59,0.30);
 }
 
-.category-pill:active { transform: scale(0.95); }
+.category-pill:active { transform: scale(0.96); }
 
-/* ── Category divider label in list ── */
-.menu-category-header {
-  padding: 20px 20px 10px;
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--text-primary, #1A1A1A);
-  letter-spacing: -0.03em;
-  background: var(--surface, #FFF);
+/* ══════════════════════════════════════════
+   PRODUCT LIST — cards horizontais (estilo print)
+══════════════════════════════════════════ */
+
+.menu-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0 16px 16px;
+  background: var(--bg);
 }
 
-/* ── Product list — scrollable ── */
-.menu-product-list {
-  flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  padding-bottom: 8px;
-}
-.menu-product-list::-webkit-scrollbar { display: none; }
-
-/* ── Product card — iFood horizontal layout ── */
 .product-card {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 14px 20px;
-  background: var(--surface, #FFF);
-  border-bottom: 1px solid var(--border, #EBEBEB);
+  padding: 14px 0;
+  background: transparent;
+  border-bottom: 1px solid #F0E8E0;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition: background 100ms ease;
+  transition: opacity 100ms ease, transform 80ms ease;
   position: relative;
+  min-width: 0;
 }
-
-.product-card:active { background: var(--surface-2, #F5F5F5); }
+.product-card:active { opacity: 0.85; }
 .product-card:last-child { border-bottom: none; }
 
-/* Image */
-.product-card-img {
-  width: 80px;
-  height: 80px;
-  border-radius: var(--r-thumb, 12px);
-  object-fit: cover;
-  flex-shrink: 0;
-  background: var(--surface-2, #F5F5F5);
-}
-
+/* Imagem */
+.product-card-img,
 .product-card-img-placeholder {
   width: 80px;
   height: 80px;
-  border-radius: var(--r-thumb, 12px);
-  background: var(--surface-2, #F5F5F5);
+  border-radius: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--surface-2);
+  display: block;
+}
+.product-card-img-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 32px;
-  flex-shrink: 0;
 }
 
-/* Info block */
+/* Info bloco */
 .product-card-info {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 
 .product-card-name {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-primary, #1A1A1A);
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
   line-height: 1.25;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .product-card-desc {
+  font-family: var(--font);
   font-size: 13px;
-  color: var(--text-secondary, #757575);
+  color: var(--text-secondary);
   line-height: 1.45;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -157,32 +196,38 @@
 }
 
 .product-card-price {
-  font-size: 15px;
+  font-family: var(--font);
+  font-size: 16px;
   font-weight: 700;
-  color: var(--text-primary, #1A1A1A);
+  color: var(--red);
   margin-top: 4px;
+  letter-spacing: -0.01em;
 }
 
-/* Add button — iFood green-style but Fluxa black */
+/* Botão "+" — circular vinho (referência do print) */
 .product-card-add {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: var(--black, #2D2D2D);
-  color: white;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  background: var(--red);
+  color: #FFF;
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   cursor: pointer;
+  box-shadow: 0 6px 14px rgba(196,28,59,0.32);
   transition: all 150ms ease;
 }
+.product-card-add:hover  { background: var(--red-vivid); }
+.product-card-add:active { transform: scale(0.9); }
 
-.product-card-add:hover  { background: var(--black-deep, #1A1A1A); }
-.product-card-add:active { transform: scale(0.88); }
+/* ══════════════════════════════════════════
+   EMPTY STATE
+══════════════════════════════════════════ */
 
-/* ── Empty state ── */
 .menu-empty {
   display: flex;
   flex-direction: column;
@@ -190,304 +235,59 @@
   justify-content: center;
   padding: 60px 20px;
   gap: 12px;
-  color: var(--text-secondary, #757575);
+  color: var(--text-secondary);
   text-align: center;
 }
-
 .menu-empty-icon { font-size: 48px; }
-.menu-empty-text {
-  font-size: 16px;
-  font-weight: 600;
-}
+.menu-empty-text { font-size: 16px; font-weight: 600; }
 
 /* ══════════════════════════════════════════
-   TABLET+ — Grid layout
+   TABLET+ — grid 2 colunas
 ══════════════════════════════════════════ */
 
 @media (min-width: 600px) {
-  .menu-product-list {
+  .menu-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    padding: 0 16px 16px;
-    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: 0 20px 20px;
   }
-
   .product-card {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 0;
-    border-bottom: none;
-    border: 1px solid var(--border, #EBEBEB);
-    border-radius: var(--r-card, 16px);
-    overflow: hidden;
-  }
-
-  .product-card-img {
-    width: 100%;
-    height: 160px;
-    border-radius: 0;
-  }
-
-  .product-card-img-placeholder {
-    width: 100%;
-    height: 160px;
-    border-radius: 0;
-  }
-
-  .product-card-info {
-    padding: 12px 14px 14px;
-  }
-
-  .product-card-name { font-size: 15px; }
-  .product-card-desc { -webkit-line-clamp: 2; }
-
-  .product-card-add {
-    position: absolute;
-    bottom: 14px;
-    right: 14px;
+    flex-direction: row;
+    padding: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
   }
 }
 
 @media (min-width: 900px) {
-  .menu-product-list {
-    grid-template-columns: repeat(3, 1fr);
+  .menu-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 1200px) {
-  .menu-product-list {
-    grid-template-columns: repeat(4, 1fr);
+  .menu-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
-/* ══════════════════════════════════════════════════════════════
-   DESKTOP — estiliza .menu-header, .menu-title, .menu-filter-btn,
-   .menu-grid (TSX classes que nao tinham CSS no original)
-══════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   DESKTOP overrides — titulo maior
+══════════════════════════════════════════ */
 
 @media (min-width: 768px) {
-  .menu-section { padding: 0; }
-
   .menu-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 18px;
+    padding: 24px 28px;
+    background: var(--bg);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
-  .menu-title {
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--text-primary, #1A1A1A);
-    letter-spacing: -0.03em;
-    margin: 0;
-  }
-  .menu-filter-btn {
-    background: transparent;
-    border: none;
-    padding: 8px;
-    cursor: pointer;
-    color: var(--red, #D91E36);
-  }
-
-  .menu-section .menu-categories {
-    margin-bottom: 24px;
-  }
-
-  /* Grid de produtos — 4 cols Apple/Uber Eats style */
-  .menu-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-    padding: 0;
-    background: transparent;
-  }
-
-  .menu-grid .product-card {
-    background: var(--surface, #FFF);
-    border: 1px solid var(--border, #EBEBEB);
-    border-radius: 14px;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border-bottom: 1px solid var(--border, #EBEBEB);
-    position: relative;
-    cursor: pointer;
-    transition: border-color 150ms ease, transform 80ms ease;
-  }
-  .menu-grid .product-card:hover { border-color: rgba(0,0,0,0.18); }
-  .menu-grid .product-card:active { transform: scale(0.99); }
-
-  .menu-grid .product-card-img,
-  .menu-grid .product-card-img-placeholder {
-    width: 64px;
-    height: 64px;
-    border-radius: 10px;
-    flex-shrink: 0;
-    object-fit: cover;
-  }
-  .menu-grid .product-card-info {
-    flex: 1;
-    min-width: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  .menu-grid .product-card-name {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text-primary, #1A1A1A);
-    line-height: 1.25;
-  }
-  .menu-grid .product-card-desc {
-    font-size: 11px;
-    color: var(--text-secondary, #757575);
-    line-height: 1.35;
-  }
-  .menu-grid .product-card-price {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text-secondary, #757575);
-    margin-top: 4px;
-    text-align: right;
-  }
-  .menu-grid .product-card-add {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: var(--red, #D91E36);
-    color: #FFF;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: opacity 150ms ease;
-  }
-  .menu-grid .product-card-add:hover { opacity: 0.88; }
-}
-
-@media (min-width: 1200px) {
-  .menu-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (max-width: 1199px) and (min-width: 768px) {
-  .menu-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* ══════════════════════════════════════════════════════════════
-   MOBILE iFood STYLE (≤767px) — estiliza as classes reais do
-   MenuComponent.tsx (.menu-header, .menu-title, .menu-filter-btn,
-   .menu-grid) que nao tinham CSS no original
-══════════════════════════════════════════════════════════════ */
-
-@media (max-width: 767px) {
-  .menu-section {
-    padding: 0;
-    background: #FFF;
-  }
-
-  /* Header sticky com title grandao estilo iFood "Destaques" */
-  .menu-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 18px 20px 14px;
-    padding-top: calc(18px + env(safe-area-inset-top, 0px));
-    background: rgba(255,255,255,0.94);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-  }
-  .menu-title {
-    font-size: 26px;
-    font-weight: 800;
-    color: #1A1A1A;
-    letter-spacing: -0.03em;
-    flex: 1;
-    margin: 0;
-    line-height: 1.15;
-  }
-  .menu-filter-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: #F5F5F5;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    cursor: pointer;
-    transition: background 150ms ease, transform 80ms ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .menu-filter-btn:active { transform: scale(0.92); }
-
-  /* Pills de categoria */
-  .menu-section .menu-categories {
-    margin: 0;
-    padding: 12px 20px 14px;
-    background: #FFF;
-  }
-  .category-pill {
-    height: 38px;
-    padding: 0 18px;
-    font-size: 14px;
-    font-weight: 600;
-    min-width: 44px;
-  }
-  .category-pill.active {
-    box-shadow: 0 4px 14px rgba(0,0,0,0.14);
-  }
-
-  /* Grid de produtos — lista vertical estilo iFood */
-  .menu-grid {
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    background: #FFF;
-  }
-  .menu-grid .product-card {
-    padding: 14px 20px;
-    gap: 14px;
-    border-bottom: 1px solid #EBEBEB;
-    border-radius: 0;
-    background: #FFF;
-    box-shadow: none;
-  }
-  .menu-grid .product-card-img,
-  .menu-grid .product-card-img-placeholder {
-    width: 96px;
-    height: 96px;
-    border-radius: 14px;
-  }
-  .menu-grid .product-card-name { font-size: 15.5px; font-weight: 700; }
-  .menu-grid .product-card-desc { font-size: 12.5px; line-height: 1.4; }
-  .menu-grid .product-card-price {
-    font-size: 15px;
-    font-weight: 800;
-    color: #1A1A1A;
-  }
-  .menu-grid .product-card-add {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--red, #D91E36);
-    color: #FFF;
-    box-shadow: 0 4px 12px rgba(217,30,54,0.30);
-  }
-  .menu-grid .product-card-add:active { transform: scale(0.88); }
+  .menu-title { font-size: 28px; }
+  .menu-categories { padding: 16px 28px 18px; }
+  .product-card-name { font-size: 16px; }
+  .product-card-price { font-size: 17px; }
 }
