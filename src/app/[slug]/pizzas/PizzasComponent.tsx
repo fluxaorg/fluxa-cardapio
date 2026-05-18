@@ -322,7 +322,7 @@ export default function Pizzas() {
   if (step === 1) {
     return (
       <div className="page-container">
-        <main className="main-section bg-white-block split-layout">
+        <main className="main-section bg-white-block split-layout pizzas-step1-layout">
           <div className="split-left">
             <HeroSection
               titleMedium="monte sua"
@@ -331,9 +331,19 @@ export default function Pizzas() {
             />
           </div>
           <div className="split-right pizza-builder-panel">
+            <header className="pizza-step-header">
+              <h1 className="pizza-step-title">Monte sua pizza</h1>
+              <p className="pizza-step-sub">Escolha o tamanho</p>
+            </header>
+
             <div className="size-list">
               {sizes.map((size) => (
-                <div key={size.id} className="size-row-card" onClick={() => handleSizeSelect(size)}>
+                <button
+                  type="button"
+                  key={size.id}
+                  className="size-row-card"
+                  onClick={() => handleSizeSelect(size)}
+                >
                   <div className="size-main-info">
                     <h3>{size.name}</h3>
                     <p>Até {size.maxFlavors} sabor{size.maxFlavors === 1 ? '' : 'es'}</p>
@@ -342,7 +352,7 @@ export default function Pizzas() {
                     <span className="size-price">R$ {size.price.toFixed(2)}</span>
                     <ChevronRight size={20} />
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </div>
@@ -355,16 +365,23 @@ export default function Pizzas() {
     return (
       <div className="page-container">
         <main className="main-section bg-white-block pizza-step2-layout">
-          <div className="pizza-s2-header">
-            <button className="back-link" onClick={() => setStep(2)}>
-              <ArrowLeft size={18} />
-              <span>Voltar aos sabores</span>
+          <header className="pizza-step-header pizza-step-header--center">
+            <button
+              type="button"
+              className="pizza-back-btn"
+              aria-label="Voltar aos sabores"
+              onClick={() => setStep(2)}
+            >
+              <ArrowLeft size={22} />
             </button>
-            <div className="pizza-s2-title">
-              <h2>Escolha a borda</h2>
-              <p>{selectedSize?.name} — {selectedFlavors.map(f => f.name).join(' / ')}</p>
+            <div className="pizza-step-title-wrap">
+              <h1 className="pizza-step-title">Escolha a borda</h1>
+              <p className="pizza-step-sub">
+                {selectedSize?.name} — {selectedFlavors.map(f => f.name).join(' / ')}
+              </p>
             </div>
-          </div>
+            <span className="pizza-back-spacer" aria-hidden="true" />
+          </header>
 
           <div className="pizza-s2-chart-area" style={{ marginBottom: 12 }}>
             <div className="pizza-visualizer-container">
@@ -399,36 +416,54 @@ export default function Pizzas() {
   return (
     <div className="page-container">
       <main className="main-section bg-white-block pizza-step2-layout">
-        <div className="pizza-s2-header">
-          <button className="back-link" onClick={() => { setStep(1); setSelectedFlavors([]); }}>
-            <ArrowLeft size={18} />
-            <span>Mudar tamanho</span>
+        {/* Header: back arrow + título centralizado grande */}
+        <header className="pizza-step-header pizza-step-header--center">
+          <button
+            type="button"
+            className="pizza-back-btn"
+            aria-label="Voltar para tamanhos"
+            onClick={() => { setStep(1); setSelectedFlavors([]); }}
+          >
+            <ArrowLeft size={22} />
           </button>
-          <div className="pizza-s2-title">
-            <h2>{selectedSize?.name}</h2>
-            <p>Escolha até {selectedSize?.maxFlavors} sabor{selectedSize?.maxFlavors === 1 ? '' : 'es'}</p>
+          <div className="pizza-step-title-wrap">
+            <h1 className="pizza-step-title">{selectedSize?.name}</h1>
+            <p className="pizza-step-sub">
+              Escolha até {selectedSize?.maxFlavors} sabor{selectedSize?.maxFlavors === 1 ? '' : 'es'}
+            </p>
           </div>
-        </div>
+          <span className="pizza-back-spacer" aria-hidden="true" />
+        </header>
 
+        {/* Counter de sabores — centralizado e refinado */}
         {selectedSize && selectedSize.maxFlavors > 1 && (
           <div className="pizza-flavor-counter">
             <button
+              type="button"
               className="pfc-btn"
+              aria-label="Diminuir sabores"
               onClick={() => changeDesiredCount(-1)}
               disabled={desiredFlavorCount <= 1}
-            >−</button>
-            <span className="pfc-label">
-              {desiredFlavorCount} sabor{desiredFlavorCount > 1 ? 'es' : ''}
-            </span>
+            >
+              <Minus size={18} />
+            </button>
+            <div className="pfc-value">
+              <span className="pfc-number">{desiredFlavorCount}</span>
+              <span className="pfc-label-text">sabor{desiredFlavorCount > 1 ? 'es' : ''}</span>
+            </div>
             <button
+              type="button"
               className="pfc-btn"
+              aria-label="Aumentar sabores"
               onClick={() => changeDesiredCount(1)}
               disabled={desiredFlavorCount >= (selectedSize?.maxFlavors || 1)}
-            >+</button>
-            <span className="pfc-hint">fatias maiores com menos sabores</span>
+            >
+              <Plus size={18} />
+            </button>
           </div>
         )}
 
+        {/* Pizza visual */}
         <div className="pizza-s2-chart-area">
           <div className="pizza-visualizer-container">
             {renderPizzaChart()}
@@ -441,23 +476,39 @@ export default function Pizzas() {
           </p>
         </div>
 
+        {/* Grid de sabores — 2 colunas, cards grandes "burger style" */}
         <div className="flavors-selection-grid pizza-s2-flavors">
           {flavors.map((flavor) => {
             const isSelected = !!selectedFlavors.find((f) => f.id === flavor.id);
             const isDisabled = !isSelected && selectedFlavors.length >= desiredFlavorCount;
             return (
-              <div
+              <button
+                type="button"
                 key={flavor.id}
                 className={`flavor-item-card ${isSelected ? 'is-selected' : ''} ${isDisabled ? 'is-disabled' : ''}`}
                 onClick={() => !isDisabled && toggleFlavor(flavor)}
+                aria-pressed={isSelected}
+                disabled={isDisabled}
               >
-                <div className="flavor-color-dot" style={{ backgroundColor: flavor.color }}></div>
-                <div className="flavor-details">
-                  <h4>{flavor.name}</h4>
-                  <p>{flavor.description}</p>
+                <div
+                  className="flavor-burger"
+                  style={{
+                    background: `radial-gradient(circle at 32% 28%, #FFE6D2 0%, #F2C9A1 38%, ${flavor.color} 70%, ${flavor.color} 100%)`,
+                  }}
+                  aria-hidden="true"
+                >
+                  <span className="flavor-burger-inner" style={{ background: flavor.color }} />
                 </div>
-                {isSelected && <Check className="check-icon" size={16} />}
-              </div>
+                <div className="flavor-details">
+                  <h4 className="flavor-name">{flavor.name}</h4>
+                  <p className="flavor-desc">{flavor.description}</p>
+                </div>
+                {isSelected && (
+                  <div className="flavor-check" aria-hidden="true">
+                    <Check size={14} strokeWidth={3} />
+                  </div>
+                )}
+              </button>
             );
           })}
         </div>

@@ -1,193 +1,555 @@
 /* ══════════════════════════════════════════════════════════════
-   PROFILE — Uber / Apple Standard Clean Layout
-   
-   • Clean Bento Grid (Radius: 16px, NOT oval)
-   • Large Bold Typography (DM Sans)
-   • Minimalist lists for Orders/Addresses
-   • Consistent header with back button
-══════════════════════════════════════════════════════════════ */
+   PROFILE — FLUXA FOOD'S
+   Big-event cards: títulos grandes em contraste, subtítulos apagados.
+   Sem emojis. Margem de segurança no topo de cada aba.
+═══════════════════════════════════════════════════════════════ */
 
-.profile-page {
-  min-height: 100dvh;
+/* Container raiz com margem de topo */
+.profile-right-panel {
+  padding: 24px 16px 24px;
+  padding-top: calc(28px + env(safe-area-inset-top, 0px));
   display: flex;
   flex-direction: column;
-  background: var(--surface, #FFF);
+  gap: 16px;
+  min-height: calc(100svh - var(--tab-bar-total, 60px));
+  background: var(--bg);
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
-/* ── Bento Grid ── */
+/* ══════════════════════════════════════════
+   BENTO GRID — big-event cards
+══════════════════════════════════════════ */
+
 .profile-bento-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(3, auto);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto;
   gap: 12px;
   width: 100%;
-  padding: 0 20px 24px;
+  margin-top: 12px;
 }
 
 .bento-card {
-  background: var(--surface-2, #F5F5F5);
-  border-radius: var(--r-card, 16px);
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: all 150ms ease;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 22px 20px 20px;
+  border-radius: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  text-align: left;
   cursor: pointer;
+  transition: border-color 150ms ease, transform 80ms ease, box-shadow 150ms ease;
   -webkit-tap-highlight-color: transparent;
-  min-height: 100px;
+  min-height: 132px;
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font);
+  width: 100%;
 }
 
-.bento-card:active { transform: scale(0.97); background: #EBEBEB; }
-
-/* ── Card Variants ── */
-.card-enderecos {
-  grid-column: 1 / 2;
-  grid-row: 1 / 3;
-  min-height: 220px;
-  background: var(--black, #2D2D2D);
-  color: #FFF;
+.bento-card:hover {
+  border-color: var(--red);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(196, 28, 59, 0.10);
 }
+.bento-card:active { transform: scale(0.98); }
 
-.card-enderecos .syl {
-  font-size: 32px;
-  font-weight: 900;
-  line-height: 0.9;
-  color: #FFF;
+.bento-title {
+  font-family: var(--font);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
   display: block;
 }
 
-.enderecos-hint {
-  font-size: 11px;
-  opacity: 0.6;
-  margin-top: 12px;
+.bento-hint {
+  font-family: var(--font);
+  font-size: 12.5px;
   font-weight: 500;
+  color: var(--text-secondary);
+  line-height: 1.35;
+  display: block;
+  opacity: 0.85;
 }
 
-.bento-card-group-top-right {
+/* Card destaque: Endereços — span 2 colunas, vinho */
+.card-enderecos {
+  grid-column: 1 / 3;
+  background: var(--red);
+  border-color: var(--red);
+  color: #FFF;
+  min-height: 124px;
+  box-shadow: 0 10px 24px rgba(196, 28, 59, 0.25);
+}
+.card-enderecos .bento-title { color: #FFF; font-size: 24px; }
+.card-enderecos .bento-hint  { color: rgba(255, 255, 255, 0.85); }
+.card-enderecos:hover {
+  background: var(--red-vivid);
+  border-color: var(--red-vivid);
+  box-shadow: 0 14px 30px rgba(196, 28, 59, 0.30);
+}
+
+/* Cards normais */
+.card-recentes { grid-column: 1 / 2; }
+.card-pedidos  { grid-column: 2 / 3; }
+.card-cupons   { grid-column: 1 / 2; }
+
+/* Logout — variante outlined, span 1 col */
+.card-logout {
   grid-column: 2 / 3;
-  grid-row: 1 / 3;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+}
+.card-logout .bento-title { color: var(--red); }
+.card-logout:hover {
+  border-color: var(--red);
+  background: #FFF;
+}
+
+/* ══════════════════════════════════════════
+   BACK BUTTON (sub-tabs)
+══════════════════════════════════════════ */
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 16px 8px 12px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  width: fit-content;
+  min-height: 40px;
+  transition: border-color 150ms ease, transform 80ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.back-btn:hover  { border-color: var(--red); color: var(--red); }
+.back-btn:active { transform: scale(0.97); }
+
+/* ══════════════════════════════════════════
+   TAB CONTENT — title with safety margin
+══════════════════════════════════════════ */
+
+.tab-content-scroll {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.card-recentes, .card-logout {
-  flex: 1;
-}
-
-.recentes-line1 { font-size: 14px; font-weight: 600; color: var(--text-secondary, #757575); }
-.recentes-line2 { font-size: 18px; font-weight: 800; color: var(--text-primary, #1A1A1A); }
-
-.logout-title { font-size: 20px; font-weight: 800; color: var(--red, #D91E36); }
-
-.card-cupons {
-  grid-column: 1 / 2;
-  grid-row: 3 / 4;
-}
-
-.card-pedidos {
-  grid-column: 2 / 3;
-  grid-row: 3 / 4;
-}
-
-.cupons-line1, .pedidos-line1 { font-size: 14px; font-weight: 600; color: var(--text-secondary, #757575); }
-.cupons-line2, .pedidos-line2 { font-size: 20px; font-weight: 800; color: var(--text-primary, #1A1A1A); }
-
-/* ── Tab Content ── */
-.tab-content-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 0 20px 24px;
+  padding-top: 12px; /* margem extra de segurança */
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+  min-height: 0;
+  padding-bottom: 32px;
 }
 
-.tab-title-header {
-  margin-bottom: 24px;
+.tab-loading {
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 24px;
 }
 
-.tab-title {
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--text-primary, #1A1A1A);
-  letter-spacing: -0.04em;
-}
-
-/* ── Lists ── */
-.profile-list {
+.tab-empty {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 48px 16px;
 }
 
-.profile-item-card {
-  background: var(--surface-2, #F5F5F5);
-  border-radius: var(--r-md, 12px);
-  padding: 16px;
+.tab-empty-text {
+  font-family: var(--font);
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  margin: 0;
+}
+
+/* ══════════════════════════════════════════
+   ORDERS LIST
+══════════════════════════════════════════ */
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.order-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  font-family: var(--font);
+  box-shadow: var(--shadow-sm);
 }
 
-.order-header {
+.order-card-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
 }
 
-.order-id { font-size: 15px; font-weight: 700; color: var(--text-primary, #1A1A1A); }
-.order-status-tag {
-  font-size: 11px;
-  font-weight: 800;
+.order-number {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.order-status {
+  font-size: 11.5px;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.04em;
   padding: 4px 10px;
-  border-radius: 6px;
-  background: #FFF;
-  color: var(--text-secondary, #757575);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--text-secondary);
 }
 
-.order-items {
-  font-size: 13px;
-  color: var(--text-secondary, #757575);
+.order-items-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.order-item-tag {
+  font-size: 12px;
   font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--surface-2);
+  padding: 4px 10px;
+  border-radius: 999px;
 }
 
-.order-footer {
+.order-card-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 4px;
-  padding-top: 8px;
-  border-top: 1px solid rgba(0,0,0,0.05);
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
 }
 
-.order-price { font-size: 15px; font-weight: 800; color: var(--text-primary, #1A1A1A); }
+.order-date  { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+.order-total { font-size: 15px; font-weight: 700; color: var(--red); }
 
-/* ── Address Form ── */
-.address-form-box {
-  background: var(--surface-2, #F5F5F5);
-  border-radius: var(--r-md, 12px);
-  padding: 20px;
-  margin-top: 12px;
+/* ══════════════════════════════════════════
+   ADDRESSES
+══════════════════════════════════════════ */
+
+.profile-name-field {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 4px;
+  box-shadow: var(--shadow-sm);
 }
 
-/* ── Desktop Overrides ── */
+.profile-name-label {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 8px;
+}
+
+.profile-name-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.profile-name-input {
+  flex: 1;
+  height: 44px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0 14px;
+  font-family: var(--font);
+  font-size: 16px;
+  color: var(--text-primary);
+}
+.profile-name-input:focus {
+  border-color: var(--red);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(196, 28, 59, 0.10);
+}
+
+.profile-name-save {
+  height: 44px;
+  padding: 0 18px;
+  background: var(--red);
+  color: #FFF;
+  border: none;
+  border-radius: 999px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 150ms ease, transform 80ms ease;
+}
+.profile-name-save:hover { background: var(--red-vivid); }
+.profile-name-save:active { transform: scale(0.97); }
+.profile-name-save:disabled { background: #D9C7CA; cursor: not-allowed; }
+
+.addresses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.address-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font);
+  box-shadow: var(--shadow-sm);
+}
+
+.address-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.address-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.address-default-tag {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--red);
+  color: #FFF;
+}
+
+.address-street, .address-city {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+
+.address-delete {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: none;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 150ms ease, color 150ms ease;
+}
+.address-delete:hover  { background: var(--red-soft); color: var(--red); }
+.address-delete:active { transform: scale(0.92); }
+
+/* Add address btn */
+.btn-add-address {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 48px;
+  background: var(--surface);
+  border: 1.5px dashed var(--border);
+  border-radius: 14px;
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 150ms ease, color 150ms ease, background 150ms ease;
+}
+.btn-add-address:hover {
+  border-color: var(--red);
+  color: var(--red);
+  border-style: solid;
+}
+
+/* Form */
+.address-form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-title {
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+}
+
+.form-input {
+  height: 44px;
+  padding: 0 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 16px;
+  color: var(--text-primary);
+}
+.form-input:focus {
+  border-color: var(--red);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(196, 28, 59, 0.10);
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-save-addr {
+  flex: 1;
+  min-height: 44px;
+  background: var(--red);
+  color: #FFF;
+  border: none;
+  border-radius: 999px;
+  font-family: var(--font);
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-save-addr:hover { background: var(--red-vivid); }
+.btn-save-addr:active { transform: scale(0.98); }
+
+.btn-cancel-addr {
+  flex: 1;
+  min-height: 44px;
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: var(--font);
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-cancel-addr:hover { border-color: var(--text-secondary); }
+
+/* ══════════════════════════════════════════
+   CUPONS
+══════════════════════════════════════════ */
+
+.cupons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cupon-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font);
+}
+
+.cupon-discount {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cupon-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cupon-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.cupon-desc, .cupon-validity {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+}
+
+/* ══════════════════════════════════════════
+   DESKTOP
+══════════════════════════════════════════ */
+
 @media (min-width: 1024px) {
-  .profile-page {
-    flex-direction: row;
+  .profile-right-panel {
     padding: 32px;
-    gap: 32px;
-  }
-  
-  .profile-bento-grid {
-    flex: 0 0 450px;
-    padding: 0;
-  }
-  
-  .tab-content-container {
-    background: #FFF;
-    border-radius: var(--r-xl, 20px);
-    padding: 32px;
+    border-radius: 20px;
+    background: var(--surface);
     box-shadow: var(--shadow-sm);
   }
+
+  .profile-bento-grid {
+    gap: 14px;
+  }
+
+  .bento-title { font-size: 22px; }
+  .bento-hint  { font-size: 13.5px; }
+  .card-enderecos .bento-title { font-size: 28px; }
 }

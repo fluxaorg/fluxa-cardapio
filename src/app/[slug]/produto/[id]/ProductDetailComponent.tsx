@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { Filter, Plus, Minus } from 'lucide-react';
+import { ArrowLeft, Heart, Plus, Minus, Check } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useCompany } from '@/context/CompanyContext';
 import { useCart } from '@/context/CartContext';
@@ -15,6 +15,13 @@ const INGREDIENT_EMOJI: Record<string, string> = {
   mostarda: '🌿', calabresa: '🌭', linguiça: '🌭', azeitona: '🫒',
   ervilha: '🌱', brócolis: '🥦', champignon: '🍄', pão: '🍞',
 };
+
+const EXTRAS = [
+  { id: 'queijo-extra',  name: 'Queijo extra',     price: 3.5 },
+  { id: 'bacon-extra',   name: 'Bacon crocante',   price: 4.0 },
+  { id: 'cebola-cara',   name: 'Cebola caramelizada', price: 2.5 },
+  { id: 'molho-especial',name: 'Molho da casa',    price: 1.5 },
+];
 
 function parseIngredients(desc: string | null | undefined) {
   if (!desc) return [];
@@ -43,7 +50,9 @@ export default function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const [size, setSize] = useState('G');
   const [removedItems, setRemovedItems] = useState<string[]>([]);
+  const [addedExtras, setAddedExtras] = useState<string[]>([]);
   const [qty, setQty] = useState(1);
+  const [favorite, setFavorite] = useState(false);
   const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
@@ -89,17 +98,23 @@ export default function ProductDetail() {
 
   const handleAdd = () => {
     if (!product) return;
-    const price = urlPromoPrice ??
+    const basePrice = urlPromoPrice ??
       (product.promo_price && product.promo_price < product.price
         ? product.promo_price : product.price);
+    const selectedExtras = EXTRAS.filter(e => addedExtras.includes(e.id));
+    const finalUnit = basePrice + selectedExtras.reduce((acc, e) => acc + e.price, 0);
     addItem({
       productId: product.id,
       name: product.name,
-      price,
+      price: finalUnit,
       qty,
       image_url: product.image_url,
       description: product.description,
-      options: { size, removed: removedItems },
+      options: {
+        size,
+        removed: removedItems,
+        extras: selectedExtras.map(e => e.id),
+      },
     } as any);
   };
 
@@ -108,6 +123,16 @@ export default function ProductDetail() {
       prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
     );
   };
+
+  const toggleExtra = (id: string) => {
+    setAddedExtras((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
+
+  const extrasTotal = EXTRAS
+    .filter(e => addedExtras.includes(e.id))
+    .reduce((acc, e) => acc + e.price, 0);
 
   if (loading) return <div className="page-loading">Carregando...</div>;
   if (!product) return <div className="page-loading">Produto não encontrado.</div>;
@@ -121,98 +146,152 @@ export default function ProductDetail() {
 
   const ingredients = parseIngredients(product.description);
 
+  const unitPrice = effectivePrice + extrasTotal;
+  const finalPrice = unitPrice * qty;
+
   return (
     <div className="page-container detail-layout">
-      {/* Left Area */}
       <main className="main-section bg-white-block detail-left">
-        <div className="detail-header">
-          <h1 className="detail-header-title">Detalhes do produto...</h1>
-          <button className="menu-filter-btn">
-            <Filter size={24} color="#D91E36" strokeWidth={2.5} />
+        {/* Header: ← Voltar    Detalhes    ♥ */}
+        <header className="pd-header">
+          <button
+            type="button"
+            className="pd-header-btn"
+            aria-label="Voltar"
+            onClick={() => router.back()}
+          >
+            <ArrowLeft size={22} />
           </button>
-        </div>
+          <h1 className="pd-header-title">Detalhes do produto</h1>
+          <button
+            type="button"
+            className={`pd-header-btn pd-fav ${favorite ? 'is-fav' : ''}`}
+            aria-label={favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+            aria-pressed={favorite}
+            onClick={() => setFavorite(f => !f)}
+          >
+            <Heart size={20} strokeWidth={2.2} fill={favorite ? 'currentColor' : 'none'} />
+          </button>
+        </header>
 
-        {categories.length > 0 && (
-          <div className="menu-categories" style={{ marginTop: '0px', marginBottom: '40px' }}>
-            <button
-              className={`category-pill active`}
-            >
-              {product?.category || 'Pizzas'}
-            </button>
-            {categories.filter(c => c.name !== product?.category).map(c => (
-              <button
-                key={c.id}
-                className={`category-pill`}
-                onClick={() => router.push(`${basePath}/`)}
-              >
-                {c.name}
-              </button>
-            ))}
+        <div className="pd-content">
+          {/* Foto quadrada centralizada */}
+          <figure className="pd-photo-wrap">
+            <img
+              src={product.image_url || 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=80'}
+              alt={product.name}
+              className="pd-photo"
+            />
+          </figure>
+
+          {/* Nome + preço + descrição */}
+          <div className="pd-meta">
+            <h2 className="pd-name">{product.name}</h2>
+            <div className="pd-price-row">
+              {product.promo_price && product.promo_price < product.price && (
+                <span className="pd-price-old">R$ {product.price.toFixed(2)}</span>
+              )}
+              <span className="pd-price">R$ {effectivePrice.toFixed(2)}</span>
+            </div>
+            {product.description && (
+              <p className="pd-desc">{product.description}</p>
+            )}
           </div>
-        )}
 
-        <div className="product-area">
-          <img
-            src={product.image_url || 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=80'}
-            alt={product.name}
-            className="detail-img"
-          />
-
-          <div className="detail-info">
-            <h2 className="detail-title">{product.name}</h2>
-            <p className="detail-desc">{product.description}</p>
-
+          {/* Tamanho */}
+          <section className="pd-section">
+            <h3 className="pd-section-title">Tamanho</h3>
             <div className="size-selector">
               {['P', 'M', 'G'].map((s) => (
                 <button
+                  type="button"
                   key={s}
                   className={`size-pill ${size === s ? 'active' : ''}`}
                   onClick={() => setSize(s)}
+                  aria-pressed={size === s}
                 >
                   {s}
                 </button>
               ))}
             </div>
+          </section>
 
-            {ingredients.length > 0 && (
-              <div className="remove-section">
-                <span className="remove-label">Deseja remover algo?</span>
-                <div className="remove-grid">
-                  {ingredients.map((ing) => (
-                    <button
-                      key={ing.id}
-                      className={`remove-card ${removedItems.includes(ing.id) ? 'removed' : ''}`}
-                      onClick={() => toggleItem(ing.id)}
-                      title={ing.label}
-                    >
-                      <span className="remove-emoji">{ing.emoji}</span>
-                    </button>
-                  ))}
-                </div>
+          {/* Ingredientes a remover (apenas se houver) */}
+          {ingredients.length > 0 && (
+            <section className="pd-section remove-section">
+              <h3 className="pd-section-title">Deseja remover algo?</h3>
+              <div className="remove-grid">
+                {ingredients.map((ing) => (
+                  <button
+                    type="button"
+                    key={ing.id}
+                    className={`remove-card ${removedItems.includes(ing.id) ? 'removed' : ''}`}
+                    onClick={() => toggleItem(ing.id)}
+                    title={ing.label}
+                    aria-pressed={removedItems.includes(ing.id)}
+                  >
+                    <span className="remove-emoji">{ing.emoji}</span>
+                    <span className="remove-name">{ing.label}</span>
+                  </button>
+                ))}
               </div>
-            )}
+            </section>
+          )}
 
-            <div className="qty-action-row">
-              <div className="qty-controls">
-                <button className="qty-btn" onClick={() => setQty(Math.max(1, qty - 1))}>
-                  <Minus size={20} />
-                </button>
-                <span className="qty-val">{qty}</span>
-                <button className="qty-btn" onClick={() => setQty(qty + 1)}>
-                  <Plus size={20} />
-                </button>
-              </div>
-              <div className="price-pill">
-                {product.promo_price && product.promo_price < product.price && (
-                  <span style={{ textDecoration: 'line-through', color: '#aaa', fontSize: '12px', marginRight: '6px' }}>
-                    R$ {(product.price * qty).toFixed(2)}
-                  </span>
-                )}
-                R$ {(effectivePrice * qty).toFixed(2)}
-              </div>
-              <button className="btn-add" onClick={handleAdd}>Adicionar</button>
+          {/* Ingredientes extras */}
+          <section className="pd-section">
+            <h3 className="pd-section-title">Adicionais</h3>
+            <div className="extras-list">
+              {EXTRAS.map((extra) => {
+                const isSel = addedExtras.includes(extra.id);
+                return (
+                  <button
+                    type="button"
+                    key={extra.id}
+                    className={`extra-row ${isSel ? 'is-selected' : ''}`}
+                    onClick={() => toggleExtra(extra.id)}
+                    aria-pressed={isSel}
+                  >
+                    <div className="extra-info">
+                      <span className="extra-name">{extra.name}</span>
+                      <span className="extra-price">+ R$ {extra.price.toFixed(2)}</span>
+                    </div>
+                    <span className={`extra-check ${isSel ? 'on' : ''}`}>
+                      {isSel && <Check size={14} strokeWidth={3} />}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
+          </section>
+        </div>
+
+        {/* CTA fixo: qty + adicionar */}
+        <div className="pd-bottom-bar">
+          <div className="qty-controls">
+            <button
+              type="button"
+              className="qty-btn"
+              aria-label="Diminuir quantidade"
+              onClick={() => setQty(Math.max(1, qty - 1))}
+              disabled={qty <= 1}
+            >
+              <Minus size={18} />
+            </button>
+            <span className="qty-val">{qty}</span>
+            <button
+              type="button"
+              className="qty-btn"
+              aria-label="Aumentar quantidade"
+              onClick={() => setQty(qty + 1)}
+            >
+              <Plus size={18} />
+            </button>
           </div>
+          <button type="button" className="btn-add" onClick={handleAdd}>
+            <span className="btn-add-label">Adicionar</span>
+            <span className="btn-add-price">R$ {finalPrice.toFixed(2)}</span>
+          </button>
         </div>
 
         {/* Sugestões */}

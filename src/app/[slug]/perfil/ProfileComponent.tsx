@@ -32,11 +32,11 @@ interface Address {
 }
 
 const STATUS_LABELS: Record<string, string> = {
-  recebido: '🔴 Recebido',
-  preparo: '⚡ Em preparo',
-  pronto: '✅ Pronto',
-  entregue: '📦 Entregue',
-  cancelado: '❌ Cancelado',
+  recebido: 'Recebido',
+  preparo: 'Em preparo',
+  pronto: 'Pronto',
+  entregue: 'Entregue',
+  cancelado: 'Cancelado',
 };
 
 export default function Profile() {
@@ -192,9 +192,9 @@ export default function Profile() {
       case 'cupons': return { small: 'meus', large: 'cupons', sub: 'seus descontos disponíveis' };
       case 'pedidos': return { small: 'meus', large: 'pedidos', sub: 'acompanhe o histórico' };
       default: return {
-        small: 'oláaaa',
+        small: 'olá',
         large: displayName ? `${displayName}!` : 'fulano!',
-        sub: 'o que manda hoje? me conta ai...'
+        sub: 'o que vai pedir hoje?'
       };
     }
   };
@@ -209,56 +209,39 @@ export default function Profile() {
             titleMedium={t.small}
             titleGiant={t.large}
             subtitle={t.sub}
-            showEyes={activeTab === 'home'}
           />
         </div>
 
         <div className="split-right profile-right-panel">
           {activeTab !== 'home' && (
             <button className="back-btn" onClick={() => setActiveTab('home')}>
-              <ArrowLeft size={24} /><span>Voltar</span>
+              <ArrowLeft size={20} /><span>Voltar</span>
             </button>
           )}
 
-          {/* ── HOME ── */}
+          {/* ── HOME — big-event cards ── */}
           {activeTab === 'home' && (
             <div className="profile-bento-grid">
-              <div className="bento-card card-enderecos" onClick={() => setActiveTab('enderecos')}>
-                <div className="enderecos-text">
-                  <span className="syl">en</span><span className="syl">de</span>
-                  <span className="syl">re</span><span className="syl">ços</span>
-                  <span className="enderecos-hint">confirma<br/>certinho né!</span>
-                </div>
-              </div>
-              <div className="bento-card-group-top-right">
-                <div className="bento-card card-recentes" onClick={() => setActiveTab('recentes')}>
-                  <div className="card-recentes-content">
-                    <span className="recentes-line1">pedidos</span>
-                    <span className="recentes-line2">recentes</span>
-                    <span className="recentes-hint">peça dnv...</span>
-                  </div>
-                </div>
-                <div className="bento-card card-logout" onClick={signOut}>
-                  <div className="card-logout-content">
-                    <span className="logout-title">Logout</span>
-                    <span className="logout-hint">ja vai?</span>
-                  </div>
-                </div>
-              </div>
-              <div className="bento-card card-cupons" onClick={() => setActiveTab('cupons')}>
-                <div className="card-cupons-content">
-                  <span className="cupons-line1">Meus</span>
-                  <span className="cupons-line2">Cupons</span>
-                  <span className="cupons-hint">vai um desconto aí?</span>
-                </div>
-              </div>
-              <div className="bento-card card-pedidos" onClick={() => setActiveTab('pedidos')}>
-                <div className="card-pedidos-content">
-                  <span className="pedidos-line1">Meus</span>
-                  <span className="pedidos-line2">Pedidos</span>
-                  <span className="pedidos-hint">acompanhe seus pedidos.</span>
-                </div>
-              </div>
+              <button type="button" className="bento-card card-enderecos" onClick={() => setActiveTab('enderecos')}>
+                <span className="bento-title">Endereços</span>
+                <span className="bento-hint">Confirma certinho onde a comida chega</span>
+              </button>
+              <button type="button" className="bento-card card-recentes" onClick={() => setActiveTab('recentes')}>
+                <span className="bento-title">Pedidos recentes</span>
+                <span className="bento-hint">Peça de novo num toque</span>
+              </button>
+              <button type="button" className="bento-card card-cupons" onClick={() => setActiveTab('cupons')}>
+                <span className="bento-title">Meus cupons</span>
+                <span className="bento-hint">Vai um descontinho?</span>
+              </button>
+              <button type="button" className="bento-card card-pedidos" onClick={() => setActiveTab('pedidos')}>
+                <span className="bento-title">Meus pedidos</span>
+                <span className="bento-hint">Acompanhe o histórico</span>
+              </button>
+              <button type="button" className="bento-card card-logout" onClick={signOut}>
+                <span className="bento-title">Sair</span>
+                <span className="bento-hint">Já vai?</span>
+              </button>
             </div>
           )}
 
@@ -268,8 +251,7 @@ export default function Profile() {
               {dataLoading ? <p className="tab-loading">Carregando...</p> :
                orders.length === 0 ? (
                 <div className="tab-empty">
-                  <span style={{ fontSize: 40 }}>📦</span>
-                  <p>Você ainda não fez pedidos aqui.</p>
+                  <p className="tab-empty-text">Você ainda não fez pedidos aqui.</p>
                 </div>
               ) : (
                 <div className="orders-list">
@@ -324,7 +306,10 @@ export default function Profile() {
                     {addresses.map((addr) => (
                       <div key={addr.id} className="address-card">
                         <div className="address-info">
-                          <span className="address-label">{addr.label}{addr.is_default ? ' ⭐' : ''}</span>
+                          <span className="address-label">
+                            {addr.label}
+                            {addr.is_default && <span className="address-default-tag">Padrão</span>}
+                          </span>
                           <span className="address-street">{addr.street}{addr.number ? `, ${addr.number}` : ''}{addr.complement ? ` - ${addr.complement}` : ''}</span>
                           <span className="address-city">{addr.city}{addr.cep ? ` · ${addr.cep}` : ''}</span>
                         </div>
@@ -335,8 +320,7 @@ export default function Profile() {
                     ))}
                     {addresses.length === 0 && !showAddressForm && (
                       <div className="tab-empty">
-                        <span style={{ fontSize: 40 }}>📍</span>
-                        <p>Nenhum endereço salvo ainda.</p>
+                        <p className="tab-empty-text">Nenhum endereço salvo ainda.</p>
                       </div>
                     )}
                   </div>
@@ -376,8 +360,7 @@ export default function Profile() {
               {dataLoading ? <p className="tab-loading">Carregando...</p> :
                coupons.length === 0 ? (
                 <div className="tab-empty">
-                  <span style={{ fontSize: 40 }}>🎟️</span>
-                  <p>Nenhuma promoção ativa no momento.</p>
+                  <p className="tab-empty-text">Nenhuma promoção ativa no momento.</p>
                 </div>
               ) : (
                 <div className="cupons-list">
