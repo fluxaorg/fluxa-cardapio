@@ -213,34 +213,53 @@ export default function Profile() {
         </div>
 
         <div className="split-right profile-right-panel">
-          {activeTab !== 'home' && (
-            <button className="back-btn" onClick={() => setActiveTab('home')}>
-              <ArrowLeft size={20} /><span>Voltar</span>
-            </button>
-          )}
+          <header className="profile-page-header">
+            {activeTab !== 'home' ? (
+              <button type="button" className="back-btn" onClick={() => setActiveTab('home')} aria-label="Voltar">
+                <ArrowLeft size={20} /><span>Voltar</span>
+              </button>
+            ) : <span className="profile-page-header-spacer" />}
+            <h1 className="profile-page-title">
+              {activeTab === 'home'      && 'Perfil'}
+              {activeTab === 'enderecos' && 'Endereços'}
+              {activeTab === 'recentes'  && 'Pedidos recentes'}
+              {activeTab === 'cupons'    && 'Meus cupons'}
+              {activeTab === 'pedidos'   && 'Meus pedidos'}
+            </h1>
+            <span className="profile-page-header-spacer" />
+          </header>
 
-          {/* ── HOME — big-event cards ── */}
+
+          {/* ── HOME — bento grid (Apple-minimalista, sem emojis) ── */}
           {activeTab === 'home' && (
             <div className="profile-bento-grid">
               <button type="button" className="bento-card card-enderecos" onClick={() => setActiveTab('enderecos')}>
+                <span className="bento-eyebrow">Onde entregar</span>
                 <span className="bento-title">Endereços</span>
                 <span className="bento-hint">Confirma certinho onde a comida chega</span>
               </button>
-              <button type="button" className="bento-card card-recentes" onClick={() => setActiveTab('recentes')}>
-                <span className="bento-title">Pedidos recentes</span>
-                <span className="bento-hint">Peça de novo num toque</span>
-              </button>
+
+              <div className="bento-card-group-top-right">
+                <button type="button" className="bento-card card-recentes" onClick={() => setActiveTab('recentes')}>
+                  <span className="bento-eyebrow">Pedidos</span>
+                  <span className="bento-title">Recentes</span>
+                </button>
+                <button type="button" className="bento-card card-logout" onClick={signOut}>
+                  <span className="bento-eyebrow">Sessão</span>
+                  <span className="bento-title">Sair</span>
+                </button>
+              </div>
+
               <button type="button" className="bento-card card-cupons" onClick={() => setActiveTab('cupons')}>
+                <span className="bento-eyebrow">Descontos</span>
                 <span className="bento-title">Meus cupons</span>
                 <span className="bento-hint">Vai um descontinho?</span>
               </button>
+
               <button type="button" className="bento-card card-pedidos" onClick={() => setActiveTab('pedidos')}>
+                <span className="bento-eyebrow">Histórico</span>
                 <span className="bento-title">Meus pedidos</span>
-                <span className="bento-hint">Acompanhe o histórico</span>
-              </button>
-              <button type="button" className="bento-card card-logout" onClick={signOut}>
-                <span className="bento-title">Sair</span>
-                <span className="bento-hint">Já vai?</span>
+                <span className="bento-hint">Acompanhe os seus pedidos</span>
               </button>
             </div>
           )}

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import HeroSection from '@/components/HeroSection';
-import { ArrowLeft, ChevronRight, Check, Minus, Plus } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Minus, Plus } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useCompany } from '@/context/CompanyContext';
 import { supabase } from '@/lib/supabase';
@@ -31,27 +31,27 @@ const PIZZA_SIZES: PizzaSize[] = [
 ];
 
 const FLAVORS: Flavor[] = [
-  { id: 'calabresa',   name: 'Calabresa',       description: 'Molho de tomate, mussarela, calabresa e cebola.',         color: '#B22222', pattern: 'calabresa'   },
-  { id: 'frango',      name: 'Frango Catupiry',  description: 'Molho de tomate, mussarela, frango desfiado e catupiry.', color: '#D4A017', pattern: 'frango'      },
-  { id: 'margherita',  name: 'Margherita',       description: 'Molho, mussarela, manjericão fresco e tomate.',           color: '#4CAF50', pattern: 'margherita'  },
-  { id: '4queijos',    name: '4 Queijos',        description: 'Mussarela, catupiry, provolone e parmesão.',              color: '#FFD700', pattern: 'queijos'     },
-  { id: 'portuguesa',  name: 'Portuguesa',       description: 'Mussarela, presunto, ovos, cebola, ervilha e azeitona.', color: '#FF8C00', pattern: 'portuguesa'  },
-  { id: 'bacon',       name: 'Bacon',            description: 'Mussarela, bacon crocante e cebola.',                    color: '#8B4513', pattern: 'bacon'       },
-  { id: 'pepperoni',   name: 'Pepperoni',        description: 'Mussarela, fatias de pepperoni e orégano.',              color: '#CC2200', pattern: 'pepperoni'   },
-  { id: 'vegetariana', name: 'Vegetariana',      description: 'Brócolis, milho, ervilha e palmito.',                    color: '#2E8B57', pattern: 'vegetariana' },
+  { id: 'calabresa',   name: 'Calabresa',       description: 'Tradicional', color: '#B22222', pattern: 'calabresa'   },
+  { id: 'frango',      name: 'Frango Catupiry', description: 'Especial',    color: '#D4A017', pattern: 'frango'      },
+  { id: 'margherita',  name: 'Margherita',      description: 'Tradicional', color: '#4CAF50', pattern: 'margherita'  },
+  { id: '4queijos',    name: '4 Queijos',       description: 'Especial',    color: '#FFD700', pattern: 'queijos'     },
+  { id: 'portuguesa',  name: 'Portuguesa',      description: 'Tradicional', color: '#FF8C00', pattern: 'portuguesa'  },
+  { id: 'bacon',       name: 'Bacon',           description: 'Tradicional', color: '#8B4513', pattern: 'bacon'       },
+  { id: 'pepperoni',   name: 'Pepperoni',       description: 'Especial',    color: '#CC2200', pattern: 'pepperoni'   },
+  { id: 'vegetariana', name: 'Vegetariana',     description: 'Vegetariana', color: '#2E8B57', pattern: 'vegetariana' },
 ];
 
 const PIZZA_CRUSTS = [
-  { id: 'sem',        name: 'Sem borda',              price: 0,    emoji: '🍕' },
-  { id: 'queijo',     name: 'Borda de Queijo',        price: 6,    emoji: '🧀' },
-  { id: 'catupiry',   name: 'Borda de Catupiry',      price: 8,    emoji: '🫙' },
-  { id: 'cheddar',    name: 'Borda de Cheddar',       price: 8,    emoji: '🟡' },
-  { id: 'integral',   name: 'Pão Integral',           price: 4,    emoji: '🌾' },
-  { id: 'pq',         name: 'Pão de Queijo',          price: 6,    emoji: '🧆' },
-  { id: 'choco_preto',name: 'Pão de Chocolate Preto', price: 9,    emoji: '🍫' },
-  { id: 'choco_bco',  name: 'Pão de Chocolate Branco',price: 9,    emoji: '🤍' },
-  { id: 'pq_recheado',name: 'Pão de Queijo Recheado', price: 10,   emoji: '🫕' },
-  { id: 'doce_leite', name: 'Borda Doce de Leite',    price: 10,   emoji: '🍬' },
+  { id: 'sem',        name: 'Sem borda',               price: 0,  category: 'Padrão'  },
+  { id: 'queijo',     name: 'Borda de Queijo',         price: 6,  category: 'Salgada' },
+  { id: 'catupiry',   name: 'Borda de Catupiry',       price: 8,  category: 'Salgada' },
+  { id: 'cheddar',    name: 'Borda de Cheddar',        price: 8,  category: 'Salgada' },
+  { id: 'integral',   name: 'Pão Integral',            price: 4,  category: 'Massa'   },
+  { id: 'pq',         name: 'Pão de Queijo',           price: 6,  category: 'Massa'   },
+  { id: 'choco_preto',name: 'Pão de Chocolate Preto',  price: 9,  category: 'Doce'    },
+  { id: 'choco_bco',  name: 'Pão de Chocolate Branco', price: 9,  category: 'Doce'    },
+  { id: 'pq_recheado',name: 'Pão de Queijo Recheado',  price: 10, category: 'Massa'   },
+  { id: 'doce_leite', name: 'Borda Doce de Leite',     price: 10, category: 'Doce'    },
 ];
 
 const FLAVOR_COLORS: Record<string, { color: string; pattern: string }> = {
@@ -118,9 +118,12 @@ export default function Pizzas() {
           }
           if (Array.isArray(data.pizza_borda_options) && data.pizza_borda_options.length > 0) {
             setDynamicCrusts([
-              { id: 'sem', name: 'Sem borda', price: 0, emoji: '🍕' },
+              { id: 'sem', name: 'Sem borda', price: 0, category: 'Padrão' },
               ...data.pizza_borda_options.map((c: any) => ({
-                id: c.id || c.name, name: c.name, price: Number(c.price || 0), emoji: '🔵',
+                id: c.id || c.name,
+                name: c.name,
+                price: Number(c.price || 0),
+                category: c.category || c.subcat || 'Borda',
               })),
             ]);
           }
@@ -392,13 +395,17 @@ export default function Pizzas() {
           <div className="pizza-crust-grid-step3">
             {crusts.map(crust => (
               <button
+                type="button"
                 key={crust.id}
-                className={`pizza-crust-btn ${selectedCrust.id === crust.id ? 'selected' : ''}`}
+                className={`flavor-item-card ${selectedCrust.id === crust.id ? 'is-selected' : ''}`}
                 onClick={() => setSelectedCrust(crust)}
+                aria-pressed={selectedCrust.id === crust.id}
               >
-                <span className="crust-emoji">{crust.emoji}</span>
-                <span className="crust-name">{crust.name}</span>
-                {crust.price > 0 && <span className="crust-price">+R$ {crust.price.toFixed(2)}</span>}
+                <span className="flavor-name">{crust.name}</span>
+                <span className="flavor-category">
+                  {crust.category || 'Borda'}
+                  {crust.price > 0 && <> · +R$ {crust.price.toFixed(2)}</>}
+                </span>
               </button>
             ))}
           </div>
@@ -490,23 +497,9 @@ export default function Pizzas() {
                 aria-pressed={isSelected}
                 disabled={isDisabled}
               >
-                <div
-                  className="flavor-burger"
-                  style={{
-                    background: `radial-gradient(circle at 32% 28%, #FFE6D2 0%, #F2C9A1 38%, ${flavor.color} 70%, ${flavor.color} 100%)`,
-                  }}
-                  aria-hidden="true"
-                >
-                  <span className="flavor-burger-inner" style={{ background: flavor.color }} />
-                </div>
-                <div className="flavor-details">
-                  <h4 className="flavor-name">{flavor.name}</h4>
-                  <p className="flavor-desc">{flavor.description}</p>
-                </div>
-                {isSelected && (
-                  <div className="flavor-check" aria-hidden="true">
-                    <Check size={14} strokeWidth={3} />
-                  </div>
+                <span className="flavor-name">{flavor.name}</span>
+                {flavor.description && (
+                  <span className="flavor-category">{flavor.description}</span>
                 )}
               </button>
             );

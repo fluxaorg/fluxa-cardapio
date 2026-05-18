@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, SlidersHorizontal, ShoppingBag, MapPin, Star } from 'lucide-react';
+import { Search, SlidersHorizontal, ShoppingBag } from 'lucide-react';
 import { useCompany } from '@/context/CompanyContext';
 import { useCart } from '@/context/CartContext';
 import { supabase } from '@/lib/supabase';
@@ -10,7 +10,6 @@ import './Home.css';
 interface Category {
   id: string;
   name: string;
-  emoji?: string | null;
 }
 
 interface MenuItem {
@@ -21,30 +20,6 @@ interface MenuItem {
   image_url: string | null;
   category: string;
   promo_price?: number | null;
-  rating?: number | null;
-}
-
-const CATEGORY_EMOJIS: Record<string, string> = {
-  todos: '🍽️',
-  pizzas: '🍕',
-  pizza: '🍕',
-  massas: '🍝',
-  massa: '🍝',
-  hamburgers: '🍔',
-  lanches: '🍔',
-  sanduiches: '🥪',
-  saladas: '🥗',
-  entradas: '🥗',
-  bebidas: '🥤',
-  bebida: '🥤',
-  sobremesas: '🍮',
-  sobremesa: '🍮',
-  promocoes: '🎁',
-};
-
-function emojiFor(name: string): string {
-  const key = name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-  return CATEGORY_EMOJIS[key] || '🍴';
 }
 
 export default function Home() {
@@ -91,8 +66,10 @@ export default function Home() {
     });
   }, [products, searchQuery, activeCategory, categories]);
 
-  const popularItem = useMemo(() => {
-    return products.find(p => p.promo_price && p.promo_price < p.price) || products[0];
+  const popularItems = useMemo(() => {
+    const promo = products.filter(p => p.promo_price && p.promo_price < p.price);
+    if (promo.length >= 3) return promo.slice(0, 8);
+    return products.slice(0, 8);
   }, [products]);
 
   const goToProduct = (id: string) => router.push(`${basePath}/produto/${id}`);
@@ -100,18 +77,14 @@ export default function Home() {
   return (
     <div className="page-container home-page">
       <main className="home-main">
-        {/* HEADER */}
+        {/* HEADER — título página padrão + carrinho */}
         <header className="home-header">
           <div className="home-header-top">
             <div className="home-header-left">
               <span className="home-greet-eyebrow">Bem-vindo a</span>
-              <h1 className="home-restaurant-name">
+              <h1 className="home-page-title">
                 {company?.name || "Fluxa Food's"}
               </h1>
-              <span className="home-location">
-                <MapPin size={12} strokeWidth={2.5} />
-                <span>Entrega 30–45 min</span>
-              </span>
             </div>
             <button
               type="button"
@@ -131,7 +104,7 @@ export default function Home() {
           {/* Search + filtros */}
           <div className="home-search-row">
             <div className="home-search-wrap">
-              <Search size={18} strokeWidth={2.2} className="home-search-icon" />
+              <Search size={18} strokeWidth={2} className="home-search-icon" />
               <input
                 type="text"
                 className="home-search-input"
@@ -146,11 +119,11 @@ export default function Home() {
               className="home-filter-btn"
               aria-label="Filtros"
             >
-              <SlidersHorizontal size={18} strokeWidth={2.2} />
+              <SlidersHorizontal size={18} strokeWidth={2} />
             </button>
           </div>
 
-          {/* Pills de categoria */}
+          {/* Pills de categoria — Apple minimalista, sem emojis */}
           <div className="home-categories" role="tablist" aria-label="Categorias">
             <button
               type="button"
@@ -159,8 +132,7 @@ export default function Home() {
               className={`home-cat-pill ${activeCategory === 'todos' ? 'active' : ''}`}
               onClick={() => setActiveCategory('todos')}
             >
-              <span className="home-cat-emoji" aria-hidden="true">🍽️</span>
-              <span className="home-cat-label">Todos</span>
+              Todos
             </button>
             {categories.map((cat) => (
               <button
@@ -171,8 +143,7 @@ export default function Home() {
                 className={`home-cat-pill ${activeCategory === cat.id ? 'active' : ''}`}
                 onClick={() => setActiveCategory(cat.id)}
               >
-                <span className="home-cat-emoji" aria-hidden="true">{emojiFor(cat.name)}</span>
-                <span className="home-cat-label">{cat.name}</span>
+                {cat.name}
               </button>
             ))}
           </div>
@@ -180,39 +151,43 @@ export default function Home() {
 
         {/* CONTENT */}
         <div className="home-content">
-          {/* Itens populares — card destaque */}
-          {popularItem && (
+          {/* Itens populares — carrossel arrastável de cards */}
+          {popularItems.length > 0 && (
             <section className="home-section">
               <header className="home-section-header">
                 <h2 className="home-section-title">Itens populares</h2>
               </header>
-              <button
-                type="button"
-                className="popular-card"
-                onClick={() => goToProduct(popularItem.id)}
-                aria-label={`Ver ${popularItem.name}`}
+              <div
+                className="popular-carousel"
+                role="list"
+                aria-label="Itens populares — arraste pra ver mais"
               >
-                <img
-                  src={popularItem.image_url || 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80'}
-                  alt={popularItem.name}
-                  className="popular-card-img"
-                />
-                <div className="popular-card-meta">
-                  <div className="popular-card-info">
-                    <h3 className="popular-card-name">{popularItem.name}</h3>
-                    <div className="popular-card-rating" aria-label="Avaliação 5.0 estrelas">
-                      <Star size={12} fill="currentColor" strokeWidth={0} />
-                      <span>5.0</span>
+                {popularItems.map((p) => (
+                  <button
+                    type="button"
+                    role="listitem"
+                    key={p.id}
+                    className="popular-card"
+                    onClick={() => goToProduct(p.id)}
+                    aria-label={`Ver ${p.name}`}
+                  >
+                    <img
+                      src={p.image_url || 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80'}
+                      alt={p.name}
+                      className="popular-card-img"
+                    />
+                    <div className="popular-card-meta">
+                      <h3 className="popular-card-name">{p.name}</h3>
+                      <div className="popular-card-bottom">
+                        <span className="popular-card-price">
+                          R$ {(p.promo_price ?? p.price).toFixed(2)}
+                        </span>
+                        <span className="popular-card-cta">Adicionar</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="popular-card-bottom">
-                    <span className="popular-card-price">
-                      R$ {(popularItem.promo_price ?? popularItem.price).toFixed(2)}
-                    </span>
-                    <span className="popular-card-cta">Adicionar</span>
-                  </div>
-                </div>
-              </button>
+                  </button>
+                ))}
+              </div>
             </section>
           )}
 

@@ -51,14 +51,14 @@
 
 .menu-title {
   font-family: var(--font);
-  font-size: 22px;
+  font-size: 32px;
   font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   flex: 1;
   min-width: 0;
   margin: 0;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 .menu-filter-btn {
