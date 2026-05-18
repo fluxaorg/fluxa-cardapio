@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import HeroSection from '@/components/HeroSection';
-import { ArrowLeft, ChevronRight, Check } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Check, Minus, Plus } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useCompany } from '@/context/CompanyContext';
 import { supabase } from '@/lib/supabase';
